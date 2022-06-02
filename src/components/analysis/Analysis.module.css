@@ -1,0 +1,72 @@
+/* 
+LeftBar
+*/
+.left_bar__main{
+  width: 100px;
+  height: 100%;
+  background-color: #16191C;
+}
+
+
+/* 
+Header
+*/
+.analysis__header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.analysis__title{
+  font-size: 36px;
+  color: #FFFFFF;
+}
+
+/* 
+Participant
+*/
+
+.participant__main {
+  height: 370px;
+  width: 100%;
+  margin-top: 40px;
+  padding: 20px 0 0 30px;
+  background-color: #292E33;
+  border-radius: 5px;
+  overflow: scroll;
+}
+
+.participant__above_bar {
+  display: flex;
+  /* justify-content: space-between; */
+  height: 40px;
+}
+
+.participant__title {
+  color: #FFFFFF;
+  font-size: 32px;
+}
+
+.participant__label {
+  color: #FFFFFF;
+}
+
+
+.participant__select_days {
+  margin:0 20px 0 auto;
+}
+
+.participant__users {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.participant__user {
+  width: 120px;
+}
+
+.participant__user_name {
+  margin: 5px auto 0;
+  color: #FFFFFF;
+  font-size: 20px;
+  text-align: center;
+}
