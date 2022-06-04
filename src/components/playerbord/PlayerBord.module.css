@@ -1,0 +1,75 @@
+/* 
+player
+*/
+
+.player__main {
+  height: 370px;
+  width: 100%;
+  margin-top: 40px;
+  padding: 20px 0 0 30px;
+  background-color: #292E33;
+  border-radius: 5px;
+  overflow: scroll;
+  position: relative;
+}
+
+.player__above_bar {
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+}
+
+.player__title {
+  color: #FFFFFF;
+  font-size: 32px;
+}
+
+.player__main_bord {
+  display: flex;
+}
+
+.player__label {
+  color: #FFFFFF;
+}
+
+
+.player__select_days {
+  margin:0 20px 0 auto;
+}
+
+.player__button {
+  margin-top: 20px;
+}
+
+.player__avatars {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.player__avatar {
+  width: 120px;
+}
+
+.player__avatar_name {
+  margin: 5px auto 0;
+  color: #FFFFFF;
+  font-size: 20px;
+  text-align: center;
+}
+
+/* .player__add_circle_icon {
+  color: #29CB97;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+.player__add_circle_icon_back {
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 13px;
+  bottom: 15px;
+} */

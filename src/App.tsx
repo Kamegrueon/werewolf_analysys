@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "./App.module.css"
 import AnalysisHeader from './components/analysis/AnalysisHeader';
-import AnalysisParticipant from './components/analysis/AnalysisParticipant';
+import AnalysisParticipant from './components/playerbord/PlayerBordMain';
 import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
 
 const App: React.FC = () =>  {
