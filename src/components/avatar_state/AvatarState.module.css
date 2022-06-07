@@ -1,0 +1,132 @@
+/* 
+MurderedMarker
+*/
+
+.player__murdered_marker_box {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  width: 100px;
+  height: 100px;
+  z-index: 5;
+}
+
+.player__murdered_marker {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  border-radius: 50%;
+  /* background-color: blue; */
+  overflow: hidden;
+}
+
+.player__murdered_marker div{
+  position: absolute;
+  right: -40px;
+  height: 4px;
+  width: 200px;
+  background-color: black;
+  border-radius: 2px;
+  display: inline-block;
+  transform: rotate(135deg);
+
+}
+
+.player__murdered_marker div:nth-of-type(1) {
+  bottom: 70px;
+}
+
+.player__murdered_marker div:nth-of-type(2) {
+  bottom: 40px;
+}
+
+.player__murdered_marker div:nth-of-type(3) {
+  bottom: 10px;
+}
+
+/* 
+ExecutedMarker
+*/
+
+.player__executed_marker_box {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  width: 100px;
+  height: 100px;
+  z-index: 5;
+}
+
+.player__executed_marker {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  border-radius: 50%;
+  /* background-color: blue; */
+  overflow: hidden;
+}
+
+.player__executed_marker div{
+  position: absolute;
+  height: 4px;
+  width: 200px;
+  background-color: black;
+  border-radius: 2px;
+  display: inline-block;
+  transform: rotate(90deg);
+
+}
+
+.player__executed_marker div:nth-of-type(1) {
+  right: calc(65px - 100px);
+}
+
+.player__executed_marker div:nth-of-type(2) {
+  right: calc(35px - 100px);
+}
+
+/* 
+PerishedMarker
+*/
+
+.player__perished_marker_box {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  width: 100px;
+  height: 100px;
+  z-index: 5;
+}
+
+.player__perished_marker {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.player__perished_marker div{
+  position: absolute;
+  height: 4px;
+  width: 200px;
+  background-color: black;
+  border-radius: 2px;
+  display: inline-block;
+
+}
+
+.player__perished_marker div:nth-of-type(1) {
+  right: calc(65px - 100px);
+  top: 35px;
+  transform: rotate(45deg);
+}
+
+.player__perished_marker div:nth-of-type(2) {
+  right: calc(35px - 100px);
+  top: 35px;
+  transform: rotate(135deg);
+}

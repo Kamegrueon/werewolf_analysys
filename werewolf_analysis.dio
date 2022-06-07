@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="P1QmGMAU_VZfFbWxP7bX" name="ページ1">
-        <mxGraphModel dx="1142" dy="804" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="952" dy="670" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -228,7 +228,7 @@
                         <mxRectangle width="45" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="204" value="strange_death_player_id" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;pointerEvents=1;fontColor=#000000;labelBorderColor=default;strokeColor=#000000;" vertex="1" parent="202">
+                <mxCell id="204" value="perish_player_id" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;pointerEvents=1;fontColor=#000000;labelBorderColor=default;strokeColor=#000000;" vertex="1" parent="202">
                     <mxGeometry x="45" width="156" height="30" as="geometry">
                         <mxRectangle width="156" height="30" as="alternateBounds"/>
                     </mxGeometry>
