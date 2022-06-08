@@ -4,8 +4,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/AddOutlined';
+import EditIcon from '@mui/icons-material/EditOutlined';
 import { DAILIES } from '../types'
 
 const PlayerBoardDailyReport: React.FC<DAILIES> = (props) => {
