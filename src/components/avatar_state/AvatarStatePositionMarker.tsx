@@ -13,6 +13,8 @@ const PositionState = (props: Prop) => {
       return {position_order: '占', position_color: '#4072EE'}
     case 'were-wolf':
       return {position_order: '狼', position_color: '#000000'}
+    case 'medium':
+      return {position_order: '霊', position_color: '#B558F6'}  
     default:
       return {position_order: '', position_color: 'transparent'}
   }
