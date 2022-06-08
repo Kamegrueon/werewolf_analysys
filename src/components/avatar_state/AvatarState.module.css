@@ -2,7 +2,7 @@
 MurderedMarker
 */
 
-.player__murdered_marker_box {
+.avatar__murdered_marker_box {
   position: absolute;
   left: 10px;
   top: 15px;
@@ -11,7 +11,7 @@ MurderedMarker
   z-index: 5;
 }
 
-.player__murdered_marker {
+.avatar__murdered_marker {
   position: absolute;
   height: 100px;
   width: 100px;
@@ -21,7 +21,7 @@ MurderedMarker
   overflow: hidden;
 }
 
-.player__murdered_marker div{
+.avatar__murdered_marker div{
   position: absolute;
   right: -40px;
   height: 4px;
@@ -33,15 +33,15 @@ MurderedMarker
 
 }
 
-.player__murdered_marker div:nth-of-type(1) {
+.avatar__murdered_marker div:nth-of-type(1) {
   bottom: 70px;
 }
 
-.player__murdered_marker div:nth-of-type(2) {
+.avatar__murdered_marker div:nth-of-type(2) {
   bottom: 40px;
 }
 
-.player__murdered_marker div:nth-of-type(3) {
+.avatar__murdered_marker div:nth-of-type(3) {
   bottom: 10px;
 }
 
@@ -49,7 +49,7 @@ MurderedMarker
 ExecutedMarker
 */
 
-.player__executed_marker_box {
+.avatar__executed_marker_box {
   position: absolute;
   left: 10px;
   top: 15px;
@@ -58,7 +58,7 @@ ExecutedMarker
   z-index: 5;
 }
 
-.player__executed_marker {
+.avatar__executed_marker {
   position: absolute;
   height: 100px;
   width: 100px;
@@ -68,7 +68,7 @@ ExecutedMarker
   overflow: hidden;
 }
 
-.player__executed_marker div{
+.avatar__executed_marker div{
   position: absolute;
   height: 4px;
   width: 200px;
@@ -79,11 +79,11 @@ ExecutedMarker
 
 }
 
-.player__executed_marker div:nth-of-type(1) {
+.avatar__executed_marker div:nth-of-type(1) {
   right: calc(65px - 100px);
 }
 
-.player__executed_marker div:nth-of-type(2) {
+.avatar__executed_marker div:nth-of-type(2) {
   right: calc(35px - 100px);
 }
 
@@ -91,7 +91,7 @@ ExecutedMarker
 PerishedMarker
 */
 
-.player__perished_marker_box {
+.avatar__perished_marker_box {
   position: absolute;
   left: 10px;
   top: 15px;
@@ -100,7 +100,7 @@ PerishedMarker
   z-index: 5;
 }
 
-.player__perished_marker {
+.avatar__perished_marker {
   position: absolute;
   height: 100px;
   width: 100px;
@@ -109,7 +109,7 @@ PerishedMarker
   overflow: hidden;
 }
 
-.player__perished_marker div{
+.avatar__perished_marker div{
   position: absolute;
   height: 4px;
   width: 200px;
@@ -119,14 +119,20 @@ PerishedMarker
 
 }
 
-.player__perished_marker div:nth-of-type(1) {
+.avatar__perished_marker div:nth-of-type(1) {
   right: calc(65px - 100px);
   top: 35px;
   transform: rotate(45deg);
 }
 
-.player__perished_marker div:nth-of-type(2) {
+.avatar__perished_marker div:nth-of-type(2) {
   right: calc(35px - 100px);
   top: 35px;
   transform: rotate(135deg);
+}
+
+
+.avatar__position_marker {
+  position: absolute;
+  
 }

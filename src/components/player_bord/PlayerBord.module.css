@@ -24,8 +24,9 @@ player
   font-size: 32px;
 }
 
-.player__main_bord {
+.player__bord_main {
   display: flex;
+  justify-content: space-between;
 }
 
 .player__label {

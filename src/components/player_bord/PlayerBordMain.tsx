@@ -2,27 +2,13 @@ import React, { useState } from 'react'
 import styles from './PlayerBord.module.css'
 import PlayerBordAvatar from './PlayerBordAvatar'
 import PlayerBordDailyReport from './PlayerBordDailyReport'
+import { AVATAR } from '../types'
 
-interface Avatar {
-  name: string | null
-  cause_of_death: ('perished' | 'executed' | 'murdered' | 'alive')
-  avatar: string
-  dead_style: {opacity: number}
-}
-
-const players:Avatar[] = [
-  { name:"Kengo", cause_of_death:'murdered', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 0.5}},
-  { name:"Kengo", cause_of_death:'executed', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 0.5}},
-  { name:"Kengo", cause_of_death:'perished', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 0.5}},
-  { name:"Kengo", cause_of_death:'alive', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 1.0}},
-  { name:"Kengo", cause_of_death:'alive', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 1.0}},
-  { name:"Kengo", cause_of_death:'alive', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 1.0}},
-  { name:"Kengo", cause_of_death:'alive', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 1.0}},
-  { name:"Kengo", cause_of_death:'murdered', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 0.5}},
-  { name:"Kengo", cause_of_death:'alive', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 1.0}},
-  { name:"Kengo", cause_of_death:'executed', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 0.5}},
-  { name:"Kengo", cause_of_death:'alive', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 1.0}},
-  { name:"Kengo", cause_of_death:'executed', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 0.5}}
+const players:AVATAR[] = [
+  {user_id: 1, name:"Kengo", cause_of_death:'murdered', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 0.5},},
+  {user_id: 2, name:"Kengo", cause_of_death:'executed', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 0.5}},
+  {user_id: 3, name:"Kengo", cause_of_death:'perished', avatar:'../../static/images/Bitmap.png', dead_style:{opacity: 0.5}},
+  {user_id: 4, name:"Kengo", cause_of_death:'alive', avatar:'../../static/images/Bitmap.png'},
 ]
 
 
@@ -36,7 +22,7 @@ const PlayerBordMain = () => {
           参加者
         </div>
       </div>
-      <div className={styles.player__main_bord}>
+      <div className={styles.player__bord_main}>
         <PlayerBordAvatar players={players}/>
         <PlayerBordDailyReport date_progresses={date_progress}/>
       </div>

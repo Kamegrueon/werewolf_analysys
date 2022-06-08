@@ -6,19 +6,14 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import { DAILIES } from '../types'
 
-
-interface DailiesProps {
-  date_progresses: number[]
-}
-
-const PlayerBordDailyReport: React.FC<DailiesProps> = (props) => {
+const PlayerBordDailyReport: React.FC<DAILIES> = (props) => {
   const select_days = {
     width: 150,
     height: 30,
     color: '#1F2327',
     bgcolor: '#bdbdbd',
-    // textDecoration: 'none',
   }
 
   const [days, setDays] = React.useState(1);
@@ -41,8 +36,8 @@ const PlayerBordDailyReport: React.FC<DailiesProps> = (props) => {
           // label="経過日数"
           onChange={handleChange}
         >
-         {props.date_progresses.map((date_progress) => 
-          <MenuItem value={date_progress}>{date_progress}日目</MenuItem>
+         {props.date_progresses.map((date_progress, ) => 
+          <MenuItem value={date_progress} key={date_progress}>{date_progress}日目</MenuItem>
         )}
         </Select>
       </FormControl>
