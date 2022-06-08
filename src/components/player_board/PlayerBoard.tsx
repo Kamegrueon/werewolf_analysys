@@ -14,8 +14,8 @@ const PlayerBoard: React.FC = () => {
         </div>
       </div>
       <div className={styles.player__board_main}>
-        <PlayerBoardAvatar/>
-        <PlayerBoardDailyReport date_progresses={date_progress}/>
+        <PlayerBoardAvatar />
+        <PlayerBoardDailyReport />
       </div>
     </div>
   )

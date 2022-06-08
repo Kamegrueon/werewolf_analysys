@@ -5,6 +5,8 @@ import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
 import PlayerContext from './components/contexts/PlayerContext';
 import PlayerBoard from './components/player_board/PlayerBoard';
 import Player from './components/player_board/Player';
+import DailyContext from './components/contexts/DailyContext';
+import { Dailies } from './components/select/Select'
 
 const App: React.FC = () =>  {
   return (
@@ -13,7 +15,9 @@ const App: React.FC = () =>  {
       <div className={styles.app__main}>
         <AnalysisHeader />
         <PlayerContext.Provider value={Player}>
-          <PlayerBoard />
+          <DailyContext.Provider value={Dailies}>
+            <PlayerBoard />
+          </DailyContext.Provider>
         </PlayerContext.Provider>
       </div>
     </div>

@@ -15,10 +15,3 @@ export interface AVATAR {
   date_of_death?: number
   dead_style?: {opacity: number}
 }
-
-
-// PlayerBord
-
-export interface DAILIES {
-  date_progresses: number[]
-}

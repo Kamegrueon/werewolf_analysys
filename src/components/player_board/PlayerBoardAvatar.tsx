@@ -16,11 +16,6 @@ const avatar = {
   height: 100
 }
 
-const PositionState = {
-  position_color: '#4072EE',
-  position_order: 'A',
-}
-
 const ExistCod = (player: AVATAR) => {
   switch (player.cause_of_death) {
     case 'murdered':
