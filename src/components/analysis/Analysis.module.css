@@ -1,0 +1,23 @@
+/* 
+LeftBar
+*/
+.left_bar__main{
+  width: 10%;
+  height: 100%;
+  min-width: 120px;
+  background-color: #16191C;
+}
+
+
+/* 
+Header
+*/
+.analysis__header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.analysis__title{
+  font-size: 36px;
+  color: #FFFFFF;
+}

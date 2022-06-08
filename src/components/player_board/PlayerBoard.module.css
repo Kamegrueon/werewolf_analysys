@@ -1,0 +1,64 @@
+/* 
+player
+*/
+
+.player__main {
+  height: 370px;
+  width: 100%;
+  margin-top: 40px;
+  padding: 10px 0 0 30px;
+  background-color: #292E33;
+  border-radius: 5px;
+  overflow: scroll;
+  position: relative;
+}
+
+.player__above_bar {
+  display: flex;
+  justify-content: space-between;
+  height: 55px;
+}
+
+.player__title {
+  color: #FFFFFF;
+  font-size: 32px;
+}
+
+.player__board_main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.player__label {
+  color: #FFFFFF;
+}
+
+
+.player__select_days {
+  margin:0 20px 0 auto;
+}
+
+.player__daily_button {
+  margin-top: 20px;
+}
+
+.player__avatars {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.player__avatar {
+  width: 120px;
+}
+
+.player__avatar_name {
+  margin: 5px auto 0;
+  color: #FFFFFF;
+  font-size: 20px;
+  text-align: center;
+}
+
+.player__avatar_state {
+  position: relative;
+}
+

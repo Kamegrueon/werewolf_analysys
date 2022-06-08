@@ -1,0 +1,147 @@
+/* 
+MurderedMarker
+*/
+
+.avatar__murdered_marker_box {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  width: 100px;
+  height: 100px;
+  z-index: 5;
+}
+
+.avatar__murdered_marker {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  border-radius: 50%;
+  /* background-color: blue; */
+  overflow: hidden;
+}
+
+.avatar__murdered_marker div{
+  position: absolute;
+  right: -40px;
+  height: 4px;
+  width: 200px;
+  background-color: black;
+  border-radius: 2px;
+  display: inline-block;
+  transform: rotate(135deg);
+
+}
+
+.avatar__murdered_marker div:nth-of-type(1) {
+  bottom: 70px;
+}
+
+.avatar__murdered_marker div:nth-of-type(2) {
+  bottom: 40px;
+}
+
+.avatar__murdered_marker div:nth-of-type(3) {
+  bottom: 10px;
+}
+
+/* 
+ExecutedMarker
+*/
+
+.avatar__executed_marker_box {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  width: 100px;
+  height: 100px;
+  z-index: 5;
+}
+
+.avatar__executed_marker {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  border-radius: 50%;
+  /* background-color: blue; */
+  overflow: hidden;
+}
+
+.avatar__executed_marker div{
+  position: absolute;
+  height: 4px;
+  width: 200px;
+  background-color: black;
+  border-radius: 2px;
+  display: inline-block;
+  transform: rotate(90deg);
+
+}
+
+.avatar__executed_marker div:nth-of-type(1) {
+  right: calc(65px - 100px);
+}
+
+.avatar__executed_marker div:nth-of-type(2) {
+  right: calc(35px - 100px);
+}
+
+/* 
+PerishedMarker
+*/
+
+.avatar__perished_marker_box {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  width: 100px;
+  height: 100px;
+  z-index: 5;
+}
+
+.avatar__perished_marker {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar__perished_marker div{
+  position: absolute;
+  height: 4px;
+  width: 200px;
+  background-color: black;
+  border-radius: 2px;
+  display: inline-block;
+
+}
+
+.avatar__perished_marker div:nth-of-type(1) {
+  right: calc(65px - 100px);
+  top: 35px;
+  transform: rotate(45deg);
+}
+
+.avatar__perished_marker div:nth-of-type(2) {
+  right: calc(35px - 100px);
+  top: 35px;
+  transform: rotate(135deg);
+}
+
+
+.avatar__position_marker {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 800;
+  
+}
+
+.avatar__death_date{
+  position: absolute;
+  right: 15px;
+  top: 100px;
+  color: #FFFFFF;
+}

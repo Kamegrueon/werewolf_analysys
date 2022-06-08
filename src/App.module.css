@@ -1,0 +1,11 @@
+.app__root{
+  background-color: #1F2327;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.app__main{
+  width: 100%;
+  padding: 50px 40px 0 60px;
+}
