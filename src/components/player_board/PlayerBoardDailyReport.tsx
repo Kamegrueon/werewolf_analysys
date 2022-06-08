@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './PlayerBord.module.css'
+import styles from './PlayerBoard.module.css'
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -8,12 +8,19 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import { DAILIES } from '../types'
 
-const PlayerBordDailyReport: React.FC<DAILIES> = (props) => {
+const PlayerBoardDailyReport: React.FC<DAILIES> = (props) => {
   const select_days = {
-    width: 150,
+    width: 165,
     height: 30,
     color: '#1F2327',
     bgcolor: '#bdbdbd',
+  }
+
+  const daily_button_style = {
+    color: '#1F2327',
+    bgcolor: '#bdbdbd',
+    width: 165,
+    mr: 2
   }
 
   const [days, setDays] = React.useState(1);
@@ -36,19 +43,19 @@ const PlayerBordDailyReport: React.FC<DAILIES> = (props) => {
           // label="経過日数"
           onChange={handleChange}
         >
-         {props.date_progresses.map((date_progress, ) => 
+         {props.date_progresses.map((date_progress) => 
           <MenuItem value={date_progress} key={date_progress}>{date_progress}日目</MenuItem>
         )}
         </Select>
       </FormControl>
     </div>
-    <div className={styles.player__button}>
-      <Button variant="contained" sx={{color: '#1F2327', bgcolor: '#bdbdbd'}} endIcon={<AddIcon />}>
+    <div className={styles.player__daily_button}>
+      <Button variant="contained" sx={daily_button_style} endIcon={<AddIcon />}>
         Daily Report
       </Button>
     </div>
-    <div className={styles.player__button}>
-      <Button variant="contained" sx={{color: '#1F2327', bgcolor: '#bdbdbd'}} endIcon={<EditIcon />}>
+    <div className={styles.player__daily_button}>
+      <Button variant="contained" sx={daily_button_style} endIcon={<EditIcon />}>
         Edit Report
       </Button>
     </div>
@@ -56,4 +63,4 @@ const PlayerBordDailyReport: React.FC<DAILIES> = (props) => {
   )
 }
 
-export default PlayerBordDailyReport
+export default PlayerBoardDailyReport

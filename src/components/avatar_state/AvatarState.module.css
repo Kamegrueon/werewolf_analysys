@@ -134,5 +134,14 @@ PerishedMarker
 
 .avatar__position_marker {
   position: absolute;
+  font-size: 12px;
+  font-weight: 800;
   
+}
+
+.avatar__death_date{
+  position: absolute;
+  right: 15px;
+  top: 100px;
+  color: #FFFFFF;
 }

@@ -1,17 +1,18 @@
 // Avatar 
 
-export interface  POSITION_STATE {
-  position_color: string;
-  position_order: string;
-}
+// export interface  POSITION_STATE {
+//   position: string;
+// }
 
 export type CAUSE_Of_DEATH = 'perished' | 'executed' | 'murdered' | 'alive'
 
 export interface AVATAR {
   user_id: number
   name: string | null
-  cause_of_death: CAUSE_Of_DEATH
   avatar: string //avatarの画像データどうするか検討
+  position?: string
+  cause_of_death?: CAUSE_Of_DEATH
+  date_of_death?: number
   dead_style?: {opacity: number}
 }
 

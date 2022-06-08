@@ -7,7 +7,7 @@ const MenuIconStyle = {
   color: '#DADADA',
   display: 'block',
   borderRadius: 0.8,
-  p: 1.25,
+  p: 0.5,
   width: 40,
   height: 40
 }
