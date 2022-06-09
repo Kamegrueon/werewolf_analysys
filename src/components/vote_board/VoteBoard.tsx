@@ -1,7 +1,7 @@
 import React from 'react'
 import SelectDaily from '../select/SelectDaily'
 import styles from './VoteBoard.module.css'
-import VoteBoardVoted from './VoteBoardVoted'
+import VoteBoardVoteList from './VoteBoardVoteList'
 
 const VoteBoard:React.FC = () => {
   const select_days = {
@@ -15,7 +15,7 @@ const VoteBoard:React.FC = () => {
     <div className={styles.vote__board}>
       <div className={styles.vote__title}>Vote for</div>
       <div className={styles.vote__box}>
-        <VoteBoardVoted />
+        <VoteBoardVoteList />
         <SelectDaily select_days={select_days}/>
       </div>
     </div>

@@ -9,6 +9,9 @@ import VoteContext from './components/contexts/VoteContext';
 import VoteBoard from './components/vote_board/VoteBoard';
 import { AVATAR, VOTE_LOG } from './components/types'
 
+
+
+
 // axiosでバックエンドから取得しuseEffectで更新
 const Players:AVATAR[] = [
     {user_id: 1, name:"Jon", avatar:'', position:'fortune-teller', cause_of_death:'murdered', date_of_death: 3},
@@ -22,9 +25,10 @@ const Players:AVATAR[] = [
 const Dailies:number[] = [1,2,3,4,5,6]
 
 const Votes:VOTE_LOG[] = [
-  {vote_id: 1, voted_user_id: 1, be_voted_user_id: 2, date_progress: 1},
-  {vote_id: 2, voted_user_id: 2, be_voted_user_id: 3, date_progress: 1},
-  {vote_id: 3, voted_user_id: 3, be_voted_user_id: 2, date_progress: 1}
+  {vote_id: 1, voter_id: 1, destination_player_id: 2, date_progress: 1},
+  {vote_id: 2, voter_id: 2, destination_player_id: 3, date_progress: 1},
+  {vote_id: 3, voter_id: 3, destination_player_id: 2, date_progress: 1},
+  {vote_id: 4, voter_id: 4, destination_player_id: 2, date_progress: 1}
 ]
 
 const App: React.FC = () =>  {

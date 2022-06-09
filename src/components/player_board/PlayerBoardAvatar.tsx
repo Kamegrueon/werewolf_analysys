@@ -8,6 +8,7 @@ import AvatarStatePositionMarker from '../avatar_state/AvatarStatePositionMarker
 import { AVATAR } from '../types'
 import PlayerContext from '../contexts/PlayerContext'
 import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
+import { ReactComponent as AddPlayerIcon } from '../../images/AddPlayerIcon.svg'
 
 const avatar = {
   mt: 1.875,
@@ -74,7 +75,7 @@ const PlayerBoardAvatar: React.FC = () => {
       </div>
       ))}
         <div className={styles.player__avatar}>
-          <Avatar src={'../../static/images/参加者.png'} sx={avatar} alt='avatar'/>
+          <AddPlayerIcon />
         </div>
     </div>    
   )

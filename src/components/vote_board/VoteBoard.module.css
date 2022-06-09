@@ -21,7 +21,6 @@
 }
 
 .vote__voted {
-  display: flex;
   padding: 15px 0 0 10px;
 }
 
@@ -36,6 +35,12 @@
 }
 
 .vote__send_icon {
-  margin: auto 50px;
+  margin: auto 45px;
   color: #989A9C;
+}
+
+.vote__vote_log{
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
 }

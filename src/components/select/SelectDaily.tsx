@@ -21,7 +21,7 @@ const SelectDaily: React.FC<SELECT_STYLE_PROP> = (props) => {
   return (
     <div style={select_days_style}>
       <div style={select_label_style}>
-        日付
+        Date
       </div>
       <FormControl>
         <Select

@@ -28,7 +28,7 @@ export interface SELECT_STYLE_PROP {
 
 export interface VOTE_LOG {
   vote_id: number, 
-  voted_user_id: number,
-  be_voted_user_id: number,
-  date_progress: number
+  voter_id: number,
+  destination_player_id: number,
+  date_progress: number,
 }
