@@ -15,3 +15,20 @@ export interface AVATAR {
   date_of_death?: number
   dead_style?: {opacity: number}
 }
+
+export interface SELECT_STYLE_PROP {
+  select_days:{
+    width: number,
+    height: number,
+    color?: string,
+    backgroundColor: string,
+    textAlign?: string
+  }
+}
+
+export interface VOTE_LOG {
+  vote_id: number, 
+  voted_user_id: number,
+  be_voted_user_id: number,
+  date_progress: number
+}

@@ -2,7 +2,7 @@
 player
 */
 
-.player__main {
+.player__board {
   height: 370px;
   width: 100%;
   margin-top: 40px;
@@ -24,7 +24,7 @@ player
   font-size: 32px;
 }
 
-.player__board_main {
+.player__main {
   display: flex;
   justify-content: space-between;
 }

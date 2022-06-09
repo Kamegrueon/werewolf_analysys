@@ -4,9 +4,28 @@ import AnalysisHeader from './components/analysis/AnalysisHeader';
 import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
 import PlayerContext from './components/contexts/PlayerContext';
 import PlayerBoard from './components/player_board/PlayerBoard';
-import Player from './components/player_board/Player';
 import DailyContext from './components/contexts/DailyContext';
-import { Dailies } from './components/select/Select'
+import VoteContext from './components/contexts/VoteContext';
+import VoteBoard from './components/vote_board/VoteBoard';
+import { AVATAR, VOTE_LOG } from './components/types'
+
+// axiosでバックエンドから取得しuseEffectで更新
+const Players:AVATAR[] = [
+    {user_id: 1, name:"Jon", avatar:'', position:'fortune-teller', cause_of_death:'murdered', date_of_death: 3},
+    {user_id: 2, name:"Jack", avatar:'',position:'were-wolf', cause_of_death:'executed', date_of_death: 2},
+    {user_id: 3, name:"Mike", avatar:'', cause_of_death:'perished', date_of_death: 2},
+    {user_id: 4, name:"Noah", avatar:'../../static/images/Bitmap.png'},
+    {user_id: 5, name:"Lucas", avatar:'',position:'medium'},
+  ]
+
+// axiosでバックエンドから取得しuseEffectで更新
+const Dailies:number[] = [1,2,3,4,5,6]
+
+const Votes:VOTE_LOG[] = [
+  {vote_id: 1, voted_user_id: 1, be_voted_user_id: 2, date_progress: 1},
+  {vote_id: 2, voted_user_id: 2, be_voted_user_id: 3, date_progress: 1},
+  {vote_id: 3, voted_user_id: 3, be_voted_user_id: 2, date_progress: 1}
+]
 
 const App: React.FC = () =>  {
   return (
@@ -14,11 +33,16 @@ const App: React.FC = () =>  {
       <AnalysisLeftBar />
       <div className={styles.app__main}>
         <AnalysisHeader />
-        <PlayerContext.Provider value={Player}>
-          <DailyContext.Provider value={Dailies}>
-            <PlayerBoard />
-          </DailyContext.Provider>
-        </PlayerContext.Provider>
+    <PlayerContext.Provider value={Players}>
+    <DailyContext.Provider value={Dailies}>
+    <VoteContext.Provider value={Votes}>
+        <PlayerBoard />
+        <div className={styles.app__bottom}>
+          <VoteBoard />
+        </div>
+    </VoteContext.Provider>
+    </DailyContext.Provider>
+    </PlayerContext.Provider>
       </div>
     </div>
   );

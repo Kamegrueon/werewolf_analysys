@@ -3,21 +3,15 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import DailyContext from '../contexts/DailyContext'
+import { SELECT_STYLE_PROP } from '../types'
 
-const SelectDaily: React.FC = () => {
+
+const SelectDaily: React.FC<SELECT_STYLE_PROP> = (props) => {
 
   const select_days_style = { margin: "0 20px 0 auto" }
-  const select_label_style = { color: "#FFFFFF" }
+  const select_label_style = { color: "#FFFFFF" , fontWeight: 800}
   
-
   const date_progresses = useContext(DailyContext)
-
-  const select_days = {
-    width: 165,
-    height: 30,
-    color: '#1F2327',
-    bgcolor: '#bdbdbd',
-  }
 
   const [days, setDays] = useState(1);
 
@@ -27,14 +21,13 @@ const SelectDaily: React.FC = () => {
   return (
     <div style={select_days_style}>
       <div style={select_label_style}>
-        経過日数
+        日付
       </div>
       <FormControl>
         <Select
-          sx={select_days}
+          sx={props.select_days}
           id='select-days'
           value={days as any}
-          // label="経過日数"
           onChange={handleChange}
         >
          {date_progresses.map((date_progress) => 

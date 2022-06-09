@@ -9,3 +9,7 @@
   width: 100%;
   padding: 50px 40px 0 60px;
 }
+
+.app__bottom{
+  display: flex;
+}

@@ -9,14 +9,22 @@ const PlayerBoardDailyReport: React.FC = () => {
   
   const daily_button_style = {
     color: '#1F2327',
-    bgcolor: '#bdbdbd',
+    backgroundColor: '#bdbdbd',
     width: 165,
     mr: 2
   }
 
+  const select_days = {
+    width: 165,
+    height: 30,
+    color: '#1F2327',
+    backgroundColor: '#bdbdbd',
+    textAlign: 'center'
+  }
+
   return (
     <div className={styles.player__daily_reports}> 
-      <SelectDaily />
+      <SelectDaily select_days={select_days}/>
       <div className={styles.player__daily_button}>
         <Button variant="contained" sx={daily_button_style} endIcon={<AddIcon />}>
           Daily Report

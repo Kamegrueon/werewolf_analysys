@@ -1,0 +1,41 @@
+.vote__board{
+  height: calc(100vh - 530px);
+  width: 600px;
+  margin-top: 15px;
+  padding: 20px 0 0 20px;
+  /* background-color: red; */
+  border-radius: 5px;
+  overflow: scroll;
+  position: relative;
+}
+
+.vote__title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.vote__box {
+  display: flex;
+}
+
+.vote__voted {
+  display: flex;
+  padding: 15px 0 0 10px;
+}
+
+.vote__avatar {
+  display: flex;
+}
+
+.vote__avatar_name {
+  font-size: 14px;
+  margin: auto 10px;
+  color: #FFFFFF;
+}
+
+.vote__send_icon {
+  margin: auto 50px;
+  color: #989A9C;
+}
