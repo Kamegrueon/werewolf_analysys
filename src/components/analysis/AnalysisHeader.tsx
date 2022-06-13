@@ -3,7 +3,7 @@ import styles from "./Analysis.module.css"
 import MenuIcon from '@mui/icons-material/Menu';
 
 const MenuIconStyle = { 
-  bgcolor: '#363C43',
+  backgroundColor: '#363C43',
   color: '#DADADA',
   display: 'block',
   borderRadius: 0.8,

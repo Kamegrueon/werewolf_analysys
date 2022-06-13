@@ -12,4 +12,5 @@
 
 .app__bottom{
   display: flex;
+  height: 40%;
 }

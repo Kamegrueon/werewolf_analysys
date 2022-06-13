@@ -4,17 +4,17 @@ MurderedMarker
 
 .avatar__murdered_marker_box {
   position: absolute;
-  left: 10px;
+  left: 17.5px;
   top: 15px;
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
   z-index: 5;
 }
 
 .avatar__murdered_marker {
   position: absolute;
-  height: 100px;
-  width: 100px;
+  height: 85px;
+  width: 85px;
   display: inline-block;
   border-radius: 50%;
   /* background-color: blue; */
@@ -23,7 +23,7 @@ MurderedMarker
 
 .avatar__murdered_marker div{
   position: absolute;
-  right: -40px;
+  right: -60px;
   height: 4px;
   width: 200px;
   background-color: black;
@@ -51,17 +51,17 @@ ExecutedMarker
 
 .avatar__executed_marker_box {
   position: absolute;
-  left: 10px;
+  left: 17.5px;
   top: 15px;
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
   z-index: 5;
 }
 
 .avatar__executed_marker {
   position: absolute;
-  height: 100px;
-  width: 100px;
+  height: 85px;
+  width: 85px;
   display: inline-block;
   border-radius: 50%;
   /* background-color: blue; */
@@ -80,11 +80,11 @@ ExecutedMarker
 }
 
 .avatar__executed_marker div:nth-of-type(1) {
-  right: calc(65px - 100px);
+  right: calc(42.5px - 85px);
 }
 
 .avatar__executed_marker div:nth-of-type(2) {
-  right: calc(35px - 100px);
+  right: calc(12.5px - 85px);
 }
 
 /* 
@@ -93,18 +93,19 @@ PerishedMarker
 
 .avatar__perished_marker_box {
   position: absolute;
-  left: 10px;
+  left: 17.5px;
   top: 15px;
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
   z-index: 5;
 }
 
 .avatar__perished_marker {
   position: absolute;
-  height: 100px;
-  width: 100px;
+  height: 85px;
+  width: 85px;
   display: inline-block;
+  /* background-color: blue; */
   border-radius: 50%;
   overflow: hidden;
 }
@@ -120,14 +121,14 @@ PerishedMarker
 }
 
 .avatar__perished_marker div:nth-of-type(1) {
-  right: calc(65px - 100px);
-  top: 35px;
+  right: calc(57px - 100px);
+  top: 28.5px;
   transform: rotate(45deg);
 }
 
 .avatar__perished_marker div:nth-of-type(2) {
-  right: calc(35px - 100px);
-  top: 35px;
+  right: calc(27px - 100px);
+  top: 28.5px;
   transform: rotate(135deg);
 }
 

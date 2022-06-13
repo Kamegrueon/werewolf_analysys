@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from "./App.module.css"
 import AnalysisHeader from './components/analysis/AnalysisHeader';
 import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
@@ -8,9 +8,7 @@ import DailyContext from './components/contexts/DailyContext';
 import VoteContext from './components/contexts/VoteContext';
 import VoteBoard from './components/vote_board/VoteBoard';
 import { AVATAR, VOTE_LOG } from './components/types'
-
-
-
+import ApiFetch from './components/ApiFetch';
 
 // axiosでバックエンドから取得しuseEffectで更新
 const Players:AVATAR[] = [
@@ -28,10 +26,34 @@ const Votes:VOTE_LOG[] = [
   {vote_id: 1, voter_id: 1, destination_player_id: 2, date_progress: 1},
   {vote_id: 2, voter_id: 2, destination_player_id: 3, date_progress: 1},
   {vote_id: 3, voter_id: 3, destination_player_id: 2, date_progress: 1},
-  {vote_id: 4, voter_id: 4, destination_player_id: 2, date_progress: 1}
+  {vote_id: 4, voter_id: 4, destination_player_id: 2, date_progress: 1},
+  {vote_id: 5, voter_id: 5, destination_player_id: 3, date_progress: 1}
 ]
 
+// interface Fetch {
+//   userId: number
+//   id: number
+//   title: string
+//   body: string
+// }
+
+
 const App: React.FC = () =>  {
+
+  const [posts, setPosts] = useState([])
+  const { fetchPosts } = ApiFetch()
+  
+  useEffect(() => {
+    (async () => {
+      const posts:any = await fetchPosts()
+      if (posts.data.length === 0) {
+        return
+      }
+      setPosts(posts.data)
+    })()
+  },[])
+  console.log(posts[0])
+
   return (
     <div className={styles.app__root}>
       <AnalysisLeftBar />

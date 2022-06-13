@@ -3,7 +3,7 @@ player
 */
 
 .player__board {
-  height: 370px;
+  height: 45%;
   width: 100%;
   margin-top: 40px;
   padding: 10px 0 0 30px;
@@ -62,3 +62,8 @@ player
   position: relative;
 }
 
+.player__add_avatar {
+  margin: 10px 0 0 0;
+  width: 100px;
+  height: 100px;
+}

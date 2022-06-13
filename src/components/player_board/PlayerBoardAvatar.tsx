@@ -13,8 +13,8 @@ import { ReactComponent as AddPlayerIcon } from '../../images/AddPlayerIcon.svg'
 const avatar = {
   mt: 1.875,
   mx: 'auto',
-  width: 100,
-  height: 100
+  width: 85,
+  height: 85
 }
 
 const ExistCod = (player: AVATAR) => {
@@ -74,8 +74,8 @@ const PlayerBoardAvatar: React.FC = () => {
         </div>
       </div>
       ))}
-        <div className={styles.player__avatar}>
-          <AddPlayerIcon />
+        <div className={styles.player__add_avatar}>
+          <AddPlayerIcon width={100} height={100}/>
         </div>
     </div>    
   )

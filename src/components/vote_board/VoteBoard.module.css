@@ -1,12 +1,17 @@
 .vote__board{
-  height: calc(100vh - 530px);
+  height: 100%;
   width: 600px;
   margin-top: 15px;
   padding: 20px 0 0 20px;
-  /* background-color: red; */
   border-radius: 5px;
-  overflow: scroll;
   position: relative;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.vote__board::-webkit-scrollbar{
+  display: none;
 }
 
 .vote__title {
