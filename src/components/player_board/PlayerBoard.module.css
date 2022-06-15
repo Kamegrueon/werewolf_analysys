@@ -3,13 +3,14 @@ player
 */
 
 .player__board {
-  height: 45%;
+  height: calc(45% - 55px);
   width: 100%;
   margin-top: 40px;
   padding: 10px 0 0 30px;
   background-color: #292E33;
   border-radius: 5px;
-  overflow: scroll;
+  overflow-x: visible;
+  overflow-y: scroll;
   position: relative;
 }
 

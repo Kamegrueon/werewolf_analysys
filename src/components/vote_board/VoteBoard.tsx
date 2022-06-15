@@ -5,6 +5,7 @@ import SelectDaily from '../select/SelectDaily'
 import styles from './VoteBoard.module.css'
 import VoteBoardVoteList from './VoteBoardVoteList'
 import {fetchJsonData} from '../ApiFetch'
+import AddIcon from '@mui/icons-material/Add';
 
 import { VOTE_LOG, AVATAR } from '../types';
 
@@ -63,6 +64,7 @@ const VoteBoard:React.FC = () => {
           <VoteBoardVoteList />
           <SelectDaily dailies_props={dailies_props} />
         </div>
+        <AddIcon sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}}/>
       </div>
     </VoteContext.Provider>
     </PlayerContext.Provider>
