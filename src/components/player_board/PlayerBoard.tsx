@@ -3,7 +3,7 @@ import styles from './PlayerBoard.module.css'
 import PlayerContext from '../contexts/PlayerContext';
 import PlayerBoardAvatar from './PlayerBoardAvatar'
 import PlayerBoardDailyReport from './PlayerBoardDailyReport'
-import { fetchJsonData } from '../ApiFetch'
+import { playersRequest } from '../ApiFetch'
 import { AVATAR } from '../types'
 
 const PlayerBoard: React.FC = () => {
@@ -17,7 +17,7 @@ const PlayerBoard: React.FC = () => {
   } 
 
   useEffect(() => {
-    fetchJsonData(days).then((res) => {
+    playersRequest(days).then((res) => {
       console.log(res.data)
       setRes(res.data)
     })
@@ -44,7 +44,6 @@ const PlayerBoard: React.FC = () => {
           <PlayerBoardAvatar />
           <PlayerBoardDailyReport fetch_days_props={fetch_days_props}/>
         </div>
-        {res.title}
       </div>
     </PlayerContext.Provider>
   )

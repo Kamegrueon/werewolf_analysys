@@ -4,7 +4,7 @@ import PlayerContext from '../contexts/PlayerContext'
 import SelectDaily from '../select/SelectDaily'
 import styles from './VoteBoard.module.css'
 import VoteBoardVoteList from './VoteBoardVoteList'
-import {fetchJsonData} from '../ApiFetch'
+import { playersRequest } from '../ApiFetch'
 import AddIcon from '@mui/icons-material/Add';
 
 import { VOTE_LOG, AVATAR } from '../types';
@@ -30,7 +30,7 @@ const VoteBoard:React.FC = () => {
   }
 
   useEffect(() => {
-    fetchJsonData(days).then((res) => {
+    playersRequest(days).then((res) => {
       console.log(res.data)
       setRes(res.data)
     })

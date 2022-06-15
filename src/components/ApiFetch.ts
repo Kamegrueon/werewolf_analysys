@@ -1,12 +1,13 @@
-import axios from 'axios'
+import axiosBase from 'axios'
 
 // axiosのインスタンス作成
-const FetchJson = axios.create ({
-    baseURL: 'https://jsonplaceholder.typicode.com/posts/'
+const api = axiosBase.create ({
+    baseURL: 'https://jsonplaceholder.typicode.com/posts/',
+    responseType: "json",
 })
 
-export const fetchJsonData = async(days: number) =>{
-  return await FetchJson.get(`${days}`)
+export const playersRequest = async(days: number) =>{
+  return await api.get(`${days}`)
 }
 
 
