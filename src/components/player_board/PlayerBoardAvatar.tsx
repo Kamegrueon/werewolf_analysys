@@ -8,17 +8,13 @@ import AvatarStatePositionMarker from '../avatar_state/AvatarStatePositionMarker
 import { AVATAR } from '../types'
 import PlayerContext from '../contexts/PlayerContext'
 import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
+import { ReactComponent as AddPlayerIcon } from '../../images/AddPlayerIcon.svg'
 
 const avatar = {
   mt: 1.875,
   mx: 'auto',
-  width: 100,
-  height: 100
-}
-
-const PositionState = {
-  position_color: '#4072EE',
-  position_order: 'A',
+  width: 85,
+  height: 85
 }
 
 const ExistCod = (player: AVATAR) => {
@@ -78,8 +74,8 @@ const PlayerBoardAvatar: React.FC = () => {
         </div>
       </div>
       ))}
-        <div className={styles.player__avatar}>
-          <Avatar src={'../../static/images/参加者.png'} sx={avatar} alt='avatar'/>
+        <div className={styles.player__add_avatar}>
+          <AddPlayerIcon width={100} height={100}/>
         </div>
     </div>    
   )

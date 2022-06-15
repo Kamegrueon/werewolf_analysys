@@ -16,9 +16,40 @@ export interface AVATAR {
   dead_style?: {opacity: number}
 }
 
+export interface SELECT_STYLE_PROP {
+  select_days:{
+    width: number,
+    height: number,
+    color?: string,
+    backgroundColor: string,
+    textAlign?: string
+  }
+}
 
-// PlayerBord
+export interface VOTE_LOG {
+  vote_id: number, 
+  voter_id: number,
+  destination_player_id: number,
+  date_progress: number,
+}
 
 export interface DAILIES {
-  date_progresses: number[]
+  dailies_props: {
+    select_days_style:{
+      width: number,
+      height: number,
+      color?: string,
+      backgroundColor: string,
+      textAlign?: string
+    }
+    days: number
+    setDays: React.Dispatch<React.SetStateAction<number>>
+  }
+}
+
+export interface FETCH_DAYS_PROPS {
+  fetch_days_props: {
+    days: number, 
+    setDays: React.Dispatch<React.SetStateAction<number>>
+  }
 }

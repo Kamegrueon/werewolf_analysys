@@ -2,9 +2,12 @@ import React from 'react';
 import styles from "./App.module.css"
 import AnalysisHeader from './components/analysis/AnalysisHeader';
 import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
-import PlayerContext from './components/contexts/PlayerContext';
 import PlayerBoard from './components/player_board/PlayerBoard';
-import Player from './components/player_board/Player';
+import DailyContext from './components/contexts/DailyContext';
+import VoteBoard from './components/vote_board/VoteBoard';
+
+// axiosでバックエンドから取得しuseEffectで更新
+const Dailies:number[] = [1,2,3,4,5,6]
 
 const App: React.FC = () =>  {
   return (
@@ -12,9 +15,13 @@ const App: React.FC = () =>  {
       <AnalysisLeftBar />
       <div className={styles.app__main}>
         <AnalysisHeader />
-        <PlayerContext.Provider value={Player}>
-          <PlayerBoard />
-        </PlayerContext.Provider>
+
+    <DailyContext.Provider value={Dailies}>
+        <PlayerBoard />
+        <div className={styles.app__bottom}>
+          <VoteBoard />
+        </div>
+    </DailyContext.Provider>
       </div>
     </div>
   );

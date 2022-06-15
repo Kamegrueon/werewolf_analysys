@@ -1,10 +1,10 @@
 import { createContext } from 'react'
 import { AVATAR } from '../types'
 
-const Players:AVATAR[] = [
-  {user_id: 1, name:"", avatar:'', position: 'gray'}
+const players:AVATAR[] = [
+  {user_id: 1, name:"", avatar:'', cause_of_death:'alive', date_of_death: 1}
 ]
 
-const PlayerContext = createContext(Players)
+const PlayerContext = createContext(players)
 
 export default PlayerContext

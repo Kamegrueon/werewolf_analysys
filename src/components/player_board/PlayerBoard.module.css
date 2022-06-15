@@ -2,8 +2,8 @@
 player
 */
 
-.player__main {
-  height: 370px;
+.player__board {
+  height: 45%;
   width: 100%;
   margin-top: 40px;
   padding: 10px 0 0 30px;
@@ -24,7 +24,7 @@ player
   font-size: 32px;
 }
 
-.player__board_main {
+.player__main {
   display: flex;
   justify-content: space-between;
 }
@@ -62,3 +62,8 @@ player
   position: relative;
 }
 
+.player__add_avatar {
+  margin: 10px 0 0 0;
+  width: 100px;
+  height: 100px;
+}
