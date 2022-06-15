@@ -9,13 +9,13 @@ const VoteBoardVoteList = () => {
   const VoteList = useContext(VoteContext)
 
   return (
-    <>
+    <div>
       <div className={styles.vote__voted}>
         {VoteList.map((vote) => (    
           <VoteBoardAvatar vote={vote} key={vote.vote_id}/>        
         ))}
       </div>
-  </>
+  </div>
   )
 }
 

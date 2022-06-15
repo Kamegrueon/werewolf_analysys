@@ -1,13 +1,10 @@
 .vote__board{
-  height: 100%;
+  height: calc(100% - 35px);
   width: 600px;
   margin-top: 15px;
   padding: 20px 0 0 20px;
   border-radius: 5px;
   position: relative;
-  overflow: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 .vote__board::-webkit-scrollbar{
@@ -22,11 +19,17 @@
 }
 
 .vote__box {
+  height: 100%;
   display: flex;
 }
 
 .vote__voted {
+  height: 100%;
   padding: 15px 0 0 10px;
+  overflow-x: visible;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .vote__avatar {
