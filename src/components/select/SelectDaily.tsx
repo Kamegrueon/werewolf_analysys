@@ -1,31 +1,32 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import DailyContext from '../contexts/DailyContext'
-import { SELECT_STYLE_PROP } from '../types'
+import { DAILIES } from '../types'
 
 
-const SelectDaily: React.FC<SELECT_STYLE_PROP> = (props) => {
+const SelectDaily = (props: DAILIES) => {
 
-  const select_days_style = { margin: "0 20px 0 auto" }
-  const select_label_style = { color: "#FFFFFF" , fontWeight: 800}
+  const days_style = { margin: "0 20px 0 auto" }
+  const label_style = { color: "#FFFFFF" , fontWeight: 800}
   
   const date_progresses = useContext(DailyContext)
 
-  const [days, setDays] = useState(1);
+  const {select_days_style, days, setDays} = props.dailies_props
+  // const [days, setDays] = useState(1);
 
   const handleChange = (event: SelectChangeEvent) => {
     setDays(event.target.value as any)
 }
   return (
-    <div style={select_days_style}>
-      <div style={select_label_style}>
+    <div style={days_style}>
+      <div style={label_style}>
         Date
       </div>
       <FormControl>
         <Select
-          sx={props.select_days}
+          sx={select_days_style}
           id='select-days'
           value={days as any}
           onChange={handleChange}

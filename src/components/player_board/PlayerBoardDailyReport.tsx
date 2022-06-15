@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './PlayerBoard.module.css'
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/AddOutlined';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import SelectDaily from '../select/SelectDaily'
+import { FETCH_DAYS_PROPS } from '../types'
 
-const PlayerBoardDailyReport: React.FC = () => {
+const PlayerBoardDailyReport = (props: FETCH_DAYS_PROPS) => {
   
   const daily_button_style = {
     color: '#1F2327',
@@ -14,7 +15,8 @@ const PlayerBoardDailyReport: React.FC = () => {
     mr: 2
   }
 
-  const select_days = {
+  // <Select /> props
+  const select_days_style = {
     width: 165,
     height: 30,
     color: '#1F2327',
@@ -22,9 +24,19 @@ const PlayerBoardDailyReport: React.FC = () => {
     textAlign: 'center'
   }
 
+  const {days, setDays } = props.fetch_days_props
+
+  const dailies_props = {
+    select_days_style: select_days_style,
+    days: days,
+    setDays: setDays
+  }
+  // <Select /> props
+
+
   return (
     <div className={styles.player__daily_reports}> 
-      <SelectDaily select_days={select_days}/>
+      <SelectDaily dailies_props={dailies_props}/>
       <div className={styles.player__daily_button}>
         <Button variant="contained" sx={daily_button_style} endIcon={<AddIcon />}>
           Daily Report

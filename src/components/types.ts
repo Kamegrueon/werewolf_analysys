@@ -32,3 +32,24 @@ export interface VOTE_LOG {
   destination_player_id: number,
   date_progress: number,
 }
+
+export interface DAILIES {
+  dailies_props: {
+    select_days_style:{
+      width: number,
+      height: number,
+      color?: string,
+      backgroundColor: string,
+      textAlign?: string
+    }
+    days: number
+    setDays: React.Dispatch<React.SetStateAction<number>>
+  }
+}
+
+export interface FETCH_DAYS_PROPS {
+  fetch_days_props: {
+    days: number, 
+    setDays: React.Dispatch<React.SetStateAction<number>>
+  }
+}
