@@ -6,6 +6,7 @@ import styles from './VoteBoard.module.css'
 import VoteBoardVoteList from './VoteBoardVoteList'
 import { playersRequest } from '../ApiFetch'
 import AddIcon from '@mui/icons-material/Add';
+import DoneIcon from '@mui/icons-material/Done';
 
 import { VOTE_LOG, AVATAR } from '../types';
 
@@ -31,12 +32,12 @@ const VoteBoard:React.FC = () => {
 
   useEffect(() => {
     playersRequest(days).then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       setRes(res.data)
     })
     },[days])
   
-  console.log(res)
+  // console.log(res)
 
   const Votes:VOTE_LOG[] = [
     {vote_id: 1, voter_id: 1, destination_player_id: 2, date_progress: 1},
@@ -54,6 +55,29 @@ const VoteBoard:React.FC = () => {
     {user_id: 5, name:"Lucas", avatar:'',position:'medium'},
   ]
 
+  const [voterPlayerName, setVoterPlayerName] = useState('');
+  const [votedPlayerName, setVotedPlayerName] = useState('');
+
+  const [isOpenForm, setIsOpenForm] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpenForm(true)
+  }
+
+  const handlePostVote = () => {
+    // axios postリクエストで投票データ送信
+    console.log(voterPlayerName, votedPlayerName)
+    setIsOpenForm(false)
+  }
+
+  const voteState = {
+    voterPlayerName: voterPlayerName,
+    setVoterPlayerName: setVoterPlayerName,
+    votedPlayerName: votedPlayerName,
+    setVotedPlayerName: setVotedPlayerName,
+    isOpenForm: isOpenForm
+  }
+
 
   return (
     <PlayerContext.Provider value={Players}>
@@ -61,10 +85,15 @@ const VoteBoard:React.FC = () => {
       <div className={styles.vote__board}>
         <div className={styles.vote__title}>Vote for</div>
         <div className={styles.vote__box}>
-          <VoteBoardVoteList />
+          <VoteBoardVoteList voteState={voteState}/>
           <SelectDaily dailies_props={dailies_props} />
         </div>
-        <AddIcon sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}}/>
+        {isOpenForm
+          ? <DoneIcon onClick={handlePostVote} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}} />
+          : <AddIcon onClick={handleOpen} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}}/>
+        }
+        {/* <AddIcon onClick={handleOpen} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}}/>
+        <FormModal handleClose={handleClose} isOpen={isOpen}/> */}
       </div>
     </VoteContext.Provider>
     </PlayerContext.Provider>

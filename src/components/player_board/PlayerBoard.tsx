@@ -18,10 +18,12 @@ const PlayerBoard: React.FC = () => {
 
   useEffect(() => {
     playersRequest(days).then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       setRes(res.data)
     })
     },[days])
+
+    // console.log(res)
 
   // Axiosで取得
   const Players:AVATAR[] = [
