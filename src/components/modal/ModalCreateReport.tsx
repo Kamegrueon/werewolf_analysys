@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import styles from './Modal.module.css'
 import PlayerContext from '../contexts/PlayerContext'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
