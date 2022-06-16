@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import styles from './VoteBoard.module.css'
 import { Avatar } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';

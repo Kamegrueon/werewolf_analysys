@@ -7,10 +7,6 @@
   position: relative;
 }
 
-.vote__board::-webkit-scrollbar{
-  display: none;
-}
-
 .vote__title {
   font-size: 24px;
   font-weight: 400;
@@ -25,11 +21,15 @@
 
 .vote__voted {
   height: 100%;
+  width: 100%;
   padding: 15px 0 0 10px;
-  overflow-x: visible;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.vote__voted::-webkit-scrollbar{
+  display: none;
 }
 
 .vote__avatar {
@@ -37,9 +37,11 @@
 }
 
 .vote__avatar_name {
+  width: 100px;
   font-size: 14px;
   margin: auto 10px;
   color: #FFFFFF;
+  overflow: hidden;
 }
 
 .vote__send_icon {

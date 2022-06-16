@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
@@ -27,7 +27,6 @@ const SelectDaily = (props: DAILIES) => {
       <FormControl>
         <Select
           sx={select_days_style}
-          id='select-days'
           value={days as any}
           onChange={handleChange}
         >

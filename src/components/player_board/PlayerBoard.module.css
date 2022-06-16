@@ -9,9 +9,14 @@ player
   padding: 10px 0 0 30px;
   background-color: #292E33;
   border-radius: 5px;
-  overflow-x: visible;
   overflow-y: scroll;
   position: relative;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.player__board::-webkit-scrollbar{
+  display: none;
 }
 
 .player__above_bar {

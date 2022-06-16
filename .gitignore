@@ -24,4 +24,4 @@ yarn-error.log*
 
 .gitconfig
 
-/src/utils/*
+/src/practice/*
