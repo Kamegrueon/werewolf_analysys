@@ -16,15 +16,15 @@ const VoteForm = (props: any) => {
 
   const players = useContext(PlayerContext)
 
-  const {voterPlayerName, setVoterPlayerName, votedPlayerName, setVotedPlayerName} = props.voteState
+  const {voterPlayerId, setVoterPlayerId, votedPlayerId, setVotedPlayerId} = props
   // console.log(props.voteState)
 
   const voteHandleChange = (event: SelectChangeEvent) => {
-    setVoterPlayerName(event.target.value)
+    setVoterPlayerId(event.target.value)
   }
 
   const votedHandleChange = (event: SelectChangeEvent) => {
-    setVotedPlayerName(event.target.value)
+    setVotedPlayerId(event.target.value)
   }
 
   return (
@@ -34,7 +34,7 @@ const VoteForm = (props: any) => {
           <div className={styles.vote__avatar_name}>
             <FormControl>
               <Select
-                value={voterPlayerName}
+                value={voterPlayerId}
                 onChange={voteHandleChange}
                 style={{background: 'white', width: 100, height: 30}}
               >
@@ -53,7 +53,7 @@ const VoteForm = (props: any) => {
           <div className={styles.vote__avatar_name}>
             <FormControl>
               <Select
-                value={votedPlayerName}
+                value={votedPlayerId}
                 onChange={votedHandleChange}
                 style={{background: 'white', width: 100, height: 30}}
               >

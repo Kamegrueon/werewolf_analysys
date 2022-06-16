@@ -37,7 +37,7 @@ const VoteBoard:React.FC = () => {
     })
     },[days])
   
-  // console.log(res)
+    console.log('warning回避',res)
 
   const Votes:VOTE_LOG[] = [
     {vote_id: 1, voter_id: 1, destination_player_id: 2, date_progress: 1},
@@ -55,8 +55,8 @@ const VoteBoard:React.FC = () => {
     {user_id: 5, name:"Lucas", avatar:'',position:'medium'},
   ]
 
-  const [voterPlayerName, setVoterPlayerName] = useState('');
-  const [votedPlayerName, setVotedPlayerName] = useState('');
+  const [voterPlayerId, setVoterPlayerId] = useState('');
+  const [votedPlayerId, setVotedPlayerId] = useState('');
 
   const [isOpenForm, setIsOpenForm] = useState(false);
 
@@ -66,18 +66,11 @@ const VoteBoard:React.FC = () => {
 
   const handlePostVote = () => {
     // axios postリクエストで投票データ送信
-    console.log(voterPlayerName, votedPlayerName)
+    console.log(voterPlayerId, votedPlayerId)
+    setVoterPlayerId('')
+    setVotedPlayerId('')
     setIsOpenForm(false)
   }
-
-  const voteState = {
-    voterPlayerName: voterPlayerName,
-    setVoterPlayerName: setVoterPlayerName,
-    votedPlayerName: votedPlayerName,
-    setVotedPlayerName: setVotedPlayerName,
-    isOpenForm: isOpenForm
-  }
-
 
   return (
     <PlayerContext.Provider value={Players}>
@@ -85,7 +78,13 @@ const VoteBoard:React.FC = () => {
       <div className={styles.vote__board}>
         <div className={styles.vote__title}>Vote for</div>
         <div className={styles.vote__box}>
-          <VoteBoardVoteList voteState={voteState}/>
+          <VoteBoardVoteList
+            voterPlayerName={voterPlayerId}
+            setVoterPlayerName={setVoterPlayerId}
+            votedPlayerName={votedPlayerId}
+            setVotedPlayerName={setVotedPlayerId}
+            isOpenForm={isOpenForm}
+          />
           <SelectDaily dailies_props={dailies_props} />
         </div>
         {isOpenForm

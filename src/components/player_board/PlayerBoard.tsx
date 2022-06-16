@@ -23,7 +23,7 @@ const PlayerBoard: React.FC = () => {
     })
     },[days])
 
-    // console.log(res)
+    console.log('warning回避',res)
 
   // Axiosで取得
   const Players:AVATAR[] = [

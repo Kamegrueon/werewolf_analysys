@@ -6,13 +6,21 @@ import VoteForm from './VoteForm';
 
 import VoteContext from '../contexts/VoteContext';
 
-const VoteBoardVoteList = (props: {voteState: any}) => {
+const VoteBoardVoteList = (props: any) => {
   const VoteList = useContext(VoteContext)
 
   return (
     <div>
       <div className={styles.vote__voted}>
-        {props.voteState.isOpenForm ? <VoteForm voteState={props.voteState}/> : null}
+        {props.isOpenForm 
+          ? (<VoteForm
+              voterPlayerName={props.voterPlayerId}
+              setVoterPlayerName={props.setVoterPlayerId}
+              votedPlayerName={props.votedPlayerId}
+              setVotedPlayerName={props.setVotedPlayerId}
+            />)
+          : null
+        }
         {VoteList.map((vote) => (    
           <VoteBoardAvatar vote={vote} key={vote.vote_id}/>        
         ))}

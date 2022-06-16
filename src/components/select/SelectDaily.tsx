@@ -27,7 +27,6 @@ const SelectDaily = (props: DAILIES) => {
       <FormControl>
         <Select
           sx={select_days_style}
-          id='select-days'
           value={days as any}
           onChange={handleChange}
         >

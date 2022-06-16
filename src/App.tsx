@@ -7,7 +7,7 @@ import DailyContext from './components/contexts/DailyContext';
 import VoteBoard from './components/vote_board/VoteBoard';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import UtilsMain from './utils/UtilsMain'
+import PracticeMain from './practice/PracticeMain';
 
 // axiosでバックエンドから取得しuseEffectで更新
 const Dailies:number[] = [1,2,3,4,5,6]
@@ -28,8 +28,8 @@ const App: React.FC = () =>  {
                 </div>
               </DailyContext.Provider>
             </Route>
-            <Route path='/utils'>
-              <UtilsMain />
+            <Route path='/practice'>
+              <PracticeMain />
             </Route>
           </Switch>
         </div>
