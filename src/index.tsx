@@ -3,13 +3,31 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { DateProgressesProvider } from './components/providers/DateProgressesProvider';
+import { SelectVoteBoardDateProvider } from './components/providers/SelectVoteBoardDateProvider';
+import { SelectPlayerBoardDateProvider } from './components/providers/SelectPlayerBoardDateProvider';
+import { PlayersProvider } from './components/providers/PlayersProvider';
+import { VotesProvider } from './components/providers/VotesProvider';
+import { VoteFormProvider } from './components/providers/VoteFormProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <DateProgressesProvider>
+    <PlayersProvider>
+    <VotesProvider>
+    <VoteFormProvider>
+    <SelectPlayerBoardDateProvider>
+    <SelectVoteBoardDateProvider>
+      <App />
+    </SelectVoteBoardDateProvider>
+    </SelectPlayerBoardDateProvider>
+    </VoteFormProvider>
+    </VotesProvider>
+    </PlayersProvider>
+    </DateProgressesProvider>
   </React.StrictMode>
 );
 

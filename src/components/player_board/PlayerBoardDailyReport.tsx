@@ -4,10 +4,9 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/AddOutlined';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import SelectDaily from '../select/SelectDaily'
-import { FETCH_DAYS_PROPS } from '../types'
 import ModalMain from '../modal/ModalMain';
 
-const PlayerBoardDailyReport = (props: FETCH_DAYS_PROPS) => {
+const PlayerBoardDailyReport = (props: any) => {
   
   const daily_button_style = {
     color: '#1F2327',
@@ -25,12 +24,20 @@ const PlayerBoardDailyReport = (props: FETCH_DAYS_PROPS) => {
     textAlign: 'center'
   }
 
-  const {days, setDays } = props.fetch_days_props
+  interface DAILIES_STYLE_ACTION {
+    select_days_style:{
+      width: number,
+      height: number,
+      color?: string,
+      backgroundColor: string,
+      textAlign?: string
+    }
+    action?: 'playerDay' | 'voteDay' | undefined
+}
 
-  const dailies_props = {
+  const dailies_props:DAILIES_STYLE_ACTION = {
     select_days_style: select_days_style,
-    days: days,
-    setDays: setDays
+    action: 'playerDay'
   }
   // <Select /> props
 

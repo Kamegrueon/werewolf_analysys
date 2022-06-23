@@ -1,23 +1,21 @@
 import { useContext } from 'react'
-import PlayerContext from '../contexts/PlayerContext';
+import { PlayersContext } from '../providers/PlayersProvider';
+import { VoteFormContext } from '../providers/VoteFormProvider';
 import styles from './VoteBoard.module.css'
 import { Avatar } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
 
 const avatar = {
   width: 40,
   height: 40
 }
 
-const VoteForm = (props: any) => {
+const VoteForm = () => {
 
-  const players = useContext(PlayerContext)
-
-  const {voterPlayerId, setVoterPlayerId, votedPlayerId, setVotedPlayerId} = props
-  // console.log(props.voteState)
+  const players = useContext(PlayersContext)
+  const { setVoterPlayerId ,setVotedPlayerId } = useContext(VoteFormContext)
 
   const voteHandleChange = (event: SelectChangeEvent) => {
     setVoterPlayerId(event.target.value)
@@ -34,12 +32,14 @@ const VoteForm = (props: any) => {
           <div className={styles.vote__avatar_name}>
             <FormControl>
               <Select
-                value={voterPlayerId}
+                native={true}
+                defaultValue={''}
                 onChange={voteHandleChange}
                 style={{background: 'white', width: 100, height: 30}}
               >
+                <option value={''} key={''}></option>
               {players.map((p) => 
-                <MenuItem value={p.user_id} key={p.user_id}>{p.name}</MenuItem>
+                <option value={p.user_id} key={p.user_id}>{p.name}</option>
               )}
               </Select>
             </FormControl>
@@ -53,12 +53,14 @@ const VoteForm = (props: any) => {
           <div className={styles.vote__avatar_name}>
             <FormControl>
               <Select
-                value={votedPlayerId}
+                native={true}
+                defaultValue={''}
                 onChange={votedHandleChange}
                 style={{background: 'white', width: 100, height: 30}}
               >
+                <option value={''} key={''}></option>
               {players.map((p) => 
-                <MenuItem value={p.user_id} key={p.user_id}>{p.name}</MenuItem>
+                <option value={p.user_id} key={p.user_id}>{p.name}</option>
               )}
               </Select>
             </FormControl>
