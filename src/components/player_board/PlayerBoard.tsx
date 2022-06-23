@@ -4,24 +4,11 @@ import { SelectPlayerBoardDateContext } from '../providers/SelectPlayerBoardDate
 
 import PlayerBoardAvatar from './PlayerBoardAvatar'
 import PlayerBoardDailyReport from './PlayerBoardDailyReport'
-// import { playersRequest } from '../ApiFetch'
-import { AVATAR } from '../types'
 
 const PlayerBoard: React.FC = () => {
 
   const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)
   console.log(selectPlayerDate)
-
-  // const [res, setRes] = useState({body: '', id: 1, title: '', userId: 1})
-  // const [res, setPlayerRes] = useState({user_id: 1, name:"", avatar:'', cause_of_death:'alive', date_of_death: 1})
-
-  // useEffect(() => {
-  //   playersRequest(days).then((res) => {
-  //     // console.log(res.data)
-  //     setRes(res.data)
-  //   })
-  //   },[days])
-
 
   return (
     <div className={styles.player__board}>
