@@ -9,6 +9,7 @@ import DoneIcon from '@mui/icons-material/Done';
 
 import { SelectVoteBoardDateContext } from '../providers/SelectVoteBoardDateProvider';
 import { VoteFormContext } from '../providers/VoteFormProvider';
+import { DAILIES_STYLE_ACTION } from '../types'
 
 const VoteBoard:React.FC = () => {
   const select_days_style = {
@@ -23,22 +24,10 @@ const VoteBoard:React.FC = () => {
 
   const { isOpenForm, handleOpen, handlePostVote } = useContext(VoteFormContext)
 
-  interface DAILIES_STYLE_ACTION {
-      select_days_style:{
-        width: number,
-        height: number,
-        color?: string,
-        backgroundColor: string,
-        textAlign?: string
-      }
-      action?: 'playerDay' | 'voteDay' | undefined
-}
-
   const dailies_props: DAILIES_STYLE_ACTION = {
     select_days_style: select_days_style,
     action: 'voteDay'
   }
-
 
   return (
       <div className={styles.vote__board}>

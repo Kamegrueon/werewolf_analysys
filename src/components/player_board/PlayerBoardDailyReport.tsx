@@ -5,8 +5,9 @@ import AddIcon from '@mui/icons-material/AddOutlined';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import SelectDaily from '../select/SelectDaily'
 import ModalMain from '../modal/ModalMain';
+import { DAILIES_STYLE_ACTION } from '../types'
 
-const PlayerBoardDailyReport = (props: any) => {
+const PlayerBoardDailyReport = () => {
   
   const daily_button_style = {
     color: '#1F2327',
@@ -21,19 +22,8 @@ const PlayerBoardDailyReport = (props: any) => {
     height: 30,
     color: '#1F2327',
     backgroundColor: '#bdbdbd',
-    textAlign: 'center'
+    paddingLeft: 5
   }
-
-  interface DAILIES_STYLE_ACTION {
-    select_days_style:{
-      width: number,
-      height: number,
-      color?: string,
-      backgroundColor: string,
-      textAlign?: string
-    }
-    action?: 'playerDay' | 'voteDay' | undefined
-}
 
   const dailies_props:DAILIES_STYLE_ACTION = {
     select_days_style: select_days_style,
