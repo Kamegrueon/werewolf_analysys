@@ -4,10 +4,10 @@ import FormControl from '@mui/material/FormControl';
 import { DateProgressesContext } from '../providers/DateProgressesProvider'
 import { SelectVoteBoardDateContext } from '../providers/SelectVoteBoardDateProvider';
 import { SelectPlayerBoardDateContext } from '../providers/SelectPlayerBoardDateProvider';
-import { DAILIES } from '../types'
+import { DAILIES_ACTION } from '../types'
 
 
-const SelectDaily = (props: DAILIES) => {
+const SelectDaily = (props: DAILIES_ACTION) => {
   const {select_days_style, action} = props.dailies_props
 
   const { setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)

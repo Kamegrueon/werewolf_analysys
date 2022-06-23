@@ -33,7 +33,7 @@ export interface VOTE_LOG {
   date_progress: number,
 }
 
-export interface DAILIES {
+export interface DAILIES_ACTION {
   dailies_props: {
     select_days_style:{
       width: number,
@@ -41,8 +41,21 @@ export interface DAILIES {
       color?: string,
       backgroundColor: string,
       textAlign?: string
+      paddingLeft?: number
     }
     // setDay?: React.Dispatch<React.SetStateAction<string>>
-    action?: 'playerDay' | 'voteDay' | undefined
+    action: 'playerDay' | 'voteDay' | undefined
   }
+}
+
+export interface DAILIES_STYLE_ACTION {
+  select_days_style:{
+    width: number,
+    height: number,
+    color?: string,
+    backgroundColor: string,
+    textAlign?: string
+    paddingLeft?: number
+  }
+  action: 'playerDay' | 'voteDay' | undefined
 }

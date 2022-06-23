@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
-import { dateProgressesRequest } from '../../utils/ApiFetch'
+import { dailiesIndexRequest } from '../../utils/ApiFetch'
 
 const Dailies:string[] = ["1"]
 
@@ -14,7 +14,7 @@ export const DateProgressesProvider = (props: any) => {
   const game_id = "1"
 
   useEffect(() => {
-    dateProgressesRequest(game_id).then((res: any) => {
+    dailiesIndexRequest(game_id).then((res: any) => {
       setDateProgresses([...Array(res.data.length)].map((_, i) => String(i + 1)))
     })
   },[])
