@@ -6,9 +6,9 @@ import AvatarStateExecutedMarker from '../avatar_state/AvatarStateExecutedMarker
 import AvatarStatePerishedMarker from '../avatar_state/AvatarStatePerishedMarker'
 import AvatarStatePositionMarker from '../avatar_state/AvatarStatePositionMarker';
 import { AVATAR } from '../types'
-import PlayerContext from '../contexts/PlayerContext'
 import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
 import { ReactComponent as AddPlayerIcon } from '../../images/AddPlayerIcon.svg'
+import { PlayersContext } from '../providers/PlayersProvider';
 
 const avatar = {
   mt: 1.875,
@@ -55,7 +55,7 @@ const ExistCodStyle = (player: AVATAR) => {
 }
 
 const PlayerBoardAvatar: React.FC = () => {
-  const players = useContext(PlayerContext)
+  const players = useContext(PlayersContext)
   return (
     <div className={styles.player__avatars}>
       {players.map((player) =>(

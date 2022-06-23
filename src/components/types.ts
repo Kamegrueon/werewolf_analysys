@@ -42,14 +42,7 @@ export interface DAILIES {
       backgroundColor: string,
       textAlign?: string
     }
-    days: number
-    setDays: React.Dispatch<React.SetStateAction<number>>
-  }
-}
-
-export interface FETCH_DAYS_PROPS {
-  fetch_days_props: {
-    days: number, 
-    setDays: React.Dispatch<React.SetStateAction<number>>
+    // setDay?: React.Dispatch<React.SetStateAction<string>>
+    action?: 'playerDay' | 'voteDay' | undefined
   }
 }

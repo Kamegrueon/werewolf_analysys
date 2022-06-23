@@ -3,7 +3,7 @@ import styles from './VoteBoard.module.css'
 import { Avatar } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import { VOTE_LOG } from '../types';
-import PlayerContext from '../contexts/PlayerContext';
+import { PlayersContext } from '../providers/PlayersProvider';
 
 const avatar = {
   width: 40,
@@ -15,7 +15,7 @@ interface VoteProps {
 }
 
 const VoteBoardAvatar = (props: VoteProps) => {
-  const players = useContext(PlayerContext)
+  const players = useContext(PlayersContext)
 
   return (
     <div className={styles.vote__vote_log}>

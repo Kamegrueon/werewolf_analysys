@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import styles from './Modal.module.css'
-import PlayerContext from '../contexts/PlayerContext'
+import { PlayersContext } from '../providers/PlayersProvider'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,7 +16,7 @@ const ModalCreateReport = () => {
     textAlign: 'center'
   }
 
-  const players = useContext(PlayerContext)
+  const players = useContext(PlayersContext)
   const [executedPlayerId, setExecutedPlayerId] = useState('')
   const [murderedPlayerId, setMurderedPlayerId] = useState('')
   const [perishedPlayerId, setPerishedPlayerId] = useState('')
