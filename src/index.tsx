@@ -10,9 +10,11 @@ import { PlayersProvider } from './components/providers/PlayersProvider';
 import { VotesProvider } from './components/providers/VotesProvider';
 import { VoteFormProvider } from './components/providers/VoteFormProvider';
 
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <DateProgressesProvider>
