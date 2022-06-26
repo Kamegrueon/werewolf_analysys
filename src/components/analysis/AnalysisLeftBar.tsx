@@ -2,7 +2,7 @@ import { Avatar, List, ListItem, ListItemIcon } from '@mui/material'
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import React, { useContext } from 'react'
-import { GameSelectContext } from '../../utils/GameSelectContext';
+import { GameSelectContext } from '../../utils/AnalysisContext';
 import styles from './Analysis.module.css'
 import { NavLink, useLocation } from 'react-router-dom';
 
