@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { SelectVoteBoardDateProvider } from './components/providers/SelectVoteBoardDateProvider';
 import { SelectPlayerBoardDateProvider } from './components/providers/SelectPlayerBoardDateProvider';
-import { PlayersProvider } from './components/providers/PlayersProvider';
 import { VotesProvider } from './components/providers/VotesProvider';
 import { VoteFormProvider } from './components/providers/VoteFormProvider';
 
@@ -16,7 +15,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <PlayersProvider>
     <VotesProvider>
     <VoteFormProvider>
     <SelectPlayerBoardDateProvider>
@@ -26,7 +24,6 @@ root.render(
     </SelectPlayerBoardDateProvider>
     </VoteFormProvider>
     </VotesProvider>
-    </PlayersProvider>
   </React.StrictMode>
 );
 

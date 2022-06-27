@@ -8,12 +8,13 @@ interface Prop {
 
 const PositionState = (props: Prop) => {
   switch(props.position){
-    case 'fortune-teller':
-      // position_orderはCoした順番に応じてアルファベット(数値)を割り振る
+    case '占い師':
+      // position_orderはCoした順番が記載
+      // Coした順番に応じて色を割り振る
       return {position_order: '占', position_color: '#4072EE'}
-    case 'were-wolf':
+    case '人狼':
       return {position_order: '狼', position_color: '#000000'}
-    case 'medium':
+    case '霊媒師':
       return {position_order: '霊', position_color: '#B558F6'}  
     default:
       return {position_order: '', position_color: 'transparent'}

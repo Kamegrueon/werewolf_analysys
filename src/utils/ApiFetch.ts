@@ -15,9 +15,10 @@ export const gamesShowRequest = async(game_id: string) =>{
   return await games_api.get(`/${game_id}`)
 }
 
-
-
 export const dailiesIndexRequest = async(game_id: string) =>{
   return await games_api.get(`/${game_id}/dailies`)
 }
 
+export const playersIndexRequest = async(game_id: string) =>{
+  return await games_api.get(`/${game_id}/players`)
+}

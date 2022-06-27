@@ -1,10 +1,8 @@
 import { createContext } from 'react'
+import { AVATAR, GAME_SELECT_STATE } from '../components/types'
 
-const Dailies:string[] = ["1"]
-export const DateProgressesContext = createContext(Dailies)
+export const DateProgressesContext = createContext(["1"] as string[])
 
-type setTypeObject = {
-  gameSelect: string
-  setGameSelect: React.Dispatch<React.SetStateAction<string>> 
-};
-export const GameSelectContext = createContext({} as setTypeObject)
+export const GameSelectContext = createContext({} as GAME_SELECT_STATE)
+
+export const PlayersContext = createContext({} as AVATAR[])
