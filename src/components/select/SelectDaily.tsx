@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-import { DateProgressesContext } from '../providers/DateProgressesProvider'
+import { DateProgressesContext } from '../../utils/AnalysisContext'
 import { SelectVoteBoardDateContext } from '../providers/SelectVoteBoardDateProvider';
 import { SelectPlayerBoardDateContext } from '../providers/SelectPlayerBoardDateProvider';
 import { DAILIES_ACTION } from '../types'

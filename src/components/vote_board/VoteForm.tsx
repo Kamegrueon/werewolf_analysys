@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { PlayersContext } from '../providers/PlayersProvider';
+import { PlayersContext } from '../../utils/AnalysisContext';
 import { VoteFormContext } from '../providers/VoteFormProvider';
 import styles from './VoteBoard.module.css'
 import { Avatar } from '@mui/material'
@@ -39,7 +39,7 @@ const VoteForm = () => {
               >
                 <option value={''} key={''}></option>
               {players.map((p) => 
-                <option value={p.user_id} key={p.user_id}>{p.name}</option>
+                <option value={p.id} key={p.id}>{p.player_name}</option>
               )}
               </Select>
             </FormControl>
@@ -60,7 +60,7 @@ const VoteForm = () => {
               >
                 <option value={''} key={''}></option>
               {players.map((p) => 
-                <option value={p.user_id} key={p.user_id}>{p.name}</option>
+                <option value={p.id} key={p.id}>{p.player_name}</option>
               )}
               </Select>
             </FormControl>

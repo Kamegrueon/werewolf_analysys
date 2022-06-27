@@ -3,7 +3,7 @@ import styles from './VoteBoard.module.css'
 import { Avatar } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import { VOTE_LOG } from '../types';
-import { PlayersContext } from '../providers/PlayersProvider';
+import { PlayersContext } from '../../utils/AnalysisContext';
 
 const avatar = {
   width: 40,
@@ -22,7 +22,7 @@ const VoteBoardAvatar = (props: VoteProps) => {
       <div className={styles.vote__avatar}>
         <Avatar sx={avatar}/>
         <div className={styles.vote__avatar_name}>
-          {players.filter((player) => player.user_id === props.vote.voter_id)[0].name}
+          {players.filter((player) => player.id === props.vote.voter_id)[0].player_name}
         </div>
       </div>
       <div className={styles.vote__send_icon}>
@@ -31,7 +31,7 @@ const VoteBoardAvatar = (props: VoteProps) => {
       <div className={styles.vote__avatar}>
         <Avatar sx={avatar}/>
         <div className={styles.vote__avatar_name}>
-          {players.filter((player) => player.user_id === props.vote.destination_player_id)[0].name}
+          {players.filter((player) => player.id === props.vote.voted_id)[0].player_name}
         </div>
       </div>
     </div>

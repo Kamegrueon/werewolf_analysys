@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import styles from './Modal.module.css'
-import { PlayersContext } from '../providers/PlayersProvider'
+import { PlayersContext } from '../../utils/AnalysisContext'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
@@ -49,7 +49,7 @@ const ModalCreateReport = () => {
             onChange={handleChangeExecutedPlayer}
           >
           {players.map((player) => 
-            <MenuItem value={player.user_id} >{player.name}</MenuItem>
+            <MenuItem value={player.id} >{player.player_name}</MenuItem>
           )}
           </Select>
         </FormControl>
@@ -62,7 +62,7 @@ const ModalCreateReport = () => {
           >
             <MenuItem value={0} >該当者なし</MenuItem>
           {players.map((player) => 
-            <MenuItem value={player.user_id} >{player.name}</MenuItem>
+            <MenuItem value={player.id} >{player.player_name}</MenuItem>
           )}
           </Select>
         </FormControl>
@@ -75,7 +75,7 @@ const ModalCreateReport = () => {
           >
             <MenuItem value={0} >該当者なし</MenuItem>
           {players.map((player) => 
-            <MenuItem value={player.user_id} >{player.name}</MenuItem>
+            <MenuItem value={player.id} >{player.player_name}</MenuItem>
           )}
           </Select>
         </FormControl>

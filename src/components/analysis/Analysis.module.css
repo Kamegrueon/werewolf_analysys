@@ -1,12 +1,30 @@
 /* 
 LeftBar
 */
+ul {
+  list-style: none;  
+}
+
 .left_bar__main{
-  width: 10%;
+  width: 5%;
   height: 100%;
-  min-width: 120px;
+  min-width: 70px;
   background-color: #16191C;
 }
+
+.left_bar__avatar{
+  margin: 50px 15px 130px;
+}
+
+.left_bar__icon_box{
+  margin: 40px 15px;
+  text-align: center;
+}
+
+.nav-link .unselected{
+  background-color: #FFFFFF;
+}
+
 
 
 /* 

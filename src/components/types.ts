@@ -4,17 +4,22 @@
 //   position: string;
 // }
 
-export type CAUSE_Of_DEATH = 'perished' | 'executed' | 'murdered' | 'alive'
+export type CAUSE_Of_DEATH = '突然死' | '処刑' | '殺害' | ''
 
 export interface AVATAR {
-  user_id: number
-  name: string | null
-  avatar: string //avatarの画像データどうするか検討
+  id: number
+  player_name: string
   position?: string
+  position_order?: number
   cause_of_death?: CAUSE_Of_DEATH
   date_of_death?: number
   dead_style?: {opacity: number}
 }
+
+export interface GAME_SELECT_STATE {
+  gameSelect: string
+  setGameSelect: React.Dispatch<React.SetStateAction<string>> 
+};
 
 export interface SELECT_STYLE_PROP {
   select_days:{
@@ -29,7 +34,7 @@ export interface SELECT_STYLE_PROP {
 export interface VOTE_LOG {
   vote_id: number, 
   voter_id: number,
-  destination_player_id: number,
+  voted_id: number,
   date_progress: number,
 }
 
