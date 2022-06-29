@@ -44,9 +44,10 @@ const App: React.FC = () =>  {
               <Route exact path='/games/'>
                 <GameMain />
               </Route>
-              <Route path={`/games/${gameSelect}`}>
+              <Route exact path={`/games/${gameSelect}`}>
                 <GameBoard />
               </Route>
+              <Route component={() => <h1 style={{color: 'white', position: 'absolute', top: 350, left: 600}}>404 NOT FOUND</h1>} />
             </Switch>
           </div>
         </div>

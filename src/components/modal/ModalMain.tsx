@@ -1,4 +1,5 @@
 import Modal from 'react-modal'
+import ModalCreateGame from './ModalCreateGame';
 import ModalCreateReport from './ModalCreateReport';
 
 
@@ -34,6 +35,8 @@ const renderBody = (body: string) => {
       return '';
     case 'createAbilityLog':
       return '';
+    case 'createGame':
+      return <ModalCreateGame />;
     default:
       return <div />
   }

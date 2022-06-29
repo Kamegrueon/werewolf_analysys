@@ -8,7 +8,11 @@ const games_api = axiosBase.create ({
 })
 
 export const gamesIndexRequest = async() =>{
-  return await games_api.get('/')
+  // try{
+    return await games_api.get('/')
+  // } catch(e:any) {
+  //   return e.response
+  // }
 }
 
 export const gamesShowRequest = async(game_id: string) =>{

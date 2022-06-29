@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,32 +8,42 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
 import { GameSelectContext } from '../../utils/AnalysisContext';
-
-function createData(
-  gameId: string,
-  gameName: string,
-  playDate: string,
-  isWin: string,
-  dateProgress: number,
-) {
-  return { gameId, gameName, playDate, isWin, dateProgress };
-}
-
-const rows = [
-  createData('1', 'Game1', '2022/1/1', 'Win', 2),
-  createData('2', 'Game2', '2022/1/1', 'Lose', 3),
-  createData('3', 'Game3', '2022/1/1', 'Win', 4),
-  createData('4', 'Game4', '2022/1/1', 'Win', 7),
-  createData('5', 'Game5', '2022/1/1', 'Lose', 9),
-];
+import { gamesIndexRequest } from '../../utils/ApiFetch'
+import { Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/AddOutlined';
+import ModalMain from '../modal/ModalMain';
 
 const GameMain: React.FC = () => {
 
   const { setGameSelect } = useContext(GameSelectContext)
 
+  const [rows, setGames] = useState([{id: 1, game_name: '', is_win: true, date_progress: 1, created_at: ''}])
+
+  console.log(rows)
+
+  useEffect(() => {
+    gamesIndexRequest().then((res: any) => {
+      setGames(res.data)
+    })
+  },[])
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(true)
+  }
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
+
   return (
     <>
       <h2 style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Game List</h2>
+      <Button onClick={handleOpen} variant="contained" sx={{backgroundColor: '#bdbdbd', color: '#1F2327', ml: 137, mt: 2, mb: 3}} endIcon={<AddIcon />}>
+          New Game
+        </Button>
       <TableContainer component={Paper} style={{ background: '#292E33' }}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
@@ -47,26 +57,31 @@ const GameMain: React.FC = () => {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.gameName}
+              key={row.game_name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row" sx={{color: 'white'}}>
               <Link 
-                to={{pathname: `/games/${row.gameId}`}} 
+                to={{pathname: `/games/${row.id}`}} 
                 style={{textDecoration: 'none', color: 'inherit'}} 
-                onClick={() => setGameSelect(row.gameId)}
+                onClick={() => setGameSelect(String(row.id))}
               >
-                  {row.gameName}
+                  {row.game_name}
               </Link>
               </TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{row.playDate}</TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{row.isWin}</TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{row.dateProgress}</TableCell>
+              <TableCell align="right" sx={{color: 'white'}}>{row.created_at}</TableCell>
+              <TableCell align="right" sx={{color: 'white'}}>{row.is_win ? '勝利' : row.is_win===null ? '' :'敗北'}</TableCell>
+              <TableCell align="right" sx={{color: 'white'}}>{row.date_progress}</TableCell>
               </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    <ModalMain 
+        isOpen={isOpen} 
+        handleClose={handleClose}
+        body='createGame'
+      />
     </>
   )
 }

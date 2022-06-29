@@ -2,33 +2,27 @@ import { useContext } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import { DateProgressesContext } from '../../utils/AnalysisContext'
-import { SelectVoteBoardDateContext } from '../providers/SelectVoteBoardDateProvider';
 import { SelectPlayerBoardDateContext } from '../providers/SelectPlayerBoardDateProvider';
-import { DAILIES_ACTION } from '../types'
 
-
-const SelectDaily = (props: DAILIES_ACTION) => {
-  const {select_days_style, action} = props.dailies_props
+const SelectPlayerDay = () => {
 
   const { setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
-  const { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
+  const date_progresses = useContext(DateProgressesContext)
 
   const days_style = { margin: "0 20px 0 auto" }
   const label_style = { color: "#FFFFFF" , fontWeight: 800}
-  
-  const date_progresses = useContext(DateProgressesContext)
+
+  const select_days_style = {
+    width: 165,
+    height: 30,
+    color: '#1F2327',
+    backgroundColor: '#bdbdbd',
+    paddingLeft: 5
+  }
 
   const handleChange = (event: SelectChangeEvent) => {
-    switch (action){
-      case 'playerDay':
-        console.log('player呼ばれた')
-        setSelectPlayerDate(event.target.value)
-        break
-      case 'voteDay':
-        console.log('vote呼ばれた')
-        setSelectVoteDate(event.target.value)
-        break
-    }
+      setSelectPlayerDate(event.target.value)
+      // セットしたdailyの値で投票データをFetch
   }
 
   return (
@@ -52,4 +46,4 @@ const SelectDaily = (props: DAILIES_ACTION) => {
   )
 }
 
-export default SelectDaily
+export default SelectPlayerDay
