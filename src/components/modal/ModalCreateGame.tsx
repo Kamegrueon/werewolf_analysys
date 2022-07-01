@@ -1,88 +1,79 @@
-import { useState, useContext } from 'react'
-import styles from './Modal.module.css'
-import { PlayersContext } from '../../utils/AnalysisContext'
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useState } from 'react'
 import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
+import TagsInput from '../../utils/TagsInput';
+import CheckBoxList from '../../utils/CheckBoxList';
 
 const ModalCreateGame = () => {
 
-  const select_days_style = {
-    width: 165,
-    height: 30,
-    color: '#1F2327',
-    backgroundColor: '#bdbdbd',
-    textAlign: 'center'
+  const [gameName, setGameName] = useState('')
+  const [positionIds, setPositionIds] = useState<string[]>([]);
+  const [players, setPlayers] = useState<string[]>([])
+
+  const handleSelectedTags = (players: string[]) => {
+    setPlayers(players)
   }
 
-  const players = useContext(PlayersContext)
-  const [executedPlayerId, setExecutedPlayerId] = useState('')
-  const [murderedPlayerId, setMurderedPlayerId] = useState('')
-  const [perishedPlayerId, setPerishedPlayerId] = useState('')
-
-  const handleChangeExecutedPlayer = (event: SelectChangeEvent) => {
-    setExecutedPlayerId(event.target.value)
-  }
-
-  const handleChangeMurderedPlayer = (event: SelectChangeEvent) => {
-    setMurderedPlayerId(event.target.value)
-  }
-
-  const handleChangePerishedPlayer = (event: SelectChangeEvent) => {
-    setPerishedPlayerId(event.target.value)
-  }
+  const TextFieldStyle = {
+    '#outlined-basic-label': {color: 'white'},
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white',
+      },
+    '&:hover fieldset': {
+      borderColor: 'white',
+      },
+    },
+    '#outlined-basic': {color: 'white'},
+   }
 
   const onClickSubmit = () => {
-    return null
+    console.log(gameName, positionIds, players)
   }
 
+
   return (
-    <div className={styles.Modal__report_main}>
-      <h2>これはCreateGameです</h2>
+    <div style={{color: 'white',textAlign: 'center'}}>
+      <h2>New Game</h2>
       <form>
-        <FormControl>
-          <h3>処刑された人</h3>
-          <Select
-            sx={select_days_style}
-            value={executedPlayerId as any}
-            onChange={handleChangeExecutedPlayer}
-          >
-          {players.map((player) => 
-            <MenuItem value={player.id} >{player.player_name}</MenuItem>
-          )}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <h3>殺害された人</h3>
-          <Select
-            sx={select_days_style}
-            value={murderedPlayerId as any}
-            onChange={handleChangeMurderedPlayer}
-          >
-            <MenuItem value={0} >該当者なし</MenuItem>
-          {players.map((player) => 
-            <MenuItem value={player.id} >{player.player_name}</MenuItem>
-          )}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <h3>突然死した人</h3>
-          <Select
-            sx={select_days_style}
-            value={perishedPlayerId as any}
-            onChange={handleChangePerishedPlayer}
-          >
-            <MenuItem value={0} >該当者なし</MenuItem>
-          {players.map((player) => 
-            <MenuItem value={player.id} >{player.player_name}</MenuItem>
-          )}
-          </Select>
-        </FormControl>
+        <div>
+          <FormControl style={{width: 700}}>
+            <h3>ゲーム名を入力してください</h3>
+            <TextField 
+              id="outlined-basic" 
+              label="ゲーム名を入力してください" 
+              value={gameName}
+              onChange={e=>{setGameName(e.target.value)}}
+              sx={TextFieldStyle}
+            />
+          </FormControl>
+        </div>
+        <div>
+          <FormControl style={{width: 700}}>
+            <h3>参加者を入力してください</h3>
+            <TagsInput
+              selectedTags={handleSelectedTags}
+              fullWidth
+              variant="outlined"
+              id="tags"
+              name="tags"
+              placeholder="プレイヤー名を入力してください"
+              label="player"
+            />
+          </FormControl>
+        </div>
+        <div>
+          <FormControl style={{width: 700}}>
+            <h3>役職を選択してください</h3>
+            <CheckBoxList positionIds={positionIds} setPositionIds={setPositionIds}/>
+          </FormControl>
+        </div>
         <Button
           variant="contained"
           onClick={onClickSubmit}
-          style={{backgroundColor: "#bdbdbd", color: "#1F2327", marginTop: 130, marginLeft: 21}}
+          style={{backgroundColor: "#bdbdbd", color: "#1F2327", marginLeft: 21}}
         >
           SUBMIT
         </Button>
