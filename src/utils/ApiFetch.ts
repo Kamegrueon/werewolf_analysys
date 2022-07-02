@@ -7,17 +7,28 @@ const games_api = axiosBase.create ({
   responseType: "json",
 })
 
+// games Request
+
 export const gamesIndexRequest = async() =>{
-  // try{
     return await games_api.get('/')
-  // } catch(e:any) {
-  //   return e.response
-  // }
+}
+
+export const gamesCreateRequest = async(gameName: string | null, players: string[], positionIds: string[]) =>{
+  const response = await games_api.post('/',{
+    game: {
+      game_name: gameName, 
+      players: players, 
+      position_ids: positionIds
+    } 
+  })
+  return response
 }
 
 export const gamesShowRequest = async(game_id: string) =>{
   return await games_api.get(`/${game_id}`)
 }
+
+// dailies Request
 
 export const dailiesIndexRequest = async(game_id: string) =>{
   return await games_api.get(`/${game_id}/dailies`)

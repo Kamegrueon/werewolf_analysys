@@ -1,16 +1,22 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-
 import TagsInput from '../../utils/TagsInput';
 import CheckBoxList from '../../utils/CheckBoxList';
+import { gamesCreateRequest } from '../../utils/ApiFetch'
+import { GameSelectContext } from '../../utils/AnalysisContext';
 
 const ModalCreateGame = () => {
 
-  const [gameName, setGameName] = useState('')
+  const [gameName, setGameName] = useState<string | null>(null);
   const [positionIds, setPositionIds] = useState<string[]>([]);
-  const [players, setPlayers] = useState<string[]>([])
+  const [players, setPlayers] = useState<string[]>([]);
+  
+  const history = useHistory();
+
+  const { gameSelect ,setGameSelect } = useContext(GameSelectContext)
 
   const handleSelectedTags = (players: string[]) => {
     setPlayers(players)
@@ -31,9 +37,15 @@ const ModalCreateGame = () => {
 
   const onClickSubmit = () => {
     console.log(gameName, positionIds, players)
+    gamesCreateRequest(gameName, players, positionIds).then((res: any) => {
+      console.log(res,'呼ばれた')
+      setGameSelect(res.data.id)
+      history.push(`/games/${res.data.id}`)
+    }).catch(error =>{
+      alert(error.response.data.title)
+    })
   }
-
-
+  
   return (
     <div style={{color: 'white',textAlign: 'center'}}>
       <h2>New Game</h2>

@@ -5,7 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 
-const ModalCreateReport = () => {
+const ModalCreateReport = (props: any ) => {
 
   const select_days_style = {
     width: 165,

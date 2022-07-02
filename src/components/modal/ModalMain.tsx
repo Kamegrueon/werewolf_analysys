@@ -25,12 +25,12 @@ const customStyles = {
   },
 };
 
-const renderBody = (body: string, customStyles: any) => {
+const renderBody = (body: string, handleClose: () => void , customStyles: any) => {
   switch(body){
     case 'createReport':
       customStyles.content['height'] = '75vh'
       customStyles.content['width'] = '50vw'
-      return <ModalCreateReport />;
+      return <ModalCreateReport handleClose={handleClose} />;
     case 'createComingOut':
       return '';
     case 'createAbilityLog':
@@ -55,7 +55,7 @@ const ModalMain = (props:Props) => {
         onRequestClose={props.handleClose}
         style={customStyles}
       >
-        {renderBody(props.body, customStyles)}
+        {renderBody(props.body, props.handleClose, customStyles)}
       </Modal>
     </div>
   )
