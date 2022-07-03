@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
-import { GameSelectContext } from '../../utils/AnalysisContext';
+import { GameSelectContext, RolesContext } from '../../utils/AnalysisContext';
 import { gamesIndexRequest } from '../../utils/ApiFetch'
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddOutlined';
@@ -16,6 +16,7 @@ import ModalMain from '../modal/ModalMain';
 const GameMain: React.FC = () => {
 
   const { setGameSelect } = useContext(GameSelectContext)
+  const { setRolesState } = useContext(RolesContext)
 
   const [rows, setGames] = useState([{id: 1, game_name: '', is_win: true, date_progress: 1, created_at: ''}])
 
@@ -23,9 +24,10 @@ const GameMain: React.FC = () => {
 
   useEffect(() => {
     gamesIndexRequest().then((res: any) => {
-      setGames(res.data)
+      setGames(res.data.games)
+      setRolesState(res.data.roles)
     })
-  },[])
+  },[setRolesState])
 
   const [isOpen, setIsOpen] = useState(false);
 
