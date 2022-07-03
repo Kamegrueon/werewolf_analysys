@@ -24,8 +24,12 @@ export const gamesCreateRequest = async(gameName: string | null, players: string
   return response
 }
 
-export const gamesShowRequest = async(game_id: string) =>{
-  return await games_api.get(`/${game_id}`)
+// export const gamesShowRequest = async(game_id: string) =>{
+//   return await games_api.get(`/${game_id}`)
+// }
+
+export const gamesDeleteRequest = async(game_id: string) =>{
+  return await games_api.delete(`/${game_id}`)
 }
 
 // dailies Request

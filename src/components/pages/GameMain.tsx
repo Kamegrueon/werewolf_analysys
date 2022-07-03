@@ -8,19 +8,22 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
 import { GameSelectContext, RolesContext } from '../../utils/AnalysisContext';
-import { gamesIndexRequest } from '../../utils/ApiFetch'
+import { gamesIndexRequest, gamesDeleteRequest } from '../../utils/ApiFetch'
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ModalMain from '../modal/ModalMain';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ja';
 
 const GameMain: React.FC = () => {
 
   const { setGameSelect } = useContext(GameSelectContext)
   const { setRolesState } = useContext(RolesContext)
 
-  const [rows, setGames] = useState([{id: 1, game_name: '', is_win: true, date_progress: 1, created_at: ''}])
+  const [games, setGames] = useState([{id: 1, game_name: '', is_win: true, date_progress: 1, created_at: ''}])
 
-  console.log(rows)
+  console.log(games)
 
   useEffect(() => {
     gamesIndexRequest().then((res: any) => {
@@ -39,6 +42,11 @@ const GameMain: React.FC = () => {
     setIsOpen(false)
   }
 
+  const deleteAction = (id:string) => {
+    gamesDeleteRequest(id).then(() => {
+      setGames(games.filter((game) => String(game.id) !== id))
+    })
+  }
 
   return (
     <>
@@ -57,23 +65,24 @@ const GameMain: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {games.map((game) => (
             <TableRow
-              key={row.game_name}
+              key={game.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row" sx={{color: 'white'}}>
               <Link 
-                to={{pathname: `/games/${row.id}`}} 
+                to={{pathname: `/games/${game.id}`}} 
                 style={{textDecoration: 'none', color: 'inherit'}} 
-                onClick={() => setGameSelect(String(row.id))}
+                onClick={() => setGameSelect(String(game.id))}
               >
-                  {row.game_name}
+                  {game.game_name}
               </Link>
               </TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{row.created_at}</TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{row.is_win ? '勝利' : row.is_win===null ? '' :'敗北'}</TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{row.date_progress}</TableCell>
+              <TableCell align="right" sx={{color: 'white'}}>{dayjs(game.created_at).locale('ja').format('YYYY/MM/DD(dd)')}</TableCell>
+              <TableCell align="right" sx={{color: 'white'}}>{game.is_win ? '勝利' : game.is_win===null ? '' :'敗北'}</TableCell>
+              <TableCell align="right" sx={{color: 'white'}}>{game.date_progress}</TableCell>
+              <DeleteOutlineIcon sx={{color: 'white', ml: 3}} onClick={()=>{deleteAction(String(game.id))}}/>
               </TableRow>
           ))}
         </TableBody>

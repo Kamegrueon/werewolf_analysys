@@ -16,7 +16,7 @@ const ModalCreateGame = () => {
   
   const history = useHistory();
 
-  const { gameSelect ,setGameSelect } = useContext(GameSelectContext)
+  const { setGameSelect } = useContext(GameSelectContext)
 
   const handleSelectedTags = (players: string[]) => {
     setPlayers(players)
@@ -56,7 +56,7 @@ const ModalCreateGame = () => {
             <TextField 
               id="outlined-basic" 
               label="ゲーム名を入力してください" 
-              value={gameName}
+              // value={gameName}
               onChange={e=>{setGameName(e.target.value)}}
               sx={TextFieldStyle}
             />
