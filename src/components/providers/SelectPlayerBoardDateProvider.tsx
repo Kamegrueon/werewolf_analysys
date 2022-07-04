@@ -1,6 +1,5 @@
 import { createContext, useState } from 'react'
 
-
 type setTypeObject = {
   selectPlayerDate: string
   setSelectPlayerDate: React.Dispatch<React.SetStateAction<string>> 

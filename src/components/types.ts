@@ -1,10 +1,14 @@
-// Avatar 
-
-// export interface  POSITION_STATE {
-//   position: string;
-// }
-
 export type CAUSE_Of_DEATH = '突然死' | '処刑' | '殺害' | ''
+
+export interface ROLE_STATE {
+  id: number
+  role_name: string  
+}
+
+export interface ROLES_CONTEXT {
+  rolesState: ROLE_STATE[]
+  setRolesState: React.Dispatch<React.SetStateAction<ROLE_STATE[]>>
+}
 
 export interface AVATAR {
   id: number

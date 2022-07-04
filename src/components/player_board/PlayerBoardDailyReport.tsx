@@ -3,9 +3,8 @@ import styles from './PlayerBoard.module.css'
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/AddOutlined';
 import EditIcon from '@mui/icons-material/EditOutlined';
-import SelectDaily from '../select/SelectDaily'
+import SelectMain from '../select/SelectMain'
 import ModalMain from '../modal/ModalMain';
-import { DAILIES_STYLE_ACTION } from '../types'
 
 const PlayerBoardDailyReport = () => {
   
@@ -15,21 +14,6 @@ const PlayerBoardDailyReport = () => {
     width: 165,
     mr: 2
   }
-
-  // <Select /> props
-  const select_days_style = {
-    width: 165,
-    height: 30,
-    color: '#1F2327',
-    backgroundColor: '#bdbdbd',
-    paddingLeft: 5
-  }
-
-  const dailies_props:DAILIES_STYLE_ACTION = {
-    select_days_style: select_days_style,
-    action: 'playerDay'
-  }
-  // <Select /> props
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,10 +30,9 @@ const PlayerBoardDailyReport = () => {
   }
 
 
-
   return (
     <div className={styles.player__daily_reports}> 
-      <SelectDaily dailies_props={dailies_props}/>
+      <SelectMain body={'playerDay'}/>
       <div className={styles.player__daily_button}>
         <Button onClick={handleOpen} variant="contained" sx={daily_button_style} endIcon={<AddIcon />}>
           Daily Report

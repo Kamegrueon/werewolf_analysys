@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,33 +7,53 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
-import { GameSelectContext } from '../../utils/AnalysisContext';
-
-function createData(
-  gameId: string,
-  gameName: string,
-  playDate: string,
-  isWin: string,
-  dateProgress: number,
-) {
-  return { gameId, gameName, playDate, isWin, dateProgress };
-}
-
-const rows = [
-  createData('1', 'Game1', '2022/1/1', 'Win', 2),
-  createData('2', 'Game2', '2022/1/1', 'Lose', 3),
-  createData('3', 'Game3', '2022/1/1', 'Win', 4),
-  createData('4', 'Game4', '2022/1/1', 'Win', 7),
-  createData('5', 'Game5', '2022/1/1', 'Lose', 9),
-];
+import { GameSelectContext, RolesContext } from '../../utils/AnalysisContext';
+import { gamesIndexRequest, gamesDeleteRequest } from '../../utils/ApiFetch'
+import { Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/AddOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ModalMain from '../modal/ModalMain';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ja';
 
 const GameMain: React.FC = () => {
 
   const { setGameSelect } = useContext(GameSelectContext)
+  const { setRolesState } = useContext(RolesContext)
+
+  const [games, setGames] = useState([{id: 1, game_name: '', is_win: true, date_progress: 1, created_at: ''}])
+
+  console.log(games)
+
+  useEffect(() => {
+    gamesIndexRequest().then((res: any) => {
+      setGames(res.data.games)
+      setRolesState(res.data.roles)
+    })
+  },[setRolesState])
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(true)
+  }
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
+  const deleteAction = (id:string) => {
+    gamesDeleteRequest(id).then(() => {
+      setGames(games.filter((game) => String(game.id) !== id))
+    })
+  }
 
   return (
     <>
       <h2 style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Game List</h2>
+      <Button onClick={handleOpen} variant="contained" sx={{backgroundColor: '#bdbdbd', color: '#1F2327', ml: 137, mt: 2, mb: 3}} endIcon={<AddIcon />}>
+          New Game
+        </Button>
       <TableContainer component={Paper} style={{ background: '#292E33' }}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
@@ -45,28 +65,34 @@ const GameMain: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {games.map((game) => (
             <TableRow
-              key={row.gameName}
+              key={game.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row" sx={{color: 'white'}}>
               <Link 
-                to={{pathname: `/games/${row.gameId}`}} 
+                to={{pathname: `/games/${game.id}`}} 
                 style={{textDecoration: 'none', color: 'inherit'}} 
-                onClick={() => setGameSelect(row.gameId)}
+                onClick={() => setGameSelect(String(game.id))}
               >
-                  {row.gameName}
+                  {game.game_name}
               </Link>
               </TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{row.playDate}</TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{row.isWin}</TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{row.dateProgress}</TableCell>
+              <TableCell align="right" sx={{color: 'white'}}>{dayjs(game.created_at).locale('ja').format('YYYY/MM/DD(dd)')}</TableCell>
+              <TableCell align="right" sx={{color: 'white'}}>{game.is_win ? '勝利' : game.is_win===null ? '' :'敗北'}</TableCell>
+              <TableCell align="right" sx={{color: 'white'}}>{game.date_progress}</TableCell>
+              <DeleteOutlineIcon sx={{color: 'white', ml: 3}} onClick={()=>{deleteAction(String(game.id))}}/>
               </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    <ModalMain 
+        isOpen={isOpen} 
+        handleClose={handleClose}
+        body='createGame'
+      />
     </>
   )
 }
