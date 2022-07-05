@@ -38,10 +38,9 @@ const ModalCreateGame = () => {
   const onClickSubmit = () => {
     console.log(gameName, positionIds, players)
     gamesCreateRequest(gameName, players, positionIds).then((res: any) => {
-      console.log(res,'呼ばれた')
       setGameSelect(res.data.id)
       history.push(`/games/${res.data.id}`)
-    }).catch(error =>{
+    }).catch(error => {
       alert(error.response.data.title)
     })
   }

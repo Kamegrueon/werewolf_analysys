@@ -1,13 +1,13 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { PlayersContext, DailiesContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { dailyReportsCreateRequest } from '../../utils/ApiFetch'
+import { dailyReportsUpdateRequest, dailyReportsIndexRequest } from '../../utils/ApiFetch'
 
 
-const ModalCreateReport = (props: any ) => {
+const ModalEditReport = (props: any ) => {
 
   const select_days_style = {
     width: 165,
@@ -18,12 +18,22 @@ const ModalCreateReport = (props: any ) => {
   }
 
   const players = useContext(PlayersContext)
-  const { selectPlayerDate, setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
+  const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)
   const dailies = useContext(DailiesContext)
 
   const [executedPlayerId, setExecutedPlayerId] = useState<string>('')
   const [murderedPlayerId, setMurderedPlayerId] = useState<string | null>('')
   const [perishedPlayerId, setPerishedPlayerId] = useState<string | null>('')
+
+  const daily_id = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
+  
+  useEffect(() => {
+    dailyReportsIndexRequest(daily_id).then((res: any) => {
+      setExecutedPlayerId(res.data.executed_player_id)
+      if(res.data.murdered_player_id !== null) setMurderedPlayerId(res.data.murdered_player_id);
+      if(res.data.perished_player_id !== null) setPerishedPlayerId(res.data.perished_player_id);
+    })
+  },[daily_id])
 
   const handleChangeExecutedPlayer = (event: SelectChangeEvent) => {
     setExecutedPlayerId(event.target.value)
@@ -39,16 +49,14 @@ const ModalCreateReport = (props: any ) => {
 
   const onClickSubmit = () => {
     // daily_idをフィルターで取得してpostする
-    const daily_id = dailies.filter(daily => String(daily.date_progress) === selectPlayerDate)[0].id
+    const daily_id = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
     if(executedPlayerId !== ''){
-      dailyReportsCreateRequest( 
+      dailyReportsUpdateRequest( 
         daily_id,
         executedPlayerId, 
         murderedPlayerId,
         perishedPlayerId
       ).then((res: any) => {
-        console.log(res.data.date_progress)
-        setSelectPlayerDate(res.data.date_progress)
         props.handleClose(false)
       }).catch((error: any)  => {
         alert(error.response.data.title)
@@ -60,7 +68,7 @@ const ModalCreateReport = (props: any ) => {
 
   return (
     <div style={{color: 'white',textAlign: 'center'}}>
-      <h2>DAILY REPORT</h2>
+      <h2>Edit</h2>
       <form>
         <div>
           <FormControl>
@@ -118,4 +126,4 @@ const ModalCreateReport = (props: any ) => {
   )
 }
 
-export default ModalCreateReport
+export default ModalEditReport

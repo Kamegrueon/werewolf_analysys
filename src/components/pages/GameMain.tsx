@@ -21,7 +21,7 @@ const GameMain: React.FC = () => {
   const { setGameSelect } = useContext(GameSelectContext)
   const { setRolesState } = useContext(RolesContext)
 
-  const [games, setGames] = useState([{id: 1, game_name: '', is_win: true, date_progress: 1, created_at: ''}])
+  const [games, setGames] = useState([{id: '1', game_name: '', is_win: true, date_progress: 1, created_at: ''}])
 
   console.log(games)
 
@@ -44,7 +44,8 @@ const GameMain: React.FC = () => {
 
   const deleteAction = (id:string) => {
     gamesDeleteRequest(id).then(() => {
-      setGames(games.filter((game) => String(game.id) !== id))
+      setGameSelect('')
+      setGames(games.filter((game) => game.id !== id))
     })
   }
 
@@ -62,6 +63,7 @@ const GameMain: React.FC = () => {
             <TableCell align="right" sx={{color: 'white', fontWeight: 'bold', fontSize: 18}}>Play Date</TableCell>
             <TableCell align="right" sx={{color: 'white', fontWeight: 'bold', fontSize: 18}}>isWin</TableCell>
             <TableCell align="right" sx={{color: 'white', fontWeight: 'bold', fontSize: 18}}>Date Progress</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontWeight: 'bold', fontSize: 18}}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -74,7 +76,7 @@ const GameMain: React.FC = () => {
               <Link 
                 to={{pathname: `/games/${game.id}`}} 
                 style={{textDecoration: 'none', color: 'inherit'}} 
-                onClick={() => setGameSelect(String(game.id))}
+                onClick={() => setGameSelect(game.id)}
               >
                   {game.game_name}
               </Link>
@@ -82,7 +84,7 @@ const GameMain: React.FC = () => {
               <TableCell align="right" sx={{color: 'white'}}>{dayjs(game.created_at).locale('ja').format('YYYY/MM/DD(dd)')}</TableCell>
               <TableCell align="right" sx={{color: 'white'}}>{game.is_win ? '勝利' : game.is_win===null ? '' :'敗北'}</TableCell>
               <TableCell align="right" sx={{color: 'white'}}>{game.date_progress}</TableCell>
-              <DeleteOutlineIcon sx={{color: 'white', ml: 3}} onClick={()=>{deleteAction(String(game.id))}}/>
+              <TableCell><DeleteOutlineIcon sx={{color: 'white'}} onClick={()=>{deleteAction(game.id)}} /></TableCell>
               </TableRow>
           ))}
         </TableBody>

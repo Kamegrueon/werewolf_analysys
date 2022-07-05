@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { VOTE_LOG } from '../types'
 
-const Votes = [{vote_id: 1, voter_id: 1, voted_id: 2, date_progress: 1}]
+const Votes = [{vote_id: '1', voter_id: '1', voted_id: '2', date_progress: 1}]
 
 export const VotesContext = createContext(Votes as VOTE_LOG[])
 

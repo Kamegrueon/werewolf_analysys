@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-import { DateProgressesContext } from '../../utils/AnalysisContext'
-import { SelectVoteBoardDateContext } from '../providers/SelectVoteBoardDateProvider';
+import { DailiesContext } from '../../utils/AnalysisContext'
+import { SelectVoteBoardDateContext } from '../../utils/AnalysisContext';
 
 const SelectVoteDay = () => {
 
-  const { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
-  const date_progresses = useContext(DateProgressesContext)
+  const { selectVoteDate, setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
+  const dailies = useContext(DailiesContext)
 
   const days_style = { margin: "0 20px 0 auto" }
   const label_style = { color: "#FFFFFF" , fontWeight: 800}
@@ -21,7 +21,7 @@ const SelectVoteDay = () => {
   
   const handleChange = (event: SelectChangeEvent) => {
     setSelectVoteDate(event.target.value)
-    // セットしたdailyの値でプレイヤーデータをFetch
+    // セットしたdailyの値で投票データをFetch
   }
 
   return (
@@ -33,11 +33,11 @@ const SelectVoteDay = () => {
         <Select
           sx={select_days_style}
           native={true}
-          defaultValue={'1'}
+          defaultValue={selectVoteDate}
           onChange={handleChange}
         >
-         {date_progresses.map((date_progress: string, index: number) => 
-          <option value={date_progress} key={`${index}`}>{date_progress}日目</option>
+         {dailies.map((daily, index) => 
+          <option value={`${daily.date_progress}`} key={`${index}`}>{`${daily.date_progress}`}日目</option>
         )}
         </Select>     
       </FormControl>

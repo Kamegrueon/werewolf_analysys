@@ -16,7 +16,9 @@ const VoteBoard:React.FC = () => {
         <div className={styles.vote__title}>Vote for</div>
         <div className={styles.vote__box}>
           <VoteBoardVoteList />
-          <SelectMain body={'voteDay'} />
+          <div className={styles.vote__select}>
+            <SelectMain body={'voteDay'} />
+          </div>
         </div>
         {isOpenForm
           ? <DoneIcon onClick={handlePostVote} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}} />
