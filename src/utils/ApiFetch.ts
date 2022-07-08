@@ -49,16 +49,16 @@ const dailies_api = axiosBase.create ({
   responseType: "json",
 })
 
-// daily_report Request
+// cod Request
 
-export const dailyReportsIndexRequest = async(daily_id: string) => {
-  return await dailies_api.get(`/${daily_id}/daily_report`)
+export const causeOfDeathsIndexRequest = async(daily_id: string) => {
+  return await dailies_api.get(`/${daily_id}/cause_of_deaths`)
 }
 
-export const dailyReportsCreateRequest = async(daily_id: string, executedPlayerId: string, murderedPlayerId: string | null, perishedPlayerId: string | null) => {
+export const causeOfDeathsCreateRequest = async(daily_id: string, executedPlayerId: string, murderedPlayerId: string | null, perishedPlayerId: string | null) => {
   console.log('create', executedPlayerId, murderedPlayerId, perishedPlayerId)
-  return await dailies_api.post(`/${daily_id}/daily_reports`,{
-    daily_report: {
+  return await dailies_api.post(`/${daily_id}/cause_of_deaths`,{
+    cod: {
       executed_player_id: executedPlayerId,
       murdered_player_id: murderedPlayerId, 
       perished_player_id: perishedPlayerId,
@@ -66,10 +66,10 @@ export const dailyReportsCreateRequest = async(daily_id: string, executedPlayerI
   })
 }
 
-export const dailyReportsUpdateRequest = async(daily_id: string, executedPlayerId: string, murderedPlayerId: string | null, perishedPlayerId: string | null) => {
-  console.log('put', executedPlayerId, murderedPlayerId, perishedPlayerId)
-  return await dailies_api.put(`/${daily_id}/daily_report`,{
-    daily_report: {
+export const causeOfDeathsUpdateRequest = async(daily_id: string, executedPlayerId: string, murderedPlayerId: string | null, perishedPlayerId: string | null) => {
+  console.log('patch', executedPlayerId, murderedPlayerId, perishedPlayerId)
+  return await dailies_api.patch(`/${daily_id}/cause_of_deaths`,{
+    cod: {
       executed_player_id: executedPlayerId,
       murdered_player_id: murderedPlayerId, 
       perished_player_id: perishedPlayerId,

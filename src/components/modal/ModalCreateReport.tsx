@@ -4,7 +4,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { dailyReportsCreateRequest } from '../../utils/ApiFetch'
+import { causeOfDeathsCreateRequest } from '../../utils/ApiFetch'
 
 
 const ModalCreateReport = (props: any ) => {
@@ -22,8 +22,8 @@ const ModalCreateReport = (props: any ) => {
   const dailies = useContext(DailiesContext)
 
   const [executedPlayerId, setExecutedPlayerId] = useState<string>('')
-  const [murderedPlayerId, setMurderedPlayerId] = useState<string | null>('')
-  const [perishedPlayerId, setPerishedPlayerId] = useState<string | null>('')
+  const [murderedPlayerId, setMurderedPlayerId] = useState<string | null>(null)
+  const [perishedPlayerId, setPerishedPlayerId] = useState<string | null>(null)
 
   const handleChangeExecutedPlayer = (event: SelectChangeEvent) => {
     setExecutedPlayerId(event.target.value)
@@ -39,9 +39,9 @@ const ModalCreateReport = (props: any ) => {
 
   const onClickSubmit = () => {
     // daily_idをフィルターで取得してpostする
-    const daily_id = dailies.filter(daily => String(daily.date_progress) === selectPlayerDate)[0].id
+    const daily_id = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
     if(executedPlayerId !== ''){
-      dailyReportsCreateRequest( 
+      causeOfDeathsCreateRequest( 
         daily_id,
         executedPlayerId, 
         murderedPlayerId,
@@ -67,7 +67,7 @@ const ModalCreateReport = (props: any ) => {
             <h3>処刑された人</h3>
             <Select
               sx={select_days_style}
-              value={executedPlayerId as any}
+              value={executedPlayerId ?? ''}
               onChange={handleChangeExecutedPlayer}
             >
             {players.map((player) => 
@@ -81,10 +81,10 @@ const ModalCreateReport = (props: any ) => {
             <h3>殺害された人</h3>
             <Select
               sx={select_days_style}
-              value={murderedPlayerId as any}
+              value={murderedPlayerId ?? '0'}
               onChange={handleChangeMurderedPlayer}
             >
-              <MenuItem value={'0'} >ー</MenuItem>
+              <MenuItem value={'0'} >該当者なし</MenuItem>
             {players.map((player) => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
@@ -96,10 +96,10 @@ const ModalCreateReport = (props: any ) => {
             <h3>突然死した人</h3>
             <Select
               sx={select_days_style}
-              value={perishedPlayerId as any}
+              value={perishedPlayerId ?? '0'}
               onChange={handleChangePerishedPlayer}
             >
-              <MenuItem value={'0'} >ー</MenuItem>
+              <MenuItem value={'0'} >該当者なし</MenuItem>
             {players.map((player) => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
