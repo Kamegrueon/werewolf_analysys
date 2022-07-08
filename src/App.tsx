@@ -34,7 +34,8 @@ const App: React.FC = () =>  {
         console.log('dailiesIndex',res.data)
         setDailies(res.data)
       })
-      playersIndexRequest(gameSelect).then((res: any) => {
+      playersIndexRequest(gameSelect, selectPlayerDate).then((res: any) => {
+        console.log('playersIndex',res.data)
         setPlayers(res.data)
       })
     }

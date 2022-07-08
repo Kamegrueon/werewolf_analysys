@@ -39,8 +39,8 @@ export const dailiesIndexRequest = async(game_id: string) =>{
 
 // players Request
 
-export const playersIndexRequest = async(game_id: string) =>{
-  return await games_api.get(`/${game_id}/players`)
+export const playersIndexRequest = async(game_id: string, date_progress: string) =>{
+  return await games_api.get(`/${game_id}/players?date_progress=${date_progress}`)
 }
 
 // Daily
