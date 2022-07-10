@@ -1,7 +1,7 @@
 export type CAUSE_Of_DEATH = '突然死' | '処刑' | '殺害' | ''
 
 export interface ROLE_STATE {
-  id: number
+  id: string
   role_name: string  
 }
 
@@ -11,7 +11,7 @@ export interface ROLES_CONTEXT {
 }
 
 export interface AVATAR {
-  id: number
+  id: string
   player_name: string
   position?: string
   position_order?: number
@@ -36,11 +36,22 @@ export interface SELECT_STYLE_PROP {
 }
 
 export interface VOTE_LOG {
-  vote_id: number, 
-  voter_id: number,
-  voted_id: number,
+  id: string, 
+  voter_id: string,
+  voted_id: string,
   date_progress: number,
 }
+
+export interface VOTE_LOG_STATE {
+  voteLogs: VOTE_LOG[]
+  setVoteLogs: React.Dispatch<React.SetStateAction<VOTE_LOG[]>> 
+};
+
+export interface VOTE_FORM_CONTEXT {
+  setVoterPlayerId: React.Dispatch<React.SetStateAction<string>>
+  setVotedPlayerId: React.Dispatch<React.SetStateAction<string>>
+  isOpenForm: boolean
+};
 
 export interface DAILIES_ACTION {
   dailies_props: {
@@ -68,3 +79,18 @@ export interface DAILIES_STYLE_ACTION {
   }
   action: 'playerDay' | 'voteDay' | undefined
 }
+
+export interface DAILIES {
+  id: string
+  date_progress: number
+}
+
+export interface SELECT_PLAYER_DATE  {
+  selectPlayerDate: string
+  setSelectPlayerDate: React.Dispatch<React.SetStateAction<string>> 
+};
+
+export interface SELECT_VOTE_DATE {
+  selectVoteDate: string
+  setSelectVoteDate: React.Dispatch<React.SetStateAction<string>> 
+};

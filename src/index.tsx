@@ -3,11 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { SelectVoteBoardDateProvider } from './components/providers/SelectVoteBoardDateProvider';
-import { SelectPlayerBoardDateProvider } from './components/providers/SelectPlayerBoardDateProvider';
-import { VotesProvider } from './components/providers/VotesProvider';
-import { VoteFormProvider } from './components/providers/VoteFormProvider';
-
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,15 +10,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <VotesProvider>
-    <VoteFormProvider>
-    <SelectPlayerBoardDateProvider>
-    <SelectVoteBoardDateProvider>
       <App />
-    </SelectVoteBoardDateProvider>
-    </SelectPlayerBoardDateProvider>
-    </VoteFormProvider>
-    </VotesProvider>
   </React.StrictMode>
 );
 

@@ -1,7 +1,7 @@
 import Modal from 'react-modal'
 import ModalCreateGame from './ModalCreateGame';
 import ModalCreateReport from './ModalCreateReport';
-
+import ModalEditReport from './ModalEditReport'
 
 interface Props {
   handleClose: () => void;
@@ -31,6 +31,10 @@ const renderBody = (body: string, handleClose: () => void , customStyles: any) =
       customStyles.content['height'] = '75vh'
       customStyles.content['width'] = '50vw'
       return <ModalCreateReport handleClose={handleClose} />;
+    case 'editReport':
+      customStyles.content['height'] = '75vh'
+      customStyles.content['width'] = '50vw'
+      return <ModalEditReport handleClose={handleClose} />;
     case 'createComingOut':
       return '';
     case 'createAbilityLog':
