@@ -4,13 +4,13 @@ import VoteBoardAvatar from './VoteBoardAvatar'
 
 import VoteForm from './VoteForm';
 
-import { VotesContext } from '../providers/VotesProvider';
-import { VoteFormContext } from '../providers/VoteFormProvider';
+import { VoteLogsContext } from '../../utils/AnalysisContext';
+import { VoteFormContext } from '../../utils/AnalysisContext';
 
 const VoteBoardVoteList = () => {
-  const VoteList = useContext(VotesContext)
+  const { voteLogs } = useContext(VoteLogsContext)
   const { isOpenForm } = useContext(VoteFormContext)
-
+  console.log('voteLog',voteLogs)
   return (
     <div>
       <div className={styles.vote__voted}>
@@ -18,9 +18,12 @@ const VoteBoardVoteList = () => {
           ? <VoteForm />
           : null
         }
-        {VoteList.map((vote) => (    
-          <VoteBoardAvatar vote={vote} key={vote.vote_id}/>        
-        ))}
+        {voteLogs !== []
+          ? voteLogs.map((vote) => (
+            <VoteBoardAvatar vote={vote} key={vote.id}/>
+          ))
+          : null
+        }
       </div>
   </div>
   )

@@ -66,13 +66,25 @@ export const causeOfDeathsCreateRequest = async(daily_id: string, executedPlayer
   })
 }
 
-export const causeOfDeathsUpdateRequest = async(daily_id: string, executedPlayerId: string, murderedPlayerId: string | null, perishedPlayerId: string | null) => {
+export const causeOfDeathsUpdateRequest = async(dailyId: string, executedPlayerId: string, murderedPlayerId: string | null, perishedPlayerId: string | null) => {
   console.log('patch', executedPlayerId, murderedPlayerId, perishedPlayerId)
-  return await dailies_api.patch(`/${daily_id}/cause_of_deaths`,{
+  return await dailies_api.patch(`/${dailyId}/cause_of_deaths`,{
     cod: {
       executed_player_id: executedPlayerId,
       murdered_player_id: murderedPlayerId, 
       perished_player_id: perishedPlayerId,
+    } 
+  })
+}
+
+// votes Request
+
+
+export const votesCreateRequest = async(dailyId: string, voterId: string, votedId: string) => {
+  return await dailies_api.post(`/${dailyId}/votes`,{
+    vote: {
+      voter_id: voterId,
+      voted_id: votedId,
     } 
   })
 }

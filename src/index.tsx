@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { VotesProvider } from './components/providers/VotesProvider';
-import { VoteFormProvider } from './components/providers/VoteFormProvider';
-
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,11 +10,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <VotesProvider>
-    <VoteFormProvider>
       <App />
-    </VoteFormProvider>
-    </VotesProvider>
   </React.StrictMode>
 );
 

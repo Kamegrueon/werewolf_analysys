@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { PlayersContext } from '../../utils/AnalysisContext';
-import { VoteFormContext } from '../providers/VoteFormProvider';
+import { VoteFormContext } from '../../utils/AnalysisContext';
 import styles from './VoteBoard.module.css'
 import { Avatar } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';

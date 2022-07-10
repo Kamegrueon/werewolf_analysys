@@ -39,10 +39,10 @@ const ModalCreateReport = (props: any ) => {
 
   const onClickSubmit = () => {
     // daily_idをフィルターで取得してpostする
-    const daily_id = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
+    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
     if(executedPlayerId !== ''){
       causeOfDeathsCreateRequest( 
-        daily_id,
+        dailyId,
         executedPlayerId, 
         murderedPlayerId,
         perishedPlayerId

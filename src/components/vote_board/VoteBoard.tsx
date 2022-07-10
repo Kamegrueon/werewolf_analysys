@@ -1,17 +1,38 @@
-import React, { useContext } from 'react'
-
+import React, { useState, useContext } from 'react'
 import SelectMain from '../select/SelectMain'
 import styles from './VoteBoard.module.css'
 import VoteBoardVoteList from './VoteBoardVoteList'
 import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
-import { VoteFormContext } from '../providers/VoteFormProvider';
+import { VoteFormContext, SelectVoteBoardDateContext, VoteLogsContext } from '../../utils/AnalysisContext';
+import { votesCreateRequest } from '../../utils/ApiFetch';
 
 const VoteBoard:React.FC = () => {
+  const { selectVoteDate } = useContext(SelectVoteBoardDateContext)
+  const { voteLogs, setVoteLogs } = useContext(VoteLogsContext)
+  const [voterPlayerId, setVoterPlayerId] = useState('');
+  const [votedPlayerId, setVotedPlayerId] = useState('');
+  const [isOpenForm, setIsOpenForm] = useState(false);
 
-  const { isOpenForm, handleOpen, handlePostVote } = useContext(VoteFormContext)
+  const handlePostVote = () => {
+    votesCreateRequest(selectVoteDate, voterPlayerId, votedPlayerId).then((res: any) => {
+      setVoteLogs([...voteLogs,res.data])
+    })
+    setVoterPlayerId('')
+    setVotedPlayerId('')
+    setIsOpenForm(false)
+  }
+
+  const handleOpen = () => {
+    setIsOpenForm(true)
+  }
 
   return (
+    <VoteFormContext.Provider value={{
+      setVoterPlayerId,
+      setVotedPlayerId, 
+      isOpenForm, 
+    }}>
       <div className={styles.vote__board}>
         <div className={styles.vote__title}>Vote for</div>
         <div className={styles.vote__box}>
@@ -25,6 +46,7 @@ const VoteBoard:React.FC = () => {
           : <AddIcon onClick={handleOpen} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}}/>
         }
       </div>
+    </VoteFormContext.Provider>
   )
 }
 

@@ -36,11 +36,22 @@ export interface SELECT_STYLE_PROP {
 }
 
 export interface VOTE_LOG {
-  vote_id: string, 
+  id: string, 
   voter_id: string,
   voted_id: string,
   date_progress: number,
 }
+
+export interface VOTE_LOG_STATE {
+  voteLogs: VOTE_LOG[]
+  setVoteLogs: React.Dispatch<React.SetStateAction<VOTE_LOG[]>> 
+};
+
+export interface VOTE_FORM_CONTEXT {
+  setVoterPlayerId: React.Dispatch<React.SetStateAction<string>>
+  setVotedPlayerId: React.Dispatch<React.SetStateAction<string>>
+  isOpenForm: boolean
+};
 
 export interface DAILIES_ACTION {
   dailies_props: {
