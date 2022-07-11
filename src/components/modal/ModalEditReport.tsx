@@ -5,7 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { causeOfDeathsUpdateRequest, causeOfDeathsIndexRequest } from '../../utils/ApiFetch'
-
+import {AxiosResponse, AxiosError} from 'axios'
 
 const ModalEditReport = (props: any ) => {
 
@@ -57,10 +57,12 @@ const ModalEditReport = (props: any ) => {
         executedPlayerId, 
         murderedPlayerId,
         perishedPlayerId
-      ).then((res: any) => {
+      ).then((res: AxiosResponse) => {
         props.handleClose(false)
-      }).catch((error: any)  => {
-        alert(error.response.data.title)
+      }).catch((error: AxiosError<{ error: string }>)  => {
+        if (error.response !== undefined){
+          alert(error.response.data.error)
+        }
       })
     }else{
       alert('処刑された人を選択してください')
@@ -79,7 +81,8 @@ const ModalEditReport = (props: any ) => {
               value={executedPlayerId ?? '0'}
               onChange={handleChangeExecutedPlayer}
             >
-            {players.map((player) => 
+            {players.filter(player => player.cause_of_death === null && String(player.id) !== String(murderedPlayerId) && String(player.id) !== String(perishedPlayerId))
+            .map(player => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
             </Select>
@@ -94,7 +97,8 @@ const ModalEditReport = (props: any ) => {
               onChange={handleChangeMurderedPlayer}
             >
               <MenuItem value={'0'} >該当者なし</MenuItem>
-            {players.map((player) => 
+            {players.filter(player => player.cause_of_death === null && String(player.id) !== String(executedPlayerId) && String(player.id) !== String(perishedPlayerId))
+            .map(player => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
             </Select>
@@ -109,7 +113,8 @@ const ModalEditReport = (props: any ) => {
               onChange={handleChangePerishedPlayer}
             >
               <MenuItem value={'0'} >該当者なし</MenuItem>
-            {players.map((player) => 
+            {players.filter(player => player.cause_of_death === null && String(player.id) !== String(executedPlayerId) && String(player.id) !== String(perishedPlayerId))
+            .map(player => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
             </Select>

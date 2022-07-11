@@ -7,6 +7,7 @@ import TagsInput from '../../utils/TagsInput';
 import CheckBoxList from '../../utils/CheckBoxList';
 import { gamesCreateRequest } from '../../utils/ApiFetch'
 import { GameSelectContext } from '../../utils/AnalysisContext';
+import {AxiosResponse, AxiosError} from 'axios'
 
 const ModalCreateGame = () => {
 
@@ -37,13 +38,14 @@ const ModalCreateGame = () => {
 
   const onClickSubmit = () => {
     console.log(gameName, positionIds, players)
-    gamesCreateRequest(gameName, players, positionIds).then((res: any) => {
+    gamesCreateRequest(gameName, players, positionIds).then((res: AxiosResponse) => {
       setGameSelect(res.data.id)
       history.push(`/games/${res.data.id}`)
-    }).catch(error => {
-      alert(error.response.data.title)
-    })
-  }
+    }).catch((error: AxiosError<{ error: string }>)  => {
+      if (error.response !== undefined){
+        alert(error.response.data.error)
+      }
+    })}
   
   return (
     <div style={{color: 'white',textAlign: 'center'}}>

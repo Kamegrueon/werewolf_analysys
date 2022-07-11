@@ -10,7 +10,7 @@ export interface ROLES_CONTEXT {
   setRolesState: React.Dispatch<React.SetStateAction<ROLE_STATE[]>>
 }
 
-export interface AVATAR {
+export interface PLAYER {
   id: string
   player_name: string
   position?: string
@@ -48,7 +48,10 @@ export interface VOTE_LOG_STATE {
 };
 
 export interface VOTE_FORM_CONTEXT {
+  voteLogs: VOTE_LOG[]
+  voterPlayerId: string
   setVoterPlayerId: React.Dispatch<React.SetStateAction<string>>
+  votedPlayerId: string
   setVotedPlayerId: React.Dispatch<React.SetStateAction<string>>
   isOpenForm: boolean
 };
@@ -82,6 +85,7 @@ export interface DAILIES_STYLE_ACTION {
 
 export interface DAILIES {
   id: string
+  game_id: string
   date_progress: number
 }
 

@@ -34,8 +34,9 @@ const PlayerBoardDailyReport = () => {
     Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 5})
   }
 
-  const maxDateProgress = String(dailies.map((date) => date.date_progress).reduce((pre, cur) => Math.max(pre, cur)))
-  const isExistReport = maxDateProgress === '1' ? false : selectPlayerDate !== maxDateProgress
+  let maxDateProgress = String(dailies.map((date) => date.date_progress).reduce((pre, cur) => Math.max(pre, cur)))
+  let isExistReport = maxDateProgress === '1' ? false : selectPlayerDate !== maxDateProgress
+  console.log('max', maxDateProgress, isExistReport)
 
   return (
     <div className={styles.player__daily_reports}> 

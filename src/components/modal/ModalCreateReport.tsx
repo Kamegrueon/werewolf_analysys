@@ -5,7 +5,8 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { causeOfDeathsCreateRequest } from '../../utils/ApiFetch'
-
+import {AxiosResponse, AxiosError} from 'axios'
+import { DAILIES } from '../types';
 
 const ModalCreateReport = (props: any ) => {
 
@@ -46,12 +47,14 @@ const ModalCreateReport = (props: any ) => {
         executedPlayerId, 
         murderedPlayerId,
         perishedPlayerId
-      ).then((res: any) => {
+      ).then((res: AxiosResponse<DAILIES>) => {
         console.log(res.data.date_progress)
-        setSelectPlayerDate(res.data.date_progress)
+        setSelectPlayerDate(String(res.data.date_progress))
         props.handleClose(false)
-      }).catch((error: any)  => {
-        alert(error.response.data.title)
+      }).catch((error: AxiosError<{ error: string }>)  => {
+        if (error.response !== undefined){
+          alert(error.response.data.error)
+        }
       })
     }else{
       alert('処刑された人を選択してください')
@@ -70,7 +73,8 @@ const ModalCreateReport = (props: any ) => {
               value={executedPlayerId ?? ''}
               onChange={handleChangeExecutedPlayer}
             >
-            {players.map((player) => 
+            {players.filter(player => player.cause_of_death === null && String(player.id) !== String(murderedPlayerId) && String(player.id) !== String(perishedPlayerId))
+            .map(player => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
             </Select>
@@ -85,7 +89,8 @@ const ModalCreateReport = (props: any ) => {
               onChange={handleChangeMurderedPlayer}
             >
               <MenuItem value={'0'} >該当者なし</MenuItem>
-            {players.map((player) => 
+            {players.filter(player => player.cause_of_death === null && String(player.id) !== String(executedPlayerId) && String(player.id) !== String(perishedPlayerId))
+            .map((player) => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
             </Select>
@@ -100,7 +105,8 @@ const ModalCreateReport = (props: any ) => {
               onChange={handleChangePerishedPlayer}
             >
               <MenuItem value={'0'} >該当者なし</MenuItem>
-            {players.map((player) => 
+            {players.filter(player => player.cause_of_death === null && String(player.id) !== String(executedPlayerId) && String(player.id) !== String(murderedPlayerId))
+            .map((player) => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
             </Select>

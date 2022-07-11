@@ -23,12 +23,8 @@ export const gamesCreateRequest = async(gameName: string | null, players: string
   })
 }
 
-// export const gamesShowRequest = async(game_id: string) =>{
-//   return await games_api.get(`/${game_id}`)
-// }
-
-export const gamesDeleteRequest = async(game_id: string) =>{
-  return await games_api.delete(`/${game_id}`)
+export const gamesDeleteRequest = async(gameId: string) =>{
+  return await games_api.delete(`/${gameId}`)
 }
 
 // dailies Request
@@ -78,13 +74,25 @@ export const causeOfDeathsUpdateRequest = async(dailyId: string, executedPlayerI
 }
 
 // votes Request
+const votes_api = axiosBase.create ({
+  baseURL: 'http://localhost:3000/api/v1/votes',
+  responseType: "json",
+})
 
+export const votesIndexRequest = async(dailyId: string) => {
+  return await votes_api.get(`?daily_id=${dailyId}`)
+}
 
 export const votesCreateRequest = async(dailyId: string, voterId: string, votedId: string) => {
-  return await dailies_api.post(`/${dailyId}/votes`,{
+  return await votes_api.post('',{
     vote: {
+      daily_id: dailyId,
       voter_id: voterId,
       voted_id: votedId,
     } 
   })
+}
+
+export const votesDeleteRequest = async(voteId: string) =>{
+  return await votes_api.delete(`/${voteId}`)
 }
