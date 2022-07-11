@@ -24,7 +24,7 @@ const SelectPlayerDay = () => {
       // セットしたdailyの値でプレイヤーデータをFetch
    }
 
-   console.log('selectplayerday', selectPlayerDate)
+   console.log('selectPlayerDay', selectPlayerDate)
 
   return (
     <div style={days_style}>

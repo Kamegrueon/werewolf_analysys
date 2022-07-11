@@ -73,7 +73,8 @@ const ModalCreateReport = (props: any ) => {
               value={executedPlayerId ?? ''}
               onChange={handleChangeExecutedPlayer}
             >
-            {players.map((player) => 
+            {players.filter(player => player.cause_of_death === null && String(player.id) !== String(murderedPlayerId) && String(player.id) !== String(perishedPlayerId))
+            .map(player => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
             </Select>
@@ -88,7 +89,8 @@ const ModalCreateReport = (props: any ) => {
               onChange={handleChangeMurderedPlayer}
             >
               <MenuItem value={'0'} >該当者なし</MenuItem>
-            {players.map((player) => 
+            {players.filter(player => player.cause_of_death === null && String(player.id) !== String(executedPlayerId) && String(player.id) !== String(perishedPlayerId))
+            .map((player) => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
             </Select>
@@ -103,7 +105,8 @@ const ModalCreateReport = (props: any ) => {
               onChange={handleChangePerishedPlayer}
             >
               <MenuItem value={'0'} >該当者なし</MenuItem>
-            {players.map((player) => 
+            {players.filter(player => player.cause_of_death === null && String(player.id) !== String(executedPlayerId) && String(player.id) !== String(murderedPlayerId))
+            .map((player) => 
               <MenuItem value={player.id} key={player.id}>{player.player_name}</MenuItem>
             )}
             </Select>

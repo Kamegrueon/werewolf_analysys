@@ -33,7 +33,10 @@ const VoteBoard:React.FC = () => {
 
   return (
     <VoteFormContext.Provider value={{
+      voteLogs,
+      voterPlayerId,
       setVoterPlayerId,
+      votedPlayerId,
       setVotedPlayerId, 
       isOpenForm, 
     }}>

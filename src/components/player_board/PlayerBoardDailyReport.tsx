@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import styles from './PlayerBoard.module.css'
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/AddOutlined';
@@ -17,8 +17,6 @@ const PlayerBoardDailyReport = () => {
   }
 
   const [isOpen, setIsOpen] = useState(false);
-  // const [isExistReport, setIsExistReport] = useState(false)
-  // const [maxDateProgress, setMaxDateProgress] = useState('1')
   const [reportBody, setReportBody] = useState('');
   const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)
   const dailies = useContext(DailiesContext)

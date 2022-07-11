@@ -15,14 +15,16 @@ const avatar = {
 const VoteForm = () => {
 
   const players = useContext(PlayersContext)
-  const { setVoterPlayerId ,setVotedPlayerId } = useContext(VoteFormContext)
+  const { voteLogs, voterPlayerId, setVoterPlayerId, votedPlayerId, setVotedPlayerId } = useContext(VoteFormContext)
 
   const voteHandleChange = (event: SelectChangeEvent) => {
     setVoterPlayerId(event.target.value)
+    console.log('voter', event.target.value)
   }
 
   const votedHandleChange = (event: SelectChangeEvent) => {
     setVotedPlayerId(event.target.value)
+    console.log('voted', event.target.value)
   }
 
   return (
@@ -38,9 +40,10 @@ const VoteForm = () => {
                 style={{background: 'white', width: 100, height: 30}}
               >
                 <option value={''} key={''}></option>
-              {players.map((p) => 
-                <option value={p.id} key={p.id}>{p.player_name}</option>
-              )}
+              {players.filter(player => player.cause_of_death === null && String(player.id) !== String(votedPlayerId) && !voteLogs.map(vote => String(vote.voter_id)).includes(String(player.id)))
+                .map(player => 
+                  <option value={player.id} key={player.id}>{player.player_name}</option>
+                )}
               </Select>
             </FormControl>
           </div>
@@ -59,8 +62,9 @@ const VoteForm = () => {
                 style={{background: 'white', width: 100, height: 30}}
               >
                 <option value={''} key={''}></option>
-              {players.map((p) => 
-                <option value={p.id} key={p.id}>{p.player_name}</option>
+              {players.filter(player => player.cause_of_death === null && String(player.id) !== String(voterPlayerId))
+              .map(player => 
+                <option value={player.id} key={player.id}>{player.player_name}</option>
               )}
               </Select>
             </FormControl>
