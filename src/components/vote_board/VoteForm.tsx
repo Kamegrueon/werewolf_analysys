@@ -37,7 +37,7 @@ const VoteForm = () => {
                 native={true}
                 defaultValue={''}
                 onChange={voteHandleChange}
-                style={{background: 'white', width: 100, height: 30}}
+                style={{background: 'white', width: 90, height: 30}}
               >
                 <option value={''} key={''}></option>
               {players.filter(player => player.cause_of_death === null && String(player.id) !== String(votedPlayerId) && !voteLogs.map(vote => String(vote.voter_id)).includes(String(player.id)))
@@ -59,7 +59,7 @@ const VoteForm = () => {
                 native={true}
                 defaultValue={''}
                 onChange={votedHandleChange}
-                style={{background: 'white', width: 100, height: 30}}
+                style={{background: 'white', width: 90, height: 30}}
               >
                 <option value={''} key={''}></option>
               {players.filter(player => player.cause_of_death === null && String(player.id) !== String(voterPlayerId))

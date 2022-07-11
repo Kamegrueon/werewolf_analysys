@@ -41,7 +41,7 @@
 }
 
 .vote__avatar_name {
-  width: 100px;
+  width: 90px;
   font-size: 14px;
   margin: auto 10px;
   color: #FFFFFF;
@@ -49,12 +49,15 @@
 }
 
 .vote__send_icon {
-  margin: auto 45px;
+  margin: auto 30px;
   color: #989A9C;
 }
 
 .vote__vote_log{
   margin-top: 15px;
   display: flex;
-  justify-content: space-around;
+}
+
+.vote__delete_icon {
+  margin: auto 0;
 }

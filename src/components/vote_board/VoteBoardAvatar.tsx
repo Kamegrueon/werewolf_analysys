@@ -3,7 +3,10 @@ import styles from './VoteBoard.module.css'
 import { Avatar } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import { VOTE_LOG } from '../types';
-import { PlayersContext } from '../../utils/AnalysisContext';
+import { PlayersContext, VoteLogsContext } from '../../utils/AnalysisContext';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { votesDeleteRequest } from '../../utils/ApiFetch'
+import { AxiosResponse } from 'axios'
 
 const avatar = {
   width: 40,
@@ -16,6 +19,13 @@ interface VoteProps {
 
 const VoteBoardAvatar = (props: VoteProps) => {
   const players = useContext(PlayersContext)
+  const { voteLogs, setVoteLogs } = useContext(VoteLogsContext) 
+
+  const deleteAction = () => {
+    votesDeleteRequest(props.vote.id).then((res: AxiosResponse<VOTE_LOG>) => {
+      setVoteLogs(voteLogs.filter(vote => vote.id !== res.data.id))
+    })
+  }
 
   return (
     <div className={styles.vote__vote_log}>
@@ -33,6 +43,9 @@ const VoteBoardAvatar = (props: VoteProps) => {
         <div className={styles.vote__avatar_name}>
           {players.filter((player) => String(player.id) === String(props.vote.voted_id))[0].player_name}
         </div>
+      </div>
+      <div className={styles.vote__delete_icon}>
+        <DeleteOutlineIcon sx={{color: 'white'}} onClick={deleteAction} />
       </div>
     </div>
   )
