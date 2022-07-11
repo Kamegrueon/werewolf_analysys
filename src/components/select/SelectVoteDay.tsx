@@ -21,7 +21,6 @@ const SelectVoteDay = () => {
   
   const handleChange = (event: SelectChangeEvent) => {
     setSelectVoteDate(event.target.value)
-    // セットしたdailyの値で投票データをFetch
   }
 
   return (

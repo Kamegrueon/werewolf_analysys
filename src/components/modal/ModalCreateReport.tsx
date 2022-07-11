@@ -5,7 +5,8 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { causeOfDeathsCreateRequest } from '../../utils/ApiFetch'
-
+import {AxiosResponse, AxiosError} from 'axios'
+import { DAILIES } from '../types';
 
 const ModalCreateReport = (props: any ) => {
 
@@ -46,12 +47,14 @@ const ModalCreateReport = (props: any ) => {
         executedPlayerId, 
         murderedPlayerId,
         perishedPlayerId
-      ).then((res: any) => {
+      ).then((res: AxiosResponse<DAILIES>) => {
         console.log(res.data.date_progress)
-        setSelectPlayerDate(res.data.date_progress)
+        setSelectPlayerDate(String(res.data.date_progress))
         props.handleClose(false)
-      }).catch((error: any)  => {
-        alert(error.response.data.title)
+      }).catch((error: AxiosError<{ error: string }>)  => {
+        if (error.response !== undefined){
+          alert(error.response.data.error)
+        }
       })
     }else{
       alert('処刑された人を選択してください')

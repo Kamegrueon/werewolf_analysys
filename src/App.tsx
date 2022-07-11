@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { AxiosResponse } from 'axios'
 import styles from "./App.module.css"
 import AnalysisHeader from './components/analysis/AnalysisHeader';
 import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
@@ -6,8 +7,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
 import { GameSelectContext } from './utils/AnalysisContext';
-import { dailiesIndexRequest, playersIndexRequest } from "./utils/ApiFetch";
-import { AVATAR, DAILIES, ROLE_STATE, VOTE_LOG } from "./components/types";
+import { dailiesIndexRequest, playersIndexRequest, votesIndexRequest } from "./utils/ApiFetch";
+import { PLAYER, DAILIES, ROLE_STATE, VOTE_LOG } from "./components/types";
 import { 
   DailiesContext, 
   PlayersContext, 
@@ -19,13 +20,14 @@ import {
 
 const App: React.FC = () =>  {
 
-  const [gameSelect, setGameSelect] = useState('')
-  const [selectPlayerDate, setSelectPlayerDate] = useState('1')
-  const [selectVoteDate, setSelectVoteDate] = useState('1')
+  const [gameSelect, setGameSelect] = useState<string>('')
+  const [selectPlayerDate, setSelectPlayerDate] = useState<string>('1')
+  const [selectVoteDate, setSelectVoteDate] = useState<string>('1')
   const [rolesState, setRolesState] = useState<ROLE_STATE[]>([{id: '1', role_name: '人狼'}])
-  const [dailies, setDailies] = useState<DAILIES[]>([{id: '1', date_progress: 1}])
-  const [players, setPlayers] = useState<AVATAR[]>([{id: '1', player_name:"", position:'',position_order: 1, cause_of_death:'', date_of_death: 0}])
-  const [voteLogs, setVoteLogs] = useState<VOTE_LOG[]>([{id: '1', voter_id: '1', voted_id: '2', date_progress: 1}])
+  const [dailies, setDailies] = useState<DAILIES[]>([{id: '1',game_id: '1', date_progress: 1}])
+  const [players, setPlayers] = useState<PLAYER[]>([])
+  const [voteLogs, setVoteLogs] = useState<VOTE_LOG[]>([])
+  // const [isExistReport, setIsExistReport] = useState(false)
 
   const isFirstRender = useRef(false)
 
@@ -37,21 +39,21 @@ const App: React.FC = () =>  {
     if(isFirstRender.current) {
       isFirstRender.current = false
     } else {
-      dailiesIndexRequest(gameSelect).then((res: any) => {
-        // setDateProgresses([...Array(res.data.length)].map((_, i) => String(i + 1)))
+      dailiesIndexRequest(gameSelect).then((res: AxiosResponse<DAILIES[]>) => {
         console.log('dailiesIndex',res.data)
         setDailies(res.data)
+        let dailyId = res.data.filter((daily: DAILIES) => String(daily.date_progress) === String(selectVoteDate))[0].id
+        votesIndexRequest(dailyId).then((res: AxiosResponse<VOTE_LOG[]>) => {
+          console.log('votesIndex', res.data)
+          setVoteLogs(res.data)
+        })
       })
-      playersIndexRequest(gameSelect, selectPlayerDate).then((res: any) => {
+      playersIndexRequest(gameSelect, selectPlayerDate).then((res: AxiosResponse<PLAYER[]>) => {
         console.log('playersIndex',res.data)
         setPlayers(res.data)
       })
-      setVoteLogs([
-        {id: '1', voter_id: '251', voted_id: '252', date_progress: 1},
-        {id: '2', voter_id: '252', voted_id: '251', date_progress: 1},
-      ])
     }
-  },[gameSelect, selectPlayerDate])
+  },[gameSelect, selectPlayerDate, selectVoteDate])
 
   return (
     <Router>

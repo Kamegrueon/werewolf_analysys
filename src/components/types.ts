@@ -10,7 +10,7 @@ export interface ROLES_CONTEXT {
   setRolesState: React.Dispatch<React.SetStateAction<ROLE_STATE[]>>
 }
 
-export interface AVATAR {
+export interface PLAYER {
   id: string
   player_name: string
   position?: string
@@ -82,6 +82,7 @@ export interface DAILIES_STYLE_ACTION {
 
 export interface DAILIES {
   id: string
+  game_id: string
   date_progress: number
 }
 

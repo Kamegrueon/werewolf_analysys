@@ -23,10 +23,6 @@ export const gamesCreateRequest = async(gameName: string | null, players: string
   })
 }
 
-// export const gamesShowRequest = async(game_id: string) =>{
-//   return await games_api.get(`/${game_id}`)
-// }
-
 export const gamesDeleteRequest = async(game_id: string) =>{
   return await games_api.delete(`/${game_id}`)
 }
@@ -79,6 +75,9 @@ export const causeOfDeathsUpdateRequest = async(dailyId: string, executedPlayerI
 
 // votes Request
 
+export const votesIndexRequest = async(dailyId: string) => {
+  return await dailies_api.get(`/${dailyId}/votes`)
+}
 
 export const votesCreateRequest = async(dailyId: string, voterId: string, votedId: string) => {
   return await dailies_api.post(`/${dailyId}/votes`,{

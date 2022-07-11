@@ -4,20 +4,24 @@ import styles from './VoteBoard.module.css'
 import VoteBoardVoteList from './VoteBoardVoteList'
 import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
-import { VoteFormContext, SelectVoteBoardDateContext, VoteLogsContext } from '../../utils/AnalysisContext';
+import { VoteFormContext, SelectVoteBoardDateContext, VoteLogsContext, DailiesContext } from '../../utils/AnalysisContext';
 import { votesCreateRequest } from '../../utils/ApiFetch';
 
 const VoteBoard:React.FC = () => {
   const { selectVoteDate } = useContext(SelectVoteBoardDateContext)
   const { voteLogs, setVoteLogs } = useContext(VoteLogsContext)
+  const dailies = useContext(DailiesContext)
   const [voterPlayerId, setVoterPlayerId] = useState('');
   const [votedPlayerId, setVotedPlayerId] = useState('');
   const [isOpenForm, setIsOpenForm] = useState(false);
 
   const handlePostVote = () => {
-    votesCreateRequest(selectVoteDate, voterPlayerId, votedPlayerId).then((res: any) => {
-      setVoteLogs([...voteLogs,res.data])
-    })
+    if(voterPlayerId !== '' && votedPlayerId !== ''){
+      const dailyId = dailies.filter(daily => String(daily.date_progress) === String(selectVoteDate))[0].id
+      votesCreateRequest(dailyId, voterPlayerId, votedPlayerId).then((res: any) => {
+        setVoteLogs([...voteLogs,res.data])
+      })
+    }
     setVoterPlayerId('')
     setVotedPlayerId('')
     setIsOpenForm(false)

@@ -4,11 +4,11 @@ import AvatarStateMurderedMarker from '../avatar_state/AvatarStateMurderedMarker
 import AvatarStateExecutedMarker from '../avatar_state/AvatarStateExecutedMarker'
 import AvatarStatePerishedMarker from '../avatar_state/AvatarStatePerishedMarker'
 import AvatarStatePositionMarker from '../avatar_state/AvatarStatePositionMarker';
-import { AVATAR } from '../types'
+import { PLAYER } from '../types'
 import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
 import { PlayersContext } from '../../utils/AnalysisContext';
 
-const ExistCod = (player: AVATAR) => {
+const ExistCod = (player: PLAYER) => {
   switch (player.cause_of_death) {
     case '殺害':
       return (
@@ -36,7 +36,7 @@ const ExistCod = (player: AVATAR) => {
   }
 }
 
-const ExistCodStyle = (player: AVATAR) => {
+const ExistCodStyle = (player: PLAYER) => {
   if(player.cause_of_death) {
     const dead_style = { opacity: 0.5}
     return dead_style;
@@ -45,7 +45,7 @@ const ExistCodStyle = (player: AVATAR) => {
   } 
 }
 
-const PositionName = (player: AVATAR) => {
+const PositionName = (player: PLAYER) => {
   let position_name = '？'
   switch (player.position) {
     case '占い師':

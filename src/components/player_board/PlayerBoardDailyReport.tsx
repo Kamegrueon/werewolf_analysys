@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import styles from './PlayerBoard.module.css'
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/AddOutlined';
@@ -17,6 +17,8 @@ const PlayerBoardDailyReport = () => {
   }
 
   const [isOpen, setIsOpen] = useState(false);
+  // const [isExistReport, setIsExistReport] = useState(false)
+  // const [maxDateProgress, setMaxDateProgress] = useState('1')
   const [reportBody, setReportBody] = useState('');
   const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)
   const dailies = useContext(DailiesContext)
@@ -34,8 +36,9 @@ const PlayerBoardDailyReport = () => {
     Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 5})
   }
 
-  const maxDateProgress = String(dailies.map((date) => date.date_progress).reduce((pre, cur) => Math.max(pre, cur)))
-  const isExistReport = maxDateProgress === '1' ? false : selectPlayerDate !== maxDateProgress
+  let maxDateProgress = String(dailies.map((date) => date.date_progress).reduce((pre, cur) => Math.max(pre, cur)))
+  let isExistReport = maxDateProgress === '1' ? false : selectPlayerDate !== maxDateProgress
+  console.log('max', maxDateProgress, isExistReport)
 
   return (
     <div className={styles.player__daily_reports}> 
