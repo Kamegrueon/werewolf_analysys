@@ -98,3 +98,9 @@ export interface SELECT_VOTE_DATE {
   selectVoteDate: string
   setSelectVoteDate: React.Dispatch<React.SetStateAction<string>> 
 };
+
+export interface ROLL {
+  id: number, 
+  roll_id: number, 
+  roll_name: string
+}

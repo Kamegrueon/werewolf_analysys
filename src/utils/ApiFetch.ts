@@ -27,6 +27,11 @@ export const gamesDeleteRequest = async(gameId: string) =>{
   return await games_api.delete(`/${gameId}`)
 }
 
+// rolls Request
+export const rollIndexRequest = async (gameId: string) => {
+  return await games_api.get(`/${gameId}/game_rolls`) 
+}
+
 // dailies Request
 
 export const dailiesIndexRequest = async(game_id: string) =>{
@@ -93,6 +98,12 @@ export const votesCreateRequest = async(dailyId: string, voterId: string, votedI
   })
 }
 
-export const votesDeleteRequest = async(voteId: string) =>{
+export const votesDeleteRequest = async(voteId: string) => {
   return await votes_api.delete(`/${voteId}`)
+}
+
+// ComingOut
+
+export const comingOutCreateRequest = async( dailyId: string, comingOutRoll: string, coPlayerId: string) => {
+
 }

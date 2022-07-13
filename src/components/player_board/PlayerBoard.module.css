@@ -3,7 +3,7 @@ player
 */
 
 .player__board {
-  height: calc(45% - 55px);
+  height: calc(45%);
   width: 100%;
   margin-top: 40px;
   padding: 10px 0 0 30px;
@@ -22,7 +22,7 @@ player
 .player__above_bar {
   display: flex;
   justify-content: space-between;
-  height: 55px;
+  height: 45px;
 }
 
 .player__title {
