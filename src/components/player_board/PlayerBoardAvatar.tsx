@@ -9,7 +9,6 @@ import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
 import { PlayersContext } from '../../utils/AnalysisContext';
 import ModalMain from '../modal/ModalMain'
 import PlayerBoardComingOut from './PlayerBoardComingOut'
-import { positions } from '@mui/system'
 
 const ExistCod = (player: PLAYER) => {
   switch (player.cause_of_death) {
@@ -49,36 +48,34 @@ const ExistCodStyle = (player: PLAYER) => {
 }
 
 const PositionName = (player: PLAYER) => {
-  let position_name = '？'
+  let roll_name = '？'
   switch (player.position) {
     case '占い師':
-      position_name = '占'
-      return position_name
+      roll_name = '占'
+      return roll_name
     default:
-      return position_name
+      return roll_name
   }
 }
 
 const PlayerBoardAvatar: React.FC = () => {
   const players = useContext(PlayersContext)
-  const [isOpen, setIsOpen] = useState(false);
-  const [rollBody, setRollBody] = useState('');
-  const [coPlayer, setCoPlayer] = useState({} as PLAYER)
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [rollBody, setRollBody] = useState('');
+  // const [coPlayer, setCoPlayer] = useState({} as PLAYER)
   const [clicked, setClicked] = useState<number | null>(null);
   const contentEl = useRef<HTMLDivElement>(null);
 
-  const handleOpen = (body: string, player: PLAYER) => {
-    setRollBody(body)
-    setCoPlayer(player)
-    setIsOpen(true)
-  }
-  const handleClose = () => {
-    setIsOpen(false)
-  }
+  // const handleOpen = (body: string, player: PLAYER) => {
+  //   setRollBody(body)
+  //   setCoPlayer(player)
+  //   setIsOpen(true)
+  // }
+  // const handleClose = () => {
+  //   setIsOpen(false)
+  // }
 
   const handleClick = (index: number) => {
-    console.log('beforeIndex', index)
-    console.log('beforeClicked',clicked)
     if (clicked === index) {
       return setClicked(null);
     }
@@ -119,7 +116,7 @@ const PlayerBoardAvatar: React.FC = () => {
           }
         >
           {!player.cause_of_death 
-          ? <PlayerBoardComingOut playerId={player.id}/>
+          ? <PlayerBoardComingOut playerId={player.id} setClicked={setClicked}/>
           :(
           // ここ修正 
           <div style={{position: 'absolute'}}>

@@ -1,15 +1,15 @@
-import React, { useContext, useState, useRef, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { DailiesContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
 import { rollIndexRequest, comingOutCreateRequest } from '../../utils/ApiFetch'
 import {AxiosResponse, AxiosError} from 'axios'
-import { DAILIES, PLAYER, ROLL } from '../types';
+import { ROLL } from '../types';
 import { GameSelectContext } from '../../utils/AnalysisContext'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 
-const PlayerBoardComingOut = (props: {playerId: string}) => {
+const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispatch<React.SetStateAction<number | null>>}) => {
 
   const select_days_style = {
     width: '100%',
@@ -21,10 +21,10 @@ const PlayerBoardComingOut = (props: {playerId: string}) => {
 
   const { gameSelect } = useContext(GameSelectContext)
   const [rolls, setRolls] = useState<ROLL[]>([])
-  const { selectPlayerDate, setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)  
+  const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)  
   const dailies = useContext(DailiesContext)
 
-  const [comingOutRoll, setComingOutRoll] = useState<string>('')
+  const [comingOutRoll, setComingOutRoll] = useState<string | null>(null)
 
   useEffect(() => {
     rollIndexRequest(gameSelect).then((res: AxiosResponse) => {
@@ -44,6 +44,7 @@ const PlayerBoardComingOut = (props: {playerId: string}) => {
     if(comingOutRoll !== ''){
       comingOutCreateRequest(dailyId, comingOutRoll, playerId).then((res: any) => {
         console.log(res.data)
+        props.setClicked(null)
       }).catch((error: AxiosError<{ error: string }>)  => {
         if (error.response !== undefined){
           alert(error.response.data.error)

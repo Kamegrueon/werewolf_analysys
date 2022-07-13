@@ -103,7 +103,17 @@ export const votesDeleteRequest = async(voteId: string) => {
 }
 
 // ComingOut
+const coming_outs_api = axiosBase.create ({
+  baseURL: 'http://localhost:3000/api/v1/coming_outs',
+  responseType: "json",
+})
 
-export const comingOutCreateRequest = async( dailyId: string, comingOutRoll: string, coPlayerId: string) => {
-
+export const comingOutCreateRequest = async( dailyId: string, comingOutRoll: string | null, coPlayerId: string) => {
+  return await coming_outs_api.post('',{
+    coming_out: {
+      daily_id: dailyId,
+      player_id: coPlayerId,
+      roll_name: comingOutRoll,
+    }
+  })
 }
