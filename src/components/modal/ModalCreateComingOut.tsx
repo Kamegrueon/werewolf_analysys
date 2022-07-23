@@ -1,13 +1,11 @@
-import { useState, useContext, useEffect } from 'react'
-import { DailiesContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
+import { useState, useContext } from 'react'
+import { CastingsContext, DailiesContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { rollIndexRequest, comingOutCreateRequest } from '../../utils/ApiFetch'
-import {AxiosResponse, AxiosError} from 'axios'
-import { DAILIES, ROLL } from '../types';
-import { GameSelectContext } from '../../utils/AnalysisContext'
+import { comingOutCreateRequest } from '../../utils/ApiFetch'
+import { AxiosError } from 'axios'
 
 const ModalCreateComingOut = (props: any ) => {
   const select_days_style = {
@@ -20,19 +18,11 @@ const ModalCreateComingOut = (props: any ) => {
 
   const {handleClose, coPlayer} = props
 
-  const { gameSelect } = useContext(GameSelectContext)
-  const [rolls, setRolls] = useState<ROLL[]>([])
-  const { selectPlayerDate, setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)  
+  const castings = useContext(CastingsContext)
+  const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)  
   const dailies = useContext(DailiesContext)
 
   const [comingOutRoll, setComingOutRoll] = useState<string>('')
-
-  useEffect(() => {
-    rollIndexRequest(gameSelect).then((res: AxiosResponse) => {
-      console.log('rolls',res.data)
-      setRolls(res.data)
-    })
-  },[])
 
   const handleChangeComingOutRoll = (event: SelectChangeEvent) => {
     setComingOutRoll(event.target.value)
@@ -68,9 +58,9 @@ const ModalCreateComingOut = (props: any ) => {
               value={comingOutRoll ?? ''}
               onChange={handleChangeComingOutRoll}
             >
-            {rolls
-            .map(roll => 
-              <MenuItem value={roll.roll_name} key={roll.id}>{roll.roll_name}</MenuItem>
+            {castings
+            .map(casting =>
+              <MenuItem value={casting.roll_name} key={casting.id}>{casting.roll_name}</MenuItem>
             )}
             </Select>
           </FormControl>

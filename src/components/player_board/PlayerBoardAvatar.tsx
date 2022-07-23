@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import styles from './PlayerBoard.module.css'
 import AvatarStateMurderedMarker from '../avatar_state/AvatarStateMurderedMarker'
 import AvatarStateExecutedMarker from '../avatar_state/AvatarStateExecutedMarker'
@@ -7,7 +7,7 @@ import AvatarStatePositionMarker from '../avatar_state/AvatarStatePositionMarker
 import { PLAYER } from '../types'
 import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
 import { PlayersContext } from '../../utils/AnalysisContext';
-import ModalMain from '../modal/ModalMain'
+// import ModalMain from '../modal/ModalMain'
 import PlayerBoardComingOut from './PlayerBoardComingOut'
 
 const ExistCod = (player: PLAYER) => {

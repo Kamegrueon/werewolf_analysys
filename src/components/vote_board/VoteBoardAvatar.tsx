@@ -27,12 +27,21 @@ const VoteBoardAvatar = (props: VoteProps) => {
     })
   }
 
+  let playerName = null
+  players === []
+    ? playerName = null
+    : playerName = players.filter((player) => String(player.id) === String(props.vote.voter_id))[0].player_name
+  console.log('これ',playerName)
+
   return (
     <div className={styles.vote__vote_log}>
       <div className={styles.vote__avatar}>
         <Avatar sx={avatar}/>
         <div className={styles.vote__avatar_name}>
-          {players.filter((player) => String(player.id) === String(props.vote.voter_id))[0].player_name}
+          {players === []
+            ? <></>
+            : players.filter((player) => String(player.id) === String(props.vote.voter_id))[0].player_name
+          }
         </div>
       </div>
       <div className={styles.vote__send_icon}>
@@ -41,7 +50,10 @@ const VoteBoardAvatar = (props: VoteProps) => {
       <div className={styles.vote__avatar}>
         <Avatar sx={avatar}/>
         <div className={styles.vote__avatar_name}>
-          {players.filter((player) => String(player.id) === String(props.vote.voted_id))[0].player_name}
+          {players === []
+            ? <></>
+            : players.filter((player) => String(player.id) === String(props.vote.voted_id))[0].player_name
+          }
         </div>
       </div>
       <div className={styles.vote__delete_icon}>
