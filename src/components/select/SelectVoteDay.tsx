@@ -32,7 +32,7 @@ const SelectVoteDay = () => {
         <Select
           sx={select_days_style}
           native={true}
-          defaultValue={selectVoteDate}
+          value={selectVoteDate}
           onChange={handleChange}
         >
          {dailies.map((daily, index) => 

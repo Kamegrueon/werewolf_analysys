@@ -10,7 +10,7 @@ import { VoteFormContext } from '../../utils/AnalysisContext';
 const VoteBoardVoteList = () => {
   const { voteLogs } = useContext(VoteLogsContext)
   const { isOpenForm } = useContext(VoteFormContext)
-  console.log('voteList',voteLogs)
+  // console.log('voteList',voteLogs)
   return (
     <div>
       <div className={styles.vote__voted}>

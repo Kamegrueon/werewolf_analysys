@@ -55,10 +55,16 @@ const App: React.FC = () =>  {
       })
       rollIndexRequest(gameSelect).then((res: AxiosResponse) => {
         console.log('rolls',res.data)
-        setCastings(res.data)
+        if (!ignore) setCastings(res.data)
       })
+    return () => { 
+      ignore = true
+      // setDailies([{id: '1',game_id: '1', date_progress: 1}]);
+      setVoteLogs([]);
+      setPlayers([]);
+      setCastings([]);
+    };
     }
-    return () => { ignore = true };
   },[gameSelect, selectPlayerDate, selectVoteDate])
 
   return (

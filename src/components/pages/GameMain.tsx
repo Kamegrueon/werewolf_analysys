@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, memo } from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,10 +16,10 @@ import ModalMain from '../modal/ModalMain';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
 
-const GameMain: React.FC = () => {
+const GameMain: React.FC = memo(() => {
 
   const { setGameSelect } = useContext(GameSelectContext)
-  const { setRolesState } = useContext(RolesContext)
+  const { setRolesState } = useContext(RolesContext)  
 
   const [games, setGames] = useState([{id: '1', game_name: '', is_win: true, date_progress: 1, created_at: ''}])
 
@@ -97,6 +97,6 @@ const GameMain: React.FC = () => {
       />
     </>
   )
-}
+})
 
 export default GameMain
