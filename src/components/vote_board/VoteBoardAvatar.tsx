@@ -27,6 +27,11 @@ const VoteBoardAvatar = (props: VoteProps) => {
     })
   }
 
+  // let flag = false
+  // if(players.filter((player) => String(player.id) === String(props.vote.voter_id))[0] === undefined){
+  //   flag = true
+  // }
+
   return (
     <div className={styles.vote__vote_log}>
       <div className={styles.vote__avatar}>

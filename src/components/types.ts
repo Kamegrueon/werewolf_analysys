@@ -13,8 +13,8 @@ export interface ROLES_CONTEXT {
 export interface PLAYER {
   id: string
   player_name: string
-  position?: string
-  position_order?: number
+  roll_name?: string
+  roll_color?: string
   cause_of_death?: CAUSE_Of_DEATH
   date_of_death?: number
   dead_style?: {opacity: number}
@@ -98,3 +98,14 @@ export interface SELECT_VOTE_DATE {
   selectVoteDate: string
   setSelectVoteDate: React.Dispatch<React.SetStateAction<string>> 
 };
+
+export interface CASTING {
+  id: number, 
+  roll_id: number, 
+  roll_name: string
+}
+
+export interface RENDER_STATE {
+  renderState: number
+  rerender: React.Dispatch<React.SetStateAction<number>>
+}

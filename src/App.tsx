@@ -6,9 +6,9 @@ import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
-import { GameSelectContext } from './utils/AnalysisContext';
-import { dailiesIndexRequest, playersIndexRequest, votesIndexRequest } from "./utils/ApiFetch";
-import { PLAYER, DAILIES, ROLE_STATE, VOTE_LOG } from "./components/types";
+import { CastingsContext, GameSelectContext, RerenderContext } from './utils/AnalysisContext';
+import { dailiesIndexRequest, playersIndexRequest, votesIndexRequest, rollIndexRequest } from "./utils/ApiFetch";
+import { PLAYER, DAILIES, ROLE_STATE, VOTE_LOG, CASTING } from "./components/types";
 import { 
   DailiesContext, 
   PlayersContext, 
@@ -27,7 +27,8 @@ const App: React.FC = () =>  {
   const [dailies, setDailies] = useState<DAILIES[]>([{id: '1',game_id: '1', date_progress: 1}])
   const [players, setPlayers] = useState<PLAYER[]>([])
   const [voteLogs, setVoteLogs] = useState<VOTE_LOG[]>([])
-  // const [isExistReport, setIsExistReport] = useState(false)
+  const [castings, setCastings] = useState<CASTING[]>([])
+  const [renderState, rerender] = useState<number>(0);
 
   const isFirstRender = useRef(false)
 
@@ -36,32 +37,44 @@ const App: React.FC = () =>  {
   }, [])
   
   useEffect(() => {
+    let ignore = false;
     if(isFirstRender.current) {
       isFirstRender.current = false
     } else {
       dailiesIndexRequest(gameSelect).then((res: AxiosResponse<DAILIES[]>) => {
         console.log('dailiesIndex',res.data)
-        setDailies(res.data)
-        let dailyId = res.data.filter((daily: DAILIES) => String(daily.date_progress) === String(selectVoteDate))[0].id
-        votesIndexRequest(dailyId).then((res: AxiosResponse<VOTE_LOG[]>) => {
+        if (!ignore) setDailies(res.data)
+        votesIndexRequest(res.data.filter((daily: DAILIES) => String(daily.date_progress) === String(selectVoteDate))[0].id).then((res: AxiosResponse<VOTE_LOG[]>) => {
           console.log('votesIndex', res.data)
-          setVoteLogs(res.data)
+          if (!ignore) setVoteLogs(res.data)
         })
       })
       playersIndexRequest(gameSelect, selectPlayerDate).then((res: AxiosResponse<PLAYER[]>) => {
         console.log('playersIndex',res.data)
-        setPlayers(res.data)
+        if (!ignore) setPlayers(res.data)
       })
+      rollIndexRequest(gameSelect).then((res: AxiosResponse) => {
+        console.log('rolls',res.data)
+        if (!ignore) setCastings(res.data)
+      })
+    return () => { 
+      ignore = true
+      setVoteLogs([]);
+      setPlayers([]);
+      setCastings([]);
+    };
     }
-  },[gameSelect, selectPlayerDate, selectVoteDate])
+  },[gameSelect, selectPlayerDate, selectVoteDate, renderState])
 
   return (
     <Router>
+      <RerenderContext.Provider value={{renderState, rerender}}>
       <GameSelectContext.Provider value={{gameSelect, setGameSelect}}>
       <DailiesContext.Provider value={dailies}>
       <PlayersContext.Provider value={players}>
       <VoteLogsContext.Provider value={{voteLogs, setVoteLogs}}>
       <RolesContext.Provider value={{rolesState, setRolesState}}>
+      <CastingsContext.Provider value={castings}>
       <SelectPlayerBoardDateContext.Provider value={{selectPlayerDate, setSelectPlayerDate}}>
       <SelectVoteBoardDateContext.Provider value={{selectVoteDate, setSelectVoteDate}}>
         <div className={styles.app__root}>
@@ -81,11 +94,13 @@ const App: React.FC = () =>  {
         </div>
       </SelectVoteBoardDateContext.Provider>
       </SelectPlayerBoardDateContext.Provider>
+      </CastingsContext.Provider>
       </RolesContext.Provider>
       </VoteLogsContext.Provider>
       </PlayersContext.Provider>
       </DailiesContext.Provider>
       </GameSelectContext.Provider>
+      </RerenderContext.Provider>
     </Router>
   );
 }

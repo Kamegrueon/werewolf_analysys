@@ -2,11 +2,14 @@ import Modal from 'react-modal'
 import ModalCreateGame from './ModalCreateGame';
 import ModalCreateReport from './ModalCreateReport';
 import ModalEditReport from './ModalEditReport'
+import ModalCreateComingOut from './ModalCreateComingOut'
+import { PLAYER } from '../types';
 
 interface Props {
   handleClose: () => void;
   isOpen: boolean;
   body: string
+  coPlayer?: PLAYER
 }
 
 const customStyles = {
@@ -25,23 +28,37 @@ const customStyles = {
   },
 };
 
-const renderBody = (body: string, handleClose: () => void , customStyles: any) => {
-  switch(body){
+const settingDisplayShortSize = (customStyles: any) => {
+  customStyles.content['height'] = '30vh'
+  customStyles.content['width'] = '20vw'
+  customStyles.content['padding'] = 0
+}
+
+const settingDisplayMediumSize = (customStyles: any) => {
+  customStyles.content['height'] = '75vh'
+  customStyles.content['width'] = '50vw'
+}
+
+const settingDisplayLargeSize = (customStyles: any) => {
+  customStyles.content['height'] = '90vh'
+  customStyles.content['width'] = '90vw'
+}
+
+const renderBody = (props: Props, customStyles: any) => {
+  switch(props.body){
     case 'createReport':
-      customStyles.content['height'] = '75vh'
-      customStyles.content['width'] = '50vw'
-      return <ModalCreateReport handleClose={handleClose} />;
+      settingDisplayMediumSize(customStyles)
+      return <ModalCreateReport handleClose={props.handleClose} />;
     case 'editReport':
-      customStyles.content['height'] = '75vh'
-      customStyles.content['width'] = '50vw'
-      return <ModalEditReport handleClose={handleClose} />;
+      settingDisplayMediumSize(customStyles)
+      return <ModalEditReport handleClose={props.handleClose} />;
     case 'createComingOut':
-      return '';
+      settingDisplayShortSize(customStyles)
+      return <ModalCreateComingOut handleClose={props.handleClose} coPlayer={props.coPlayer} />;
     case 'createAbilityLog':
       return '';
     case 'createGame':
-      customStyles.content['height'] = '90vh'
-      customStyles.content['width'] = '90vw'
+      settingDisplayLargeSize(customStyles)
       return <ModalCreateGame />;
     default:
       return <div />
@@ -59,7 +76,7 @@ const ModalMain = (props:Props) => {
         onRequestClose={props.handleClose}
         style={customStyles}
       >
-        {renderBody(props.body, props.handleClose, customStyles)}
+        {renderBody(props, customStyles)}
       </Modal>
     </div>
   )

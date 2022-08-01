@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import styles from './PlayerBoard.module.css'
 import AvatarStateMurderedMarker from '../avatar_state/AvatarStateMurderedMarker'
 import AvatarStateExecutedMarker from '../avatar_state/AvatarStateExecutedMarker'
@@ -7,6 +7,8 @@ import AvatarStatePositionMarker from '../avatar_state/AvatarStatePositionMarker
 import { PLAYER } from '../types'
 import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
 import { PlayersContext } from '../../utils/AnalysisContext';
+// import ModalMain from '../modal/ModalMain'
+import PlayerBoardComingOut from './PlayerBoardComingOut'
 
 const ExistCod = (player: PLAYER) => {
   switch (player.cause_of_death) {
@@ -45,37 +47,105 @@ const ExistCodStyle = (player: PLAYER) => {
   } 
 }
 
-const PositionName = (player: PLAYER) => {
-  let position_name = '？'
-  switch (player.position) {
+const setRollName = (player: PLAYER) => {
+  let roll_name = '？'
+  switch (player.roll_name) {
     case '占い師':
-      position_name = '占'
-      return position_name
+      roll_name = '占'
+      return roll_name
+    case '人狼':
+      roll_name = '狼'
+      return roll_name
+    case '狂人':
+      roll_name = '狂'
+      return roll_name
     default:
-      return position_name
+      return roll_name
   }
 }
 
 const PlayerBoardAvatar: React.FC = () => {
   const players = useContext(PlayersContext)
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [rollBody, setRollBody] = useState('');
+  // const [coPlayer, setCoPlayer] = useState({} as PLAYER)
+  const [clicked, setClicked] = useState<number | null>(null);
+  const contentEl = useRef<HTMLDivElement>(null);
+
+  // const handleOpen = (body: string, player: PLAYER) => {
+  //   setRollBody(body)
+  //   setCoPlayer(player)
+  //   setIsOpen(true)
+  // }
+  // const handleClose = () => {
+  //   setIsOpen(false)
+  // }
+
+
+  const handleClick = (index: number) => {
+    if (clicked === index) {
+      // comingOutRollを初期値に更新
+      return setClicked(null);
+    }
+  
+    setClicked(index);
+  };
+
   return (
     <div className={styles.player__avatars}>
-      {players.map((player) =>(
+      {players.map((player, index) =>(
       <div key={player.id}>
         <div className={styles.player__avatar_state}>        
           { ExistCod(player) }
         </div>
         <div>
-          <AvatarStatePositionMarker  position={player.position} key={player.id}/>
+          <AvatarStatePositionMarker  position={player.roll_name} key={player.id}/>
         </div>
-        <div className={styles.player__avatar} style={ExistCodStyle(player)}>
-          <div className={styles.player__avatar_position}>{PositionName(player)}</div>
+        <div onClick={()=>handleClick(index)} className={styles.player__avatar} style={ExistCodStyle(player)}>
+          <div className={styles.player__avatar_position} style={{borderColor: player.roll_color, color: player.roll_color}}>{setRollName(player)}</div>
           <div className={styles.player__avatar_name}>
             {player.player_name}
           </div>
         </div>
+        <div
+          ref={contentEl}
+          style={
+            clicked === index
+              ? {
+                  height: '150px',
+                  width: '300px',
+                  backgroundColor: "#1F2327",
+                  borderRadius: '5%',
+                  boxShadow: '2px 2px 3px rgba(255, 255, 255, 0.3)',
+                  position: 'absolute',
+                  display: 'block'
+                }
+              : { height: "0px", display: 'none' }
+          }
+        >
+          {!player.cause_of_death 
+          ? <PlayerBoardComingOut playerId={player.id} setClicked={setClicked}/>
+          :(
+          // ここ修正 
+          <div style={{position: 'absolute'}}>
+            <div>
+              EditComingOut
+            </div>
+            <div>
+              useAbility
+            </div>
+          </div>
+          )
+          }
+        </div>
       </div>
       ))}
+      {/* <ModalMain 
+        isOpen={isOpen} 
+        handleClose={handleClose}
+        body={rollBody}
+        coPlayer={coPlayer}
+      /> */}
     </div>    
   )
 }
