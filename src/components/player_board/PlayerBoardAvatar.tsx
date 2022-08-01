@@ -47,11 +47,14 @@ const ExistCodStyle = (player: PLAYER) => {
   } 
 }
 
-const PositionName = (player: PLAYER) => {
+const setRollName = (player: PLAYER) => {
   let roll_name = '？'
-  switch (player.position) {
+  switch (player.roll_name) {
     case '占い師':
       roll_name = '占'
+      return roll_name
+    case '人狼':
+      roll_name = '狼'
       return roll_name
     default:
       return roll_name
@@ -75,8 +78,10 @@ const PlayerBoardAvatar: React.FC = () => {
   //   setIsOpen(false)
   // }
 
+
   const handleClick = (index: number) => {
     if (clicked === index) {
+      
       return setClicked(null);
     }
   
@@ -91,10 +96,10 @@ const PlayerBoardAvatar: React.FC = () => {
           { ExistCod(player) }
         </div>
         <div>
-          <AvatarStatePositionMarker  position={player.position} key={player.id}/>
+          <AvatarStatePositionMarker  position={player.roll_name} key={player.id}/>
         </div>
         <div onClick={()=>handleClick(index)} className={styles.player__avatar} style={ExistCodStyle(player)}>
-          <div className={styles.player__avatar_position}>{PositionName(player)}</div>
+          <div className={styles.player__avatar_position} style={{borderColor: player.roll_color, color: player.roll_color}}>{setRollName(player)}</div>
           <div className={styles.player__avatar_name}>
             {player.player_name}
           </div>

@@ -8,14 +8,12 @@ interface Prop {
 
 const PositionState = (props: Prop) => {
   switch(props.position){
-    case '占い師':
-      // position_orderはCoした順番が記載
-      // Coした順番に応じて色を割り振る
-      return {position_order: '占', position_color: '#4072EE'}
-    case '人狼':
-      return {position_order: '狼', position_color: '#000000'}
-    case '霊媒師':
-      return {position_order: '霊', position_color: '#B558F6'}  
+    case '白':
+      // 白か黒かを表示
+      // 能力を行使したplayerの役職カラーを表示
+      return {position_order: '白', position_color: '#4072EE'}
+    case '黒':
+      return {position_order: '黒', position_color: '#000000'}
     default:
       return {position_order: '', position_color: 'transparent'}
   }

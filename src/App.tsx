@@ -59,10 +59,10 @@ const App: React.FC = () =>  {
       })
     return () => { 
       ignore = true
-      // setDailies([{id: '1',game_id: '1', date_progress: 1}]);
       setVoteLogs([]);
       setPlayers([]);
       setCastings([]);
+      // setDailies([{id: '1',game_id: '1', date_progress: 1}]);
     };
     }
   },[gameSelect, selectPlayerDate, selectVoteDate])

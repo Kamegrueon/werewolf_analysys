@@ -46,7 +46,7 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
   }
 
   return (
-    <div style={{color: 'white',textAlign: 'center',margin:20, position: 'absolute'}}>
+    <div style={{color: 'white',textAlign: 'center',margin:20, position: 'absolute', zIndex: 10}}>
       <form>
         <FormControl>
           <div style={{color: 'white'}}>Coする役職を選択してください</div>

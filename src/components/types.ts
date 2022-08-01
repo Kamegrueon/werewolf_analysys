@@ -13,8 +13,8 @@ export interface ROLES_CONTEXT {
 export interface PLAYER {
   id: string
   player_name: string
-  position?: string
-  position_order?: number
+  roll_name?: string
+  roll_color?: string
   cause_of_death?: CAUSE_Of_DEATH
   date_of_death?: number
   dead_style?: {opacity: number}

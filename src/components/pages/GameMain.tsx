@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, memo } from 'react'
+import React, { useContext, useEffect, useState, memo, useRef } from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
-import { GameSelectContext, RolesContext } from '../../utils/AnalysisContext';
+import { GameSelectContext, RolesContext, SelectPlayerBoardDateContext, SelectVoteBoardDateContext } from '../../utils/AnalysisContext';
 import { gamesIndexRequest, gamesDeleteRequest } from '../../utils/ApiFetch'
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddOutlined';
@@ -19,11 +19,24 @@ import 'dayjs/locale/ja';
 const GameMain: React.FC = memo(() => {
 
   const { setGameSelect } = useContext(GameSelectContext)
-  const { setRolesState } = useContext(RolesContext)  
+  const { setRolesState } = useContext(RolesContext)
+  const { setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
+  const  { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
 
   const [games, setGames] = useState([{id: '1', game_name: '', is_win: true, date_progress: 1, created_at: ''}])
 
-  console.log(games)
+  const isFirstRender = useRef(false)
+
+  useEffect(() => {
+    isFirstRender.current = true
+  }, [])
+
+  if(isFirstRender.current) {
+    isFirstRender.current = false
+  } else {
+    setSelectPlayerDate('1')
+    setSelectVoteDate('1')
+  }
 
   useEffect(() => {
     gamesIndexRequest().then((res: any) => {
