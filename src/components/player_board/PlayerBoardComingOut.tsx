@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { CastingsContext, DailiesContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
+import { CastingsContext, DailiesContext, RerenderContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
 import { comingOutCreateRequest } from '../../utils/ApiFetch'
 import { AxiosError} from 'axios'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -20,6 +20,7 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
   const castings = useContext(CastingsContext)
   const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)  
   const dailies = useContext(DailiesContext)
+  const { renderState, rerender } = useContext(RerenderContext)
 
   const [comingOutRoll, setComingOutRoll] = useState<string | null>(null)
 
@@ -34,6 +35,8 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
     if(comingOutRoll !== ''){
       comingOutCreateRequest(dailyId, comingOutRoll, playerId).then((res: any) => {
         console.log(res.data)
+        rerender(renderState + 1)
+        setComingOutRoll(null)
         props.setClicked(null)
       }).catch((error: AxiosError<{ error: string }>)  => {
         if (error.response !== undefined){

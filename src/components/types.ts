@@ -104,3 +104,8 @@ export interface CASTING {
   roll_id: number, 
   roll_name: string
 }
+
+export interface RENDER_STATE {
+  renderState: number
+  rerender: React.Dispatch<React.SetStateAction<number>>
+}

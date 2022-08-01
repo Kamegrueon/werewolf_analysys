@@ -56,6 +56,9 @@ const setRollName = (player: PLAYER) => {
     case '人狼':
       roll_name = '狼'
       return roll_name
+    case '狂人':
+      roll_name = '狂'
+      return roll_name
     default:
       return roll_name
   }
@@ -81,7 +84,7 @@ const PlayerBoardAvatar: React.FC = () => {
 
   const handleClick = (index: number) => {
     if (clicked === index) {
-      
+      // comingOutRollを初期値に更新
       return setClicked(null);
     }
   

@@ -8,7 +8,8 @@ import {
   VOTE_LOG_STATE, 
   VOTE_FORM_CONTEXT, 
   PLAYER,
-  CASTING
+  CASTING,
+  RENDER_STATE
 } from '../components/types'
 
 export const DailiesContext = createContext([{id: '1', date_progress: 1}] as DAILIES[])
@@ -28,3 +29,5 @@ export const VoteLogsContext = createContext({} as VOTE_LOG_STATE)
 export const VoteFormContext = createContext({} as VOTE_FORM_CONTEXT)
 
 export const CastingsContext = createContext({} as CASTING[])
+
+export const RerenderContext = createContext({} as RENDER_STATE)

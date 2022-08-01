@@ -6,7 +6,7 @@ import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
-import { CastingsContext, GameSelectContext } from './utils/AnalysisContext';
+import { CastingsContext, GameSelectContext, RerenderContext } from './utils/AnalysisContext';
 import { dailiesIndexRequest, playersIndexRequest, votesIndexRequest, rollIndexRequest } from "./utils/ApiFetch";
 import { PLAYER, DAILIES, ROLE_STATE, VOTE_LOG, CASTING } from "./components/types";
 import { 
@@ -28,7 +28,7 @@ const App: React.FC = () =>  {
   const [players, setPlayers] = useState<PLAYER[]>([])
   const [voteLogs, setVoteLogs] = useState<VOTE_LOG[]>([])
   const [castings, setCastings] = useState<CASTING[]>([])
-  // const [isExistReport, setIsExistReport] = useState(false)
+  const [renderState, rerender] = useState<number>(0);
 
   const isFirstRender = useRef(false)
 
@@ -62,13 +62,13 @@ const App: React.FC = () =>  {
       setVoteLogs([]);
       setPlayers([]);
       setCastings([]);
-      // setDailies([{id: '1',game_id: '1', date_progress: 1}]);
     };
     }
-  },[gameSelect, selectPlayerDate, selectVoteDate])
+  },[gameSelect, selectPlayerDate, selectVoteDate, renderState])
 
   return (
     <Router>
+      <RerenderContext.Provider value={{renderState, rerender}}>
       <GameSelectContext.Provider value={{gameSelect, setGameSelect}}>
       <DailiesContext.Provider value={dailies}>
       <PlayersContext.Provider value={players}>
@@ -100,6 +100,7 @@ const App: React.FC = () =>  {
       </PlayersContext.Provider>
       </DailiesContext.Provider>
       </GameSelectContext.Provider>
+      </RerenderContext.Provider>
     </Router>
   );
 }
