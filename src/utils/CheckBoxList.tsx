@@ -4,8 +4,8 @@ import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { RolesContext } from './AnalysisContext'
-import { ROLE_STATE } from '../components/types';
+import { RollsContext } from './AnalysisContext'
+import { ROLL_STATE } from '../components/types';
 
 type setTypeObject = {
   positionIds: string[]
@@ -15,7 +15,7 @@ type setTypeObject = {
 const CheckBoxList = (props: setTypeObject) => {
   const { positionIds, setPositionIds } = props
 
-  const { rolesState } = useContext(RolesContext)
+  const { rollsState } = useContext(RollsContext)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.checked, event.target.value)
@@ -32,12 +32,12 @@ const CheckBoxList = (props: setTypeObject) => {
     <Box>
       <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
         <FormGroup row>
-          {Object(rolesState).map((role:{attributes:ROLE_STATE}) => (
+          {Object(rollsState).map((role:{attributes:ROLL_STATE}) => (
             <FormControlLabel
             control={
               <Checkbox 
                 onChange={handleChange} 
-                name={role.attributes.role_name} 
+                name={role.attributes.roll_name} 
                 value={role.attributes.id} 
                 sx={{
                   color: 'white',
@@ -47,7 +47,7 @@ const CheckBoxList = (props: setTypeObject) => {
                 }}
               />
             }
-            label={role.attributes.role_name}
+            label={role.attributes.roll_name}
             key={role.attributes.id}
         />            
           ))}

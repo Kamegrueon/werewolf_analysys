@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { 
   GAME_SELECT_STATE, 
-  ROLES_CONTEXT, 
+  ROLLS_CONTEXT, 
   DAILIES, 
   SELECT_PLAYER_DATE, 
   SELECT_VOTE_DATE, 
@@ -18,7 +18,7 @@ export const GameSelectContext = createContext({} as GAME_SELECT_STATE)
 
 export const PlayersContext = createContext({} as PLAYER[])
 
-export const RolesContext = createContext({} as ROLES_CONTEXT)
+export const RollsContext = createContext({} as ROLLS_CONTEXT)
 
 export const SelectPlayerBoardDateContext = createContext({} as SELECT_PLAYER_DATE)
 

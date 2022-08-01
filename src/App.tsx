@@ -8,11 +8,11 @@ import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
 import { CastingsContext, GameSelectContext, RerenderContext } from './utils/AnalysisContext';
 import { dailiesIndexRequest, playersIndexRequest, votesIndexRequest, rollIndexRequest } from "./utils/ApiFetch";
-import { PLAYER, DAILIES, ROLE_STATE, VOTE_LOG, CASTING } from "./components/types";
+import { PLAYER, DAILIES, ROLL_STATE, VOTE_LOG, CASTING } from "./components/types";
 import { 
   DailiesContext, 
   PlayersContext, 
-  RolesContext, 
+  RollsContext, 
   SelectPlayerBoardDateContext, 
   SelectVoteBoardDateContext, 
   VoteLogsContext,
@@ -23,7 +23,7 @@ const App: React.FC = () =>  {
   const [gameSelect, setGameSelect] = useState<string>('')
   const [selectPlayerDate, setSelectPlayerDate] = useState<string>('1')
   const [selectVoteDate, setSelectVoteDate] = useState<string>('1')
-  const [rolesState, setRolesState] = useState<ROLE_STATE[]>([{id: '1', role_name: '人狼'}])
+  const [rollsState, setRollsState] = useState<ROLL_STATE[]>([{id: '1', roll_name: '人狼'}])
   const [dailies, setDailies] = useState<DAILIES[]>([{id: '1',game_id: '1', date_progress: 1}])
   const [players, setPlayers] = useState<PLAYER[]>([])
   const [voteLogs, setVoteLogs] = useState<VOTE_LOG[]>([])
@@ -73,7 +73,7 @@ const App: React.FC = () =>  {
       <DailiesContext.Provider value={dailies}>
       <PlayersContext.Provider value={players}>
       <VoteLogsContext.Provider value={{voteLogs, setVoteLogs}}>
-      <RolesContext.Provider value={{rolesState, setRolesState}}>
+      <RollsContext.Provider value={{rollsState, setRollsState}}>
       <CastingsContext.Provider value={castings}>
       <SelectPlayerBoardDateContext.Provider value={{selectPlayerDate, setSelectPlayerDate}}>
       <SelectVoteBoardDateContext.Provider value={{selectVoteDate, setSelectVoteDate}}>
@@ -95,7 +95,7 @@ const App: React.FC = () =>  {
       </SelectVoteBoardDateContext.Provider>
       </SelectPlayerBoardDateContext.Provider>
       </CastingsContext.Provider>
-      </RolesContext.Provider>
+      </RollsContext.Provider>
       </VoteLogsContext.Provider>
       </PlayersContext.Provider>
       </DailiesContext.Provider>

@@ -55,8 +55,8 @@ const renderBody = (props: Props, customStyles: any) => {
     case 'createComingOut':
       settingDisplayShortSize(customStyles)
       return <ModalCreateComingOut handleClose={props.handleClose} coPlayer={props.coPlayer} />;
-    case 'createAbilityLog':
-      return '';
+    case 'abilityMenu':
+      return <div>OK</div>;
     case 'createGame':
       settingDisplayLargeSize(customStyles)
       return <ModalCreateGame />;

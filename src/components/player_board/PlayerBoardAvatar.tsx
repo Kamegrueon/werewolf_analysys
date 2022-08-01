@@ -7,8 +7,10 @@ import AvatarStatePositionMarker from '../avatar_state/AvatarStatePositionMarker
 import { PLAYER } from '../types'
 import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
 import { PlayersContext } from '../../utils/AnalysisContext';
-// import ModalMain from '../modal/ModalMain'
+import ModalMain from '../modal/ModalMain'
 import PlayerBoardComingOut from './PlayerBoardComingOut'
+
+const noAvailableRoll = ['人狼', '狂人', '共有者', '妖狐', '独裁者', '狂信者']
 
 const ExistCod = (player: PLAYER) => {
   switch (player.cause_of_death) {
@@ -16,21 +18,21 @@ const ExistCod = (player: PLAYER) => {
       return (
         <>
           <AvatarStateMurderedMarker />
-          <AvatarStateDeathDate date_of_death={player.date_of_death} key={player.id}/>
+          <AvatarStateDeathDate death_date={player.death_date} key={player.id}/>
         </>
       );
     case '処刑':
       return (
         <>
           <AvatarStateExecutedMarker />
-          <AvatarStateDeathDate date_of_death={player.date_of_death} key={player.id}/>
+          <AvatarStateDeathDate death_date={player.death_date} key={player.id}/>
         </>
       );
     case '突然死':
       return (
         <>
           <AvatarStatePerishedMarker />
-          <AvatarStateDeathDate date_of_death={player.date_of_death} key={player.id}/>
+          <AvatarStateDeathDate death_date={player.death_date} key={player.id}/>
         </>
       );
     default:
@@ -51,14 +53,25 @@ const setRollName = (player: PLAYER) => {
   let roll_name = '？'
   switch (player.roll_name) {
     case '占い師':
-      roll_name = '占'
-      return roll_name
+      return roll_name = '占'
     case '人狼':
-      roll_name = '狼'
-      return roll_name
+      return roll_name = '狼'
     case '狂人':
-      roll_name = '狂'
-      return roll_name
+      return roll_name = '狂'
+    case '霊媒師':
+      return roll_name = '霊'
+    case '騎士':
+      return roll_name = '騎'
+    case '妖狐':
+      return roll_name = '狐'
+    case '共有者':
+      return roll_name = '共'
+    case 'ハンター':
+      return roll_name = 'ハ'
+    case '独裁者':
+      return roll_name = '独'
+    case '狂信者':
+      return roll_name = '狂'
     default:
       return roll_name
   }
@@ -66,47 +79,16 @@ const setRollName = (player: PLAYER) => {
 
 const PlayerBoardAvatar: React.FC = () => {
   const players = useContext(PlayersContext)
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [rollBody, setRollBody] = useState('');
-  // const [coPlayer, setCoPlayer] = useState({} as PLAYER)
+  const [isOpen, setIsOpen] = useState(false);
+  const [coPlayer, setCoPlayer] = useState({} as PLAYER)
   const [clicked, setClicked] = useState<number | null>(null);
   const contentEl = useRef<HTMLDivElement>(null);
 
-  // const handleOpen = (body: string, player: PLAYER) => {
-  //   setRollBody(body)
-  //   setCoPlayer(player)
-  //   setIsOpen(true)
-  // }
-  // const handleClose = () => {
-  //   setIsOpen(false)
-  // }
-
-
-  const handleClick = (index: number) => {
-    if (clicked === index) {
-      // comingOutRollを初期値に更新
-      return setClicked(null);
-    }
-  
-    setClicked(index);
-  };
-
-  return (
-    <div className={styles.player__avatars}>
-      {players.map((player, index) =>(
-      <div key={player.id}>
-        <div className={styles.player__avatar_state}>        
-          { ExistCod(player) }
-        </div>
-        <div>
-          <AvatarStatePositionMarker  position={player.roll_name} key={player.id}/>
-        </div>
-        <div onClick={()=>handleClick(index)} className={styles.player__avatar} style={ExistCodStyle(player)}>
-          <div className={styles.player__avatar_position} style={{borderColor: player.roll_color, color: player.roll_color}}>{setRollName(player)}</div>
-          <div className={styles.player__avatar_name}>
-            {player.player_name}
-          </div>
-        </div>
+  const playerAvailableAction = (player: PLAYER, clicked: number | null, index: number) => {
+    if(player.cause_of_death !== null){
+      return <></>
+    }else if(player.roll_name === null){
+      return (
         <div
           ref={contentEl}
           style={
@@ -123,29 +105,81 @@ const PlayerBoardAvatar: React.FC = () => {
               : { height: "0px", display: 'none' }
           }
         >
-          {!player.cause_of_death 
-          ? <PlayerBoardComingOut playerId={player.id} setClicked={setClicked}/>
-          :(
-          // ここ修正 
-          <div style={{position: 'absolute'}}>
-            <div>
-              EditComingOut
-            </div>
-            <div>
-              useAbility
+          <PlayerBoardComingOut playerId={player.id} setClicked={setClicked}/>                  
+        </div>
+      )
+    }else if(clicked === index && !noAvailableRoll.includes(player.roll_name)){
+      setClicked(null)
+      setCoPlayer(player)
+      setIsOpen(true)
+    }
+  }
+
+  // const handleOpen = (player: PLAYER) => {
+  //   setCoPlayer(player)
+  //   setIsOpen(true)
+  // }
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
+
+  const handleClick = (index: number) => {
+    if (clicked === index) {
+      // comingOutRollを初期値に更新
+      return setClicked(null);
+    }
+  
+    setClicked(index);
+  };
+
+  return (
+    <div className={styles.player__avatars}>
+      {players.map((player, index) =>(
+        <div key={player.id}>
+          <div className={styles.player__avatar_state}>        
+            { ExistCod(player) }
+          </div>
+          <div>
+            <AvatarStatePositionMarker  position={player.roll_name} key={player.id}/>
+          </div>
+          <div onClick={()=>handleClick(index)} className={styles.player__avatar} style={ExistCodStyle(player)}>
+            <div className={styles.player__avatar_position} style={{borderColor: player.roll_color, color: player.roll_color}}>{setRollName(player)}</div>
+            <div className={styles.player__avatar_name}>
+              {player.player_name}
             </div>
           </div>
-          )
-          }
+          {playerAvailableAction(player, clicked, index)}
+          {/* {player.cause_of_death === null
+            ? (<div
+                ref={contentEl}
+                style={
+                  clicked === index && player.roll_name === null
+                    ? {
+                        height: '150px',
+                        width: '300px',
+                        backgroundColor: "#1F2327",
+                        borderRadius: '5%',
+                        boxShadow: '2px 2px 3px rgba(255, 255, 255, 0.3)',
+                        position: 'absolute',
+                        display: 'block'
+                      }
+                    : { height: "0px", display: 'none' }
+                }
+              >
+                <PlayerBoardComingOut playerId={player.id} setClicked={setClicked}/>                  
+              </div>
+              )
+            : <></>  
+          } */}
         </div>
-      </div>
       ))}
-      {/* <ModalMain 
+      <ModalMain 
         isOpen={isOpen} 
         handleClose={handleClose}
-        body={rollBody}
+        body={'abilityMenu'}
         coPlayer={coPlayer}
-      /> */}
+      />
     </div>    
   )
 }

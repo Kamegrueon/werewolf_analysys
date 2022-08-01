@@ -3,7 +3,7 @@ import styles from './AvatarState.module.css'
 // import { POSITION_STATE } from '../types'
 
 interface Prop {
-  position: string | undefined
+  position: string | null
 }
 
 const PositionState = (props: Prop) => {
