@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState, useRef, RefObject, createRef } from 'react'
 import styles from './PlayerBoard.module.css'
 import AvatarStateMurderedMarker from '../avatar_state/AvatarStateMurderedMarker'
 import AvatarStateExecutedMarker from '../avatar_state/AvatarStateExecutedMarker'
@@ -10,7 +10,7 @@ import { PlayersContext } from '../../utils/AnalysisContext';
 import ModalMain from '../modal/ModalMain'
 import PlayerBoardComingOut from './PlayerBoardComingOut'
 
-const noAvailableRoll = ['人狼', '狂人', '共有者', '妖狐', '独裁者', '狂信者']
+// const noAvailableRoll = ['人狼', '狂人', '共有者', '妖狐', '独裁者', '狂信者']
 
 const ExistCod = (player: PLAYER) => {
   switch (player.cause_of_death) {
@@ -82,15 +82,19 @@ const PlayerBoardAvatar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [coPlayer, setCoPlayer] = useState({} as PLAYER)
   const [clicked, setClicked] = useState<number | null>(null);
-  const contentEl = useRef<HTMLDivElement>(null);
+  const contentRefs = useRef<RefObject<HTMLDivElement>[]>([])
+
+  players.forEach((_, index) => {
+    contentRefs.current[index] = createRef<HTMLDivElement>()
+  })
 
   const playerAvailableAction = (player: PLAYER, clicked: number | null, index: number) => {
     if(player.cause_of_death !== null){
-      return <></>
+      return null
     }else if(player.roll_name === null){
       return (
         <div
-          ref={contentEl}
+          ref={contentRefs.current[index]}
           style={
             clicked === index
               ? {
@@ -105,24 +109,23 @@ const PlayerBoardAvatar: React.FC = () => {
               : { height: "0px", display: 'none' }
           }
         >
-          <PlayerBoardComingOut playerId={player.id} setClicked={setClicked}/>                  
+            <PlayerBoardComingOut playerId={player.id} setClicked={setClicked} contentRefs={contentRefs} index={index} clicked={clicked}/>
         </div>
       )
-    }else if(clicked === index && !noAvailableRoll.includes(player.roll_name)){
+    }else if(clicked === index){
       setClicked(null)
       setCoPlayer(player)
       setIsOpen(true)
+      const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
+      Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 0})
     }
   }
 
-  // const handleOpen = (player: PLAYER) => {
-  //   setCoPlayer(player)
-  //   setIsOpen(true)
-  // }
   const handleClose = () => {
     setIsOpen(false)
+    const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
+    Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 5})
   }
-
 
   const handleClick = (index: number) => {
     if (clicked === index) {
@@ -131,6 +134,7 @@ const PlayerBoardAvatar: React.FC = () => {
     }
   
     setClicked(index);
+
   };
 
   return (
@@ -150,28 +154,6 @@ const PlayerBoardAvatar: React.FC = () => {
             </div>
           </div>
           {playerAvailableAction(player, clicked, index)}
-          {/* {player.cause_of_death === null
-            ? (<div
-                ref={contentEl}
-                style={
-                  clicked === index && player.roll_name === null
-                    ? {
-                        height: '150px',
-                        width: '300px',
-                        backgroundColor: "#1F2327",
-                        borderRadius: '5%',
-                        boxShadow: '2px 2px 3px rgba(255, 255, 255, 0.3)',
-                        position: 'absolute',
-                        display: 'block'
-                      }
-                    : { height: "0px", display: 'none' }
-                }
-              >
-                <PlayerBoardComingOut playerId={player.id} setClicked={setClicked}/>                  
-              </div>
-              )
-            : <></>  
-          } */}
         </div>
       ))}
       <ModalMain 
