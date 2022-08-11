@@ -2,6 +2,7 @@ import Modal from 'react-modal'
 import ModalCreateGame from './ModalCreateGame';
 import ModalCreateReport from './ModalCreateReport';
 import ModalEditReport from './ModalEditReport'
+import ModalAbilityAction from './ModalAbilityAction';
 import { PLAYER } from '../types';
 
 interface Props {
@@ -27,11 +28,11 @@ const customStyles = {
   },
 };
 
-// const settingDisplayShortSize = (customStyles: any) => {
-//   customStyles.content['height'] = '30vh'
-//   customStyles.content['width'] = '20vw'
-//   customStyles.content['padding'] = 0
-// }
+const settingDisplayShortSize = (customStyles: any) => {
+  customStyles.content['height'] = '40vh'
+  customStyles.content['width'] = '20vw'
+  customStyles.content['padding'] = 0
+}
 
 const settingDisplayMediumSize = (customStyles: any) => {
   customStyles.content['height'] = '75vh'
@@ -51,9 +52,9 @@ const renderBody = (props: Props, customStyles: any) => {
     case 'editReport':
       settingDisplayMediumSize(customStyles)
       return <ModalEditReport handleClose={props.handleClose} />;
-    case 'abilityMenu':
-      // abilityMenuにはボタン配置。そこから複数アクションに分岐する
-      return <div>OK</div>;
+    case 'createAbilityLog':
+      settingDisplayShortSize(customStyles)
+      return <ModalAbilityAction coPlayer={props.coPlayer}/>
     case 'createGame':
       settingDisplayLargeSize(customStyles)
       return <ModalCreateGame />;

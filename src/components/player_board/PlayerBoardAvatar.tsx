@@ -9,6 +9,7 @@ import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
 import { PlayersContext } from '../../utils/AnalysisContext';
 import ModalMain from '../modal/ModalMain'
 import PlayerBoardComingOut from './PlayerBoardComingOut'
+import PlayerBoardSelectAbilityAction from './PlayerBoardSelectAbilityAction'
 
 // const noAvailableRoll = ['人狼', '狂人', '共有者', '妖狐', '独裁者', '狂信者']
 
@@ -91,15 +92,16 @@ const PlayerBoardAvatar: React.FC = () => {
   const playerAvailableAction = (player: PLAYER, clicked: number | null, index: number) => {
     if(player.cause_of_death !== null){
       return null
-    }else if(player.roll_name === null){
+    }else{
+      const height = player.roll_name === null ? '150px' : '180px'
       return (
         <div
           ref={contentRefs.current[index]}
           style={
             clicked === index
               ? {
-                  height: '150px',
-                  width: '300px',
+                  height: height,
+                  width: '280px',
                   backgroundColor: "#1F2327",
                   borderRadius: '5%',
                   boxShadow: '2px 2px 3px rgba(255, 255, 255, 0.3)',
@@ -109,15 +111,19 @@ const PlayerBoardAvatar: React.FC = () => {
               : { height: "0px", display: 'none' }
           }
         >
-            <PlayerBoardComingOut playerId={player.id} setClicked={setClicked} contentRefs={contentRefs} index={index} clicked={clicked}/>
+          {
+          player.roll_name === null 
+            ? <PlayerBoardComingOut playerId={player.id} setClicked={setClicked} contentRefs={contentRefs} index={index} clicked={clicked}/>
+            : <PlayerBoardSelectAbilityAction player={player} setCoPlayer={setCoPlayer} setIsOpen={setIsOpen} setClicked={setClicked} contentRefs={contentRefs} index={index} clicked={clicked}/>
+          }
         </div>
       )
-    }else if(clicked === index){
-      setClicked(null)
-      setCoPlayer(player)
-      setIsOpen(true)
-      const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
-      Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 0})
+    // }else if(clicked === index){
+      // setClicked(null)
+      // setCoPlayer(player)
+      // setIsOpen(true)
+      // const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
+      // Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 0})
     }
   }
 
@@ -159,7 +165,7 @@ const PlayerBoardAvatar: React.FC = () => {
       <ModalMain 
         isOpen={isOpen} 
         handleClose={handleClose}
-        body={'abilityMenu'}
+        body={'createAbilityLog'}
         coPlayer={coPlayer}
       />
     </div>    
