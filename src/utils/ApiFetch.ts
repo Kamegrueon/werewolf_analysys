@@ -117,3 +117,14 @@ export const comingOutCreateRequest = async( dailyId: string, comingOutRoll: str
     }
   })
 }
+
+// AbilityLog
+
+export const abilityLogsCreateRequest = async( coId: string | null, playerId: string, abilityResult: string) => {
+  return await coming_outs_api.post(`/${coId}/ability_logs`,{
+    ability_log: {
+      target_player_id: playerId,
+      ability_result: abilityResult,
+    }
+  })
+}
