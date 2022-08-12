@@ -1,10 +1,9 @@
 import { useEffect } from 'react'
 import Button from '@mui/material/Button';
-import { PLAYER } from '../types';
 
 interface Props {
-  player: PLAYER, 
-  setCoPlayer: React.Dispatch<React.SetStateAction<PLAYER>>,
+  coId: string | null,
+  setCoId: React.Dispatch<React.SetStateAction<string | null>>,
   setClicked: React.Dispatch<React.SetStateAction<number | null>>,
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
   contentRefs: React.MutableRefObject<React.RefObject<HTMLDivElement>[]>, 
@@ -13,7 +12,7 @@ interface Props {
 }
 
 const PlayerBoardSelectAbilityAction = (props: Props) => {
-  const {player, setCoPlayer, setClicked, setIsOpen, contentRefs, index, clicked} = props
+  const {coId, setCoId, setClicked, setIsOpen, contentRefs, index, clicked} = props
 
   useEffect(()=>{
     if (contentRefs && contentRefs.current[index].current){
@@ -29,7 +28,7 @@ const PlayerBoardSelectAbilityAction = (props: Props) => {
 
   const createAbilityLog = () => {
     setClicked(null)
-    setCoPlayer(player)
+    setCoId(coId)
     setIsOpen(true)
     const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
     Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 0})              

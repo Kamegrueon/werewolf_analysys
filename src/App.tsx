@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
 import { CastingsContext, GameSelectContext, RerenderContext } from './utils/AnalysisContext';
-import { dailiesIndexRequest, playersIndexRequest, votesIndexRequest, rollIndexRequest } from "./utils/ApiFetch";
+import { dailiesIndexRequest, playersIndexRequest, votesIndexRequest, rollIndexRequest, comingOutIndexRequest } from "./utils/ApiFetch";
 import { PLAYER, DAILIES, ROLL_STATE, VOTE_LOG, CASTING } from "./components/types";
 import { 
   DailiesContext, 
@@ -56,6 +56,11 @@ const App: React.FC = () =>  {
       rollIndexRequest(gameSelect).then((res: AxiosResponse) => {
         console.log('rolls',res.data)
         if (!ignore) setCastings(res.data)
+      })
+      // abilityLogに修正
+      comingOutIndexRequest(gameSelect, selectPlayerDate).then((res: AxiosResponse) => {
+        console.log('comingOut', res.data)
+        // if (!ignore) setCastings(res.data)
       })
     return () => { 
       ignore = true

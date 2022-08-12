@@ -3,13 +3,12 @@ import ModalCreateGame from './ModalCreateGame';
 import ModalCreateReport from './ModalCreateReport';
 import ModalEditReport from './ModalEditReport'
 import ModalCreateAbilityLog from './ModalCreateAbilityLog';
-import { PLAYER } from '../types';
 
 interface Props {
   handleClose: () => void;
   isOpen: boolean;
-  body: string
-  coPlayer?: PLAYER
+  body: string;
+  coId?: string | null | undefined;
 }
 
 const customStyles = {
@@ -29,7 +28,7 @@ const customStyles = {
 };
 
 const settingDisplayShortSize = (customStyles: any) => {
-  customStyles.content['height'] = '30vh'
+  customStyles.content['height'] = '35vh'
   customStyles.content['width'] = '20vw'
   customStyles.content['padding'] = 0
 }
@@ -54,7 +53,7 @@ const renderBody = (props: Props, customStyles: any) => {
       return <ModalEditReport handleClose={props.handleClose} />;
     case 'createAbilityLog':
       settingDisplayShortSize(customStyles)
-      return <ModalCreateAbilityLog coPlayer={props.coPlayer} handleClose={props.handleClose} />
+      return <ModalCreateAbilityLog coId={props.coId} handleClose={props.handleClose} />
     case 'createGame':
       settingDisplayLargeSize(customStyles)
       return <ModalCreateGame />;

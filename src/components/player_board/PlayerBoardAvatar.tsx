@@ -81,7 +81,7 @@ const setRollName = (player: PLAYER) => {
 const PlayerBoardAvatar: React.FC = () => {
   const players = useContext(PlayersContext)
   const [isOpen, setIsOpen] = useState(false);
-  const [coPlayer, setCoPlayer] = useState({} as PLAYER)
+  const [coId, setCoId] = useState<string | null>(null)
   const [clicked, setClicked] = useState<number | null>(null);
   const contentRefs = useRef<RefObject<HTMLDivElement>[]>([])
 
@@ -114,7 +114,7 @@ const PlayerBoardAvatar: React.FC = () => {
           {
           player.roll_name === null 
             ? <PlayerBoardComingOut playerId={player.id} setClicked={setClicked} contentRefs={contentRefs} index={index} clicked={clicked}/>
-            : <PlayerBoardSelectAbilityAction player={player} setCoPlayer={setCoPlayer} setIsOpen={setIsOpen} setClicked={setClicked} contentRefs={contentRefs} index={index} clicked={clicked}/>
+            : <PlayerBoardSelectAbilityAction coId={player.co_id} setCoId={setCoId} setIsOpen={setIsOpen} setClicked={setClicked} contentRefs={contentRefs} index={index} clicked={clicked}/>
           }
         </div>
       )
@@ -166,7 +166,7 @@ const PlayerBoardAvatar: React.FC = () => {
         isOpen={isOpen} 
         handleClose={handleClose}
         body={'createAbilityLog'}
-        coPlayer={coPlayer}
+        coId={coId}
       />
     </div>    
   )

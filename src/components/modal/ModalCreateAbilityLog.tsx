@@ -1,15 +1,15 @@
+import { useState, useContext } from 'react';
 import { abilityLogsCreateRequest } from '../../utils/ApiFetch'
 import { AxiosError} from 'axios'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
-import { PLAYER } from '../types';
+import { PlayersContext } from '../../utils/AnalysisContext';
+import { InputLabel } from '@mui/material';
 
-const ModalCreateAbilityLog = (props: {coPlayer: PLAYER | undefined, handleClose: () => void}) => {
+const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleClose: () => void}) => {
 
-  const select_days_style = {
+  const select_style = {
     width: '100%',
     height: 30,
     color: '#1F2327',
@@ -17,24 +17,26 @@ const ModalCreateAbilityLog = (props: {coPlayer: PLAYER | undefined, handleClose
     textAlign: 'center'
   }
 
-  const buttonStyle = {
-    backgroundColor: "#bdbdbd", 
-    color: "#1F2327", 
-    marginBottom: 10
-  }
-
   const [abilityResult, setAbilityResult] = useState<string>('')
+  const [targetPlayerId, setTargetPlayerId] = useState<string>('')
+  const players = useContext(PlayersContext)
 
   const handleChangeAbilityResult = (event: SelectChangeEvent<string>) => {
     setAbilityResult(event.target.value)
     console.log(event.target.value)
   }
 
-  const onClickSubmit = (coPlayer: PLAYER | undefined) => {
-    if(abilityResult !== '' && coPlayer !== undefined){
-      abilityLogsCreateRequest(coPlayer.co_id, coPlayer.id, abilityResult).then((res: any) => {
+  const handleChangeTargetPlayer = (event: SelectChangeEvent<string>) => {
+    setTargetPlayerId(event.target.value)
+    console.log(event.target.value)
+  }
+
+  const onClickSubmit = (coId: string | null | undefined) => {
+    if(abilityResult !== '' && targetPlayerId !== '' && coId !== null){
+      abilityLogsCreateRequest(coId, targetPlayerId, abilityResult).then((res: any) => {
         console.log(res.data)
         setAbilityResult('')
+        setTargetPlayerId('')
         props.handleClose()
       }).catch((error: AxiosError<{ error: string }>)  => {
         if (error.response !== undefined){
@@ -48,30 +50,41 @@ const ModalCreateAbilityLog = (props: {coPlayer: PLAYER | undefined, handleClose
 
 
   return (
-    <div style={{color: 'white',textAlign: 'center',margin:20, position: 'absolute', zIndex: 10}}>
-    <form>
-      <FormControl>
-        <div style={{color: 'white'}}>役職のアクション結果</div>
-        {/* player contextを取得してプルダウンで選択可能にする */}
-        {/* <Select
-          sx={select_days_style}
-          value={abilityResult}
-          onChange={handleChangeAbilityResult}
-        >
-          <MenuItem value="白"></MenuItem>
-        </Select> */}
-        <Select
-          sx={select_days_style}
-          value={abilityResult}
-          onChange={handleChangeAbilityResult}
-        >
-          <MenuItem value="白">白</MenuItem>
-          <MenuItem value="黒">黒</MenuItem>
-        </Select>
-      </FormControl>
+    <div style={{color: 'white',textAlign: 'center', marginTop: 20, marginLeft: 'auto', marginRight: 'auto', width:200, zIndex: 10}}>
+    役職のアクション結果
+    <form  style={{marginTop: 8}}>
+        <FormControl style={{display: 'block'}}>
+          <InputLabel shrink style={{color: 'white'}}>対象者</InputLabel>
+          <Select
+            native={true}
+            value={targetPlayerId}
+            onChange={handleChangeTargetPlayer}
+            sx={select_style}
+            style={{marginTop: 7, marginBottom: 15}}
+          >
+            <option value={''} key={''}></option>
+          {players.map(player =>
+            <option value={player.id} key={player.id}>{player.player_name}</option>
+          )}
+          </Select>
+        </FormControl>
+        <FormControl style={{display: 'block'}}>
+          <InputLabel shrink style={{color: 'white'}}>結果</InputLabel>
+          <Select
+            native={true}
+            sx={select_style}
+            value={abilityResult}
+            onChange={handleChangeAbilityResult}
+            style={{marginTop: 7}}
+          >
+            <option value={''}></option>
+            <option value='白'>白</option>
+            <option value='黒'>黒</option>
+          </Select>
+        </FormControl>
       <Button
         variant="contained"
-        onClick={()=>onClickSubmit(props.coPlayer)}
+        onClick={()=>onClickSubmit(props.coId)}
         style={{backgroundColor: "#bdbdbd", color: "#1F2327", marginTop: 20}}
       >
         結果を記録する
