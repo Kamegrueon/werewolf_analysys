@@ -110,3 +110,12 @@ export interface RENDER_STATE {
   renderState: number
   rerender: React.Dispatch<React.SetStateAction<number>>
 }
+
+export interface ABILITY_LOG {
+  id: number,
+  coming_out_player_id: number,
+  date_progress: number
+  target_player_id: number,
+  ability_result: string,
+  roll_color?: string,
+}

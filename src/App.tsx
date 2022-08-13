@@ -6,9 +6,14 @@ import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
-import { CastingsContext, GameSelectContext, RerenderContext } from './utils/AnalysisContext';
-import { dailiesIndexRequest, playersIndexRequest, votesIndexRequest, rollIndexRequest, comingOutIndexRequest } from "./utils/ApiFetch";
-import { PLAYER, DAILIES, ROLL_STATE, VOTE_LOG, CASTING } from "./components/types";
+import { PLAYER, DAILIES, ROLL_STATE, VOTE_LOG, CASTING, ABILITY_LOG  } from "./components/types";
+import { 
+  dailiesIndexRequest, 
+  playersIndexRequest, 
+  votesIndexRequest, 
+  rollIndexRequest, 
+  comingOutIndexRequest
+} from "./utils/ApiFetch";
 import { 
   DailiesContext, 
   PlayersContext, 
@@ -16,6 +21,10 @@ import {
   SelectPlayerBoardDateContext, 
   SelectVoteBoardDateContext, 
   VoteLogsContext,
+  CastingsContext, 
+  GameSelectContext, 
+  RerenderContext,
+  AbilityLogsContext,
 } from './utils/AnalysisContext';
 
 const App: React.FC = () =>  {
@@ -28,6 +37,7 @@ const App: React.FC = () =>  {
   const [players, setPlayers] = useState<PLAYER[]>([])
   const [voteLogs, setVoteLogs] = useState<VOTE_LOG[]>([])
   const [castings, setCastings] = useState<CASTING[]>([])
+  const [abilityLogs, setAbilityLogs] = useState<ABILITY_LOG[]>([])
   const [renderState, rerender] = useState<number>(0);
 
   const isFirstRender = useRef(false)
@@ -57,17 +67,17 @@ const App: React.FC = () =>  {
         console.log('rolls',res.data)
         if (!ignore) setCastings(res.data)
       })
-      // abilityLogに修正
       comingOutIndexRequest(gameSelect, selectPlayerDate).then((res: AxiosResponse) => {
-        console.log('comingOut', res.data)
-        // if (!ignore) setCastings(res.data)
+        console.log('abilityLogs', res.data)
+        if (!ignore) setAbilityLogs(res.data)
       })
-    return () => { 
-      ignore = true
-      setVoteLogs([]);
-      setPlayers([]);
-      setCastings([]);
-    };
+      return () => { 
+        ignore = true
+        setVoteLogs([]);
+        setPlayers([]);
+        setCastings([]);
+        setAbilityLogs([])
+      };
     }
   },[gameSelect, selectPlayerDate, selectVoteDate, renderState])
 
@@ -82,6 +92,7 @@ const App: React.FC = () =>  {
       <CastingsContext.Provider value={castings}>
       <SelectPlayerBoardDateContext.Provider value={{selectPlayerDate, setSelectPlayerDate}}>
       <SelectVoteBoardDateContext.Provider value={{selectVoteDate, setSelectVoteDate}}>
+      <AbilityLogsContext.Provider value={abilityLogs} >
         <div className={styles.app__root}>
           <AnalysisLeftBar />
           <div className={styles.app__main}>
@@ -97,6 +108,7 @@ const App: React.FC = () =>  {
             </Switch>
           </div>
         </div>
+      </AbilityLogsContext.Provider>
       </SelectVoteBoardDateContext.Provider>
       </SelectPlayerBoardDateContext.Provider>
       </CastingsContext.Provider>

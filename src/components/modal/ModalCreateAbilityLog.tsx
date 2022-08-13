@@ -4,7 +4,7 @@ import { AxiosError} from 'axios'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import { PlayersContext } from '../../utils/AnalysisContext';
+import { DailiesContext, PlayersContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext';
 import { InputLabel } from '@mui/material';
 
 const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleClose: () => void}) => {
@@ -20,6 +20,8 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
   const [abilityResult, setAbilityResult] = useState<string>('')
   const [targetPlayerId, setTargetPlayerId] = useState<string>('')
   const players = useContext(PlayersContext)
+  const dailies = useContext(DailiesContext)
+  const {selectPlayerDate} = useContext(SelectPlayerBoardDateContext)
 
   const handleChangeAbilityResult = (event: SelectChangeEvent<string>) => {
     setAbilityResult(event.target.value)
@@ -32,8 +34,9 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
   }
 
   const onClickSubmit = (coId: string | null | undefined) => {
+    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
     if(abilityResult !== '' && targetPlayerId !== '' && coId !== null){
-      abilityLogsCreateRequest(coId, targetPlayerId, abilityResult).then((res: any) => {
+      abilityLogsCreateRequest(coId, targetPlayerId, dailyId, abilityResult).then((res: any) => {
         console.log(res.data)
         setAbilityResult('')
         setTargetPlayerId('')

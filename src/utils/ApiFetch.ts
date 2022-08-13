@@ -109,8 +109,8 @@ const coming_outs_api = axiosBase.create ({
 })
 
 // abilityLogのindexアクションで取得する形に修正
-export const comingOutIndexRequest = async(gameId: string, date_progress: string) => {
-  return await coming_outs_api.get(`?game_id=${gameId}&date_progress=${date_progress}`)
+export const comingOutIndexRequest = async(gameId: string, dateProgress: string) => {
+  return await coming_outs_api.get(`?game_id=${gameId}&date_progress=${dateProgress}`)
 }
 
 export const comingOutCreateRequest = async( dailyId: string, comingOutRoll: string | null, coPlayerId: string) => {
@@ -124,11 +124,11 @@ export const comingOutCreateRequest = async( dailyId: string, comingOutRoll: str
 }
 
 // AbilityLog
-
-export const abilityLogsCreateRequest = async( coId: string | null | undefined, targetPlayerId: string, abilityResult: string) => {
+export const abilityLogsCreateRequest = async( coId: string | null | undefined, targetPlayerId: string, dailyId: string, abilityResult: string) => {
   return await coming_outs_api.post(`/${coId}/ability_logs`,{
     ability_log: {
       target_player_id: targetPlayerId,
+      daily_id: dailyId,
       ability_result: abilityResult,
     }
   })
