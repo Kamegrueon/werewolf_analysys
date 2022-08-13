@@ -1,0 +1,63 @@
+.data__board{
+  height: calc(100% - 55px);
+  width: 50%;
+  margin: 15px 0 0 40px;
+  padding: 20px 0 0 20px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.data__title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.data__box {
+  height: 100%;
+  display: flex;
+}
+
+.vote__select {
+  margin: 0 0 0 auto;
+}
+
+.vote__voted {
+  height: 100%;
+  width: 100%;
+  padding: 15px 0 0 10px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.vote__voted::-webkit-scrollbar{
+  display: none;
+}
+
+.vote__avatar {
+  display: flex;
+}
+
+.vote__avatar_name {
+  width: 90px;
+  font-size: 14px;
+  margin: auto 10px;
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.vote__send_icon {
+  margin: auto 30px;
+  color: #989A9C;
+}
+
+.vote__vote_log{
+  margin-top: 15px;
+  display: flex;
+}
+
+.vote__delete_icon {
+  margin: auto 0;
+}
