@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { 
   GAME_SELECT_STATE, 
-  ROLES_CONTEXT, 
+  ROLLS_CONTEXT, 
   DAILIES, 
   SELECT_PLAYER_DATE, 
   SELECT_VOTE_DATE, 
@@ -9,7 +9,8 @@ import {
   VOTE_FORM_CONTEXT, 
   PLAYER,
   CASTING,
-  RENDER_STATE
+  RENDER_STATE,
+  ABILITY_LOG
 } from '../components/types'
 
 export const DailiesContext = createContext([{id: '1', date_progress: 1}] as DAILIES[])
@@ -18,7 +19,7 @@ export const GameSelectContext = createContext({} as GAME_SELECT_STATE)
 
 export const PlayersContext = createContext({} as PLAYER[])
 
-export const RolesContext = createContext({} as ROLES_CONTEXT)
+export const RollsContext = createContext({} as ROLLS_CONTEXT)
 
 export const SelectPlayerBoardDateContext = createContext({} as SELECT_PLAYER_DATE)
 
@@ -31,3 +32,5 @@ export const VoteFormContext = createContext({} as VOTE_FORM_CONTEXT)
 export const CastingsContext = createContext({} as CASTING[])
 
 export const RerenderContext = createContext({} as RENDER_STATE)
+
+export const AbilityLogsContext = createContext({} as ABILITY_LOG[])

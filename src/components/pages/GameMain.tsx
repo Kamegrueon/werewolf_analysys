@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
-import { GameSelectContext, RolesContext, SelectPlayerBoardDateContext, SelectVoteBoardDateContext } from '../../utils/AnalysisContext';
+import { GameSelectContext, RollsContext, SelectPlayerBoardDateContext, SelectVoteBoardDateContext } from '../../utils/AnalysisContext';
 import { gamesIndexRequest, gamesDeleteRequest } from '../../utils/ApiFetch'
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddOutlined';
@@ -19,7 +19,7 @@ import 'dayjs/locale/ja';
 const GameMain: React.FC = memo(() => {
 
   const { setGameSelect } = useContext(GameSelectContext)
-  const { setRolesState } = useContext(RolesContext)
+  const { setRollsState } = useContext(RollsContext)
   const { setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
   const  { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
 
@@ -41,9 +41,9 @@ const GameMain: React.FC = memo(() => {
   useEffect(() => {
     gamesIndexRequest().then((res: any) => {
       setGames(res.data.games)
-      setRolesState(res.data.roles)
+      setRollsState(res.data.roles)
     })
-  },[setRolesState])
+  },[setRollsState])
 
   const [isOpen, setIsOpen] = useState(false);
 

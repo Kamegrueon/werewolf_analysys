@@ -1,22 +1,23 @@
-export type CAUSE_Of_DEATH = '突然死' | '処刑' | '殺害' | ''
+export type CAUSE_Of_DEATH = '突然死' | '処刑' | '殺害' | null
 
-export interface ROLE_STATE {
+export interface ROLL_STATE {
   id: string
-  role_name: string  
+  roll_name: string  
 }
 
-export interface ROLES_CONTEXT {
-  rolesState: ROLE_STATE[]
-  setRolesState: React.Dispatch<React.SetStateAction<ROLE_STATE[]>>
+export interface ROLLS_CONTEXT {
+  rollsState: ROLL_STATE[]
+  setRollsState: React.Dispatch<React.SetStateAction<ROLL_STATE[]>>
 }
 
 export interface PLAYER {
   id: string
   player_name: string
-  roll_name?: string
-  roll_color?: string
-  cause_of_death?: CAUSE_Of_DEATH
-  date_of_death?: number
+  co_id: string | null
+  roll_name: string | null
+  roll_color: string
+  cause_of_death: CAUSE_Of_DEATH
+  death_date: number | null
   dead_style?: {opacity: number}
 }
 
@@ -108,4 +109,13 @@ export interface CASTING {
 export interface RENDER_STATE {
   renderState: number
   rerender: React.Dispatch<React.SetStateAction<number>>
+}
+
+export interface ABILITY_LOG {
+  id: number,
+  coming_out_player_id: number,
+  date_progress: number
+  target_player_id: number,
+  ability_result: string,
+  roll_color?: string,
 }

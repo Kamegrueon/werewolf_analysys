@@ -3,7 +3,7 @@ player
 */
 
 .player__board {
-  height: calc(45%);
+  height: calc(50%);
   width: 100%;
   margin-top: 40px;
   padding: 10px 0 0 30px;
@@ -55,6 +55,7 @@ player
 
 .player__avatar {
   width: 120px;
+  margin-bottom: 20px;
 }
 
 .player__avatar_position{

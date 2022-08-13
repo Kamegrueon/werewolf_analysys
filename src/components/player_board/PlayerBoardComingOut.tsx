@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { CastingsContext, DailiesContext, RerenderContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
 import { comingOutCreateRequest } from '../../utils/ApiFetch'
 import { AxiosError} from 'axios'
@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 
-const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispatch<React.SetStateAction<number | null>>}) => {
+const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispatch<React.SetStateAction<number | null>>, contentRefs: React.MutableRefObject<React.RefObject<HTMLDivElement>[]>, index: number, clicked: number | null}) => {
 
   const select_days_style = {
     width: '100%',
@@ -16,6 +16,13 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
     backgroundColor: '#bdbdbd',
     textAlign: 'center'
   }
+
+  useEffect(()=>{
+    if (props.contentRefs && props.contentRefs.current[props.index].current){
+      props.contentRefs.current[props.index].current?.scrollIntoView({block: "end", inline: "end"})
+    }
+  },[props.clicked, props.contentRefs, props.index])
+
 
   const castings = useContext(CastingsContext)
   const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)  
