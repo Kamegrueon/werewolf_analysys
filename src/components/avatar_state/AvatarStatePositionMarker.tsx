@@ -12,7 +12,7 @@ const AvatarStatePositionMarker = (props: {abilityResult: ABILITY_LOG, i: number
 
   return (
     <>
-    <div className={styles.avatar__position_marker} style={{top: -15, left: left_circle_position}}>
+    <div className={styles.avatar__position_marker} style={{top: -18, left: left_circle_position}}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="35"
