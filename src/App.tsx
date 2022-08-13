@@ -92,7 +92,7 @@ const App: React.FC = () =>  {
       <CastingsContext.Provider value={castings}>
       <SelectPlayerBoardDateContext.Provider value={{selectPlayerDate, setSelectPlayerDate}}>
       <SelectVoteBoardDateContext.Provider value={{selectVoteDate, setSelectVoteDate}}>
-      <AbilityLogsContext.Provider value={abilityLogs} >
+      <AbilityLogsContext.Provider value={{abilityLogs, setAbilityLogs}} >
         <div className={styles.app__root}>
           <AnalysisLeftBar />
           <div className={styles.app__main}>

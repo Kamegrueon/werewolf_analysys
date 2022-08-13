@@ -114,8 +114,13 @@ export interface RENDER_STATE {
 export interface ABILITY_LOG {
   id: number,
   coming_out_player_id: number,
-  date_progress: number
+  date_progress: number,
   target_player_id: number,
   ability_result: string,
   roll_color?: string,
 }
+
+export interface ABILITY_LOG_STATE {
+  abilityLogs: ABILITY_LOG[],
+  setAbilityLogs: React.Dispatch<React.SetStateAction<ABILITY_LOG[]>>
+};

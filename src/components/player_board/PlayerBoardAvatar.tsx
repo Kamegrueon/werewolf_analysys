@@ -84,7 +84,7 @@ const PlayerBoardAvatar: React.FC = () => {
   const [coId, setCoId] = useState<string | null>(null)
   const [clicked, setClicked] = useState<number | null>(null);
   const contentRefs = useRef<RefObject<HTMLDivElement>[]>([])
-  const abilityLogs = useContext(AbilityLogsContext)
+  const {abilityLogs} = useContext(AbilityLogsContext)
 
   players.forEach((_, index) => {
     contentRefs.current[index] = createRef<HTMLDivElement>()
@@ -119,12 +119,6 @@ const PlayerBoardAvatar: React.FC = () => {
           }
         </div>
       )
-    // }else if(clicked === index){
-      // setClicked(null)
-      // setCoPlayer(player)
-      // setIsOpen(true)
-      // const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
-      // Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 0})
     }
   }
 
