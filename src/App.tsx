@@ -81,7 +81,7 @@ const App: React.FC = () =>  {
         setVoteLogs([]);
         setPlayers([]);
         setCastings([]);
-        setAbilityLogs([])
+        setAbilityLogs([]);
       };
     }
   },[gameSelect, selectPlayerDate, selectVoteDate, renderState])
