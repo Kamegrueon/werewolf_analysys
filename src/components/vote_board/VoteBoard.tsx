@@ -49,8 +49,8 @@ const VoteBoard:React.FC = () => {
           </div>
         </div>
         {isOpenForm
-          ? <DoneIcon onClick={handlePostVote} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}} />
-          : <AddIcon onClick={handleOpen} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}}/>
+          ? <DoneIcon onClick={handlePostVote} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, bottom: -30, backgroundColor: '#29CB97', borderRadius: 50}} />
+          : <AddIcon onClick={handleOpen} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, bottom: -30, backgroundColor: '#29CB97', borderRadius: 50}}/>
         }
       </div>
     </VoteFormContext.Provider>

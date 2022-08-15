@@ -13,4 +13,5 @@
 .app__bottom{
   display: flex;
   height: 35%;
+  padding-top: 15px;
 }
