@@ -77,7 +77,7 @@ const PlayerBoardAvatar: React.FC = () => {
             <PlayerBoardExistCod player={player} key={player.id} />
           </div>
           <div style={{position: 'relative'}}>
-            {abilityLogs.filter(abilityLog => String(abilityLog.target_player_id) === String(player.id)).length === 0
+            {abilityLogs && abilityLogs.filter(abilityLog => String(abilityLog.target_player_id) === String(player.id)).length
               ? <></>
               : (abilityLogs.filter(abilityLog => String(abilityLog.target_player_id) === String(player.id))
                 .map((abilityResult, i) => {
