@@ -9,11 +9,13 @@ const DataBoard = () => {
   const { voteLogs } = useContext(VoteLogsContext)
   const { selectVoteDate } = useContext(SelectVoteBoardDateContext)
 
+  type aggVoteLogsReduceObj = { [key: string]: number };
   const aggVotedLogs = voteLogs.map(voteLog => voteLog.voted_id)
-  .reduce(function(prev: any, current: any) {
+  .reduce((prev, current) => {
+    console.log(prev, current)
     prev[current] = (prev[current] || 0) + 1;
     return prev;
-  }, {}); 
+  }, {} as aggVoteLogsReduceObj); 
 
   const votedPlayerFilter = (key: string) => {
     return players.filter((player: PLAYER) => String(player.id) === String(key))[0]

@@ -1,7 +1,7 @@
-import { useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import styles from './VoteBoard.module.css'
 import SendIcon from '@mui/icons-material/Send';
-import { VOTE_LOG } from '../types';
+import { PLAYER, VOTE_LOG } from '../types';
 import { PlayersContext, VoteLogsContext } from '../../utils/AnalysisContext';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { votesDeleteRequest } from '../../utils/ApiFetch'
@@ -13,8 +13,11 @@ interface VoteProps {
 }
 
 const VoteBoardAvatar = (props: VoteProps) => {
+  const { voted_id, voter_id } = props.vote
   const players = useContext(PlayersContext)
   const { voteLogs, setVoteLogs } = useContext(VoteLogsContext) 
+  const [voter, setVoter] = useState({} as PLAYER)
+  const [voted, setVoted] = useState({} as PLAYER)
 
   const deleteAction = () => {
     votesDeleteRequest(props.vote.id).then((res: AxiosResponse<VOTE_LOG>) => {
@@ -22,8 +25,10 @@ const VoteBoardAvatar = (props: VoteProps) => {
     })
   }
 
-  let voter = players.filter((player) => String(player.id) === String(props.vote.voter_id))[0]
-  let voted = players.filter((player) => String(player.id) === String(props.vote.voted_id))[0]
+  useEffect(() => {
+    setVoter(players.filter((player) => String(player.id) === String(voter_id))[0])
+    setVoted(players.filter((player) => String(player.id) === String(voted_id))[0])
+  },[players, voter_id, voted_id])
 
   return (
     <div className={styles.vote__vote_log}>

@@ -2,15 +2,9 @@ import { useContext } from 'react'
 import { PlayersContext } from '../../utils/AnalysisContext';
 import { VoteFormContext } from '../../utils/AnalysisContext';
 import styles from './VoteBoard.module.css'
-import { Avatar } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-
-const avatar = {
-  width: 40,
-  height: 40
-}
 
 const VoteForm = () => {
 
@@ -30,7 +24,7 @@ const VoteForm = () => {
   return (
       <div className={styles.vote__vote_log}>
         <div className={styles.vote__avatar}>
-          <Avatar sx={avatar}/>
+        <div className={styles.vote__avatar_position} style={{borderColor: 'white', color: 'white'}}>？</div>
           <div className={styles.vote__avatar_name}>
             <FormControl>
               <Select
@@ -52,7 +46,7 @@ const VoteForm = () => {
           <SendIcon />
         </div>
         <div className={styles.vote__avatar}>
-          <Avatar sx={avatar}/>
+          <div className={styles.vote__avatar_position} style={{borderColor: 'white', color: 'white'}}>？</div>
           <div className={styles.vote__avatar_name}>
             <FormControl>
               <Select

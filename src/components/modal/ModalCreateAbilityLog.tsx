@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { AbilityLogsContext, DailiesContext, PlayersContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext';
 import { InputLabel } from '@mui/material';
 import { ABILITY_LOG } from '../types';
+import { filteringDailyId } from '../../utils/UtilsFC';
 
 const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleClose: () => void}) => {
 
@@ -37,9 +38,9 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
   }
 
   const onClickSubmit = (coId: string | null | undefined) => {
-    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
     if(abilityResult !== '' && targetPlayerId !== '' && coId !== null){
-      abilityLogsCreateRequest(coId, targetPlayerId, dailyId, abilityResult).then((res: AxiosResponse<ABILITY_LOG[]>) => {
+      abilityLogsCreateRequest(coId, targetPlayerId, filteringDailyId(dailies, selectPlayerDate), abilityResult)
+      .then((res: AxiosResponse<ABILITY_LOG[]>) => {
         setAbilityLogs(res.data)
         setAbilityResult('')
         setTargetPlayerId('')

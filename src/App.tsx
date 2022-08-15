@@ -6,6 +6,7 @@ import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
+import { filteringDailyId } from './utils/UtilsFC';
 import { PLAYER, DAILIES, ROLL_STATE, VOTE_LOG, CASTING, ABILITY_LOG  } from "./components/types";
 import { 
   dailiesIndexRequest, 
@@ -54,20 +55,24 @@ const App: React.FC = () =>  {
       dailiesIndexRequest(gameSelect).then((res: AxiosResponse<DAILIES[]>) => {
         console.log('dailiesIndex',res.data)
         if (!ignore) setDailies(res.data)
-        votesIndexRequest(res.data.filter((daily: DAILIES) => String(daily.date_progress) === String(selectVoteDate))[0].id).then((res: AxiosResponse<VOTE_LOG[]>) => {
+        votesIndexRequest(filteringDailyId(res.data, selectVoteDate))
+        .then((res: AxiosResponse<VOTE_LOG[]>) => {
           console.log('votesIndex', res.data)
           if (!ignore) setVoteLogs(res.data)
         })
       })
-      playersIndexRequest(gameSelect, selectPlayerDate).then((res: AxiosResponse<PLAYER[]>) => {
+      playersIndexRequest(gameSelect, selectPlayerDate)
+      .then((res: AxiosResponse<PLAYER[]>) => {
         console.log('playersIndex',res.data)
         if (!ignore) setPlayers(res.data)
       })
-      rollIndexRequest(gameSelect).then((res: AxiosResponse) => {
+      rollIndexRequest(gameSelect)
+      .then((res: AxiosResponse) => {
         console.log('rolls',res.data)
         if (!ignore) setCastings(res.data)
       })
-      comingOutIndexRequest(gameSelect, selectPlayerDate).then((res: AxiosResponse) => {
+      comingOutIndexRequest(gameSelect, selectPlayerDate)
+      .then((res: AxiosResponse) => {
         console.log('abilityLogs', res.data)
         if (!ignore) setAbilityLogs(res.data)
       })
