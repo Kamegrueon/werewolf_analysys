@@ -33,7 +33,7 @@ const GameMain: React.FC = memo(() => {
       )
     };
     fetchGames();
-  },[])
+  },[setRollsState])
 
   const [isOpen, setIsOpen] = useState(false);
 
