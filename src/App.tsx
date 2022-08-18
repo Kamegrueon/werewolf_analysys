@@ -23,14 +23,17 @@ import {
   SelectVoteBoardDateContext, 
   VoteLogsContext,
   CastingsContext, 
-  GameSelectContext, 
+  // GameSelectContext, 
   RerenderContext,
   AbilityLogsContext,
 } from './utils/AnalysisContext';
 
+import { useSelector } from "react-redux";
+import { selectGameId } from "./reducers/games/gameSlice";
+
 const App: React.FC = () =>  {
 
-  const [gameSelect, setGameSelect] = useState<string>('')
+  // const [gameSelect, setGameSelect] = useState<string>('')
   const [selectPlayerDate, setSelectPlayerDate] = useState<string>('1')
   const [selectVoteDate, setSelectVoteDate] = useState<string>('1')
   const [rollsState, setRollsState] = useState<ROLL_STATE[]>([{id: '1', roll_name: '人狼'}])
@@ -40,6 +43,10 @@ const App: React.FC = () =>  {
   const [castings, setCastings] = useState<CASTING[]>([])
   const [abilityLogs, setAbilityLogs] = useState<ABILITY_LOG[]>([])
   const [renderState, rerender] = useState<number>(0);
+
+  // ここから
+  const gameId = useSelector(selectGameId)
+  // ここまで
 
   const isFirstRender = useRef(false)
 
@@ -52,7 +59,7 @@ const App: React.FC = () =>  {
     if(isFirstRender.current) {
       isFirstRender.current = false
     } else {
-      dailiesIndexRequest(gameSelect).then((res: AxiosResponse<DAILIES[]>) => {
+      dailiesIndexRequest(gameId).then((res: AxiosResponse<DAILIES[]>) => {
         console.log('dailiesIndex',res.data)
         if (!ignore) setDailies(res.data)
         votesIndexRequest(filteringDailyId(res.data, selectVoteDate))
@@ -61,17 +68,17 @@ const App: React.FC = () =>  {
           if (!ignore) setVoteLogs(res.data)
         })
       })
-      playersIndexRequest(gameSelect, selectPlayerDate)
+      playersIndexRequest(gameId, selectPlayerDate)
       .then((res: AxiosResponse<PLAYER[]>) => {
         console.log('playersIndex',res.data)
         if (!ignore) setPlayers(res.data)
       })
-      rollIndexRequest(gameSelect)
+      rollIndexRequest(gameId)
       .then((res: AxiosResponse) => {
         console.log('rolls',res.data)
         if (!ignore) setCastings(res.data)
       })
-      comingOutIndexRequest(gameSelect, selectPlayerDate)
+      comingOutIndexRequest(gameId, selectPlayerDate)
       .then((res: AxiosResponse) => {
         console.log('abilityLogs', res.data)
         if (!ignore) setAbilityLogs(res.data)
@@ -84,12 +91,11 @@ const App: React.FC = () =>  {
         setAbilityLogs([]);
       };
     }
-  },[gameSelect, selectPlayerDate, selectVoteDate, renderState])
+  },[gameId, selectPlayerDate, selectVoteDate, renderState])
 
   return (
     <Router>
       <RerenderContext.Provider value={{renderState, rerender}}>
-      <GameSelectContext.Provider value={{gameSelect, setGameSelect}}>
       <DailiesContext.Provider value={dailies}>
       <PlayersContext.Provider value={players}>
       <VoteLogsContext.Provider value={{voteLogs, setVoteLogs}}>
@@ -106,7 +112,7 @@ const App: React.FC = () =>  {
               <Route exact path='/games/'>
                 <GameMain />
               </Route>
-              <Route exact path={`/games/${gameSelect}`}>
+              <Route exact path={`/games/${gameId}`}>
                 <GameBoard />
               </Route>
               <Route component={() => <h1 style={{color: 'white', position: 'absolute', top: 350, left: 600}}>404 NOT FOUND</h1>} />
@@ -121,7 +127,6 @@ const App: React.FC = () =>  {
       </VoteLogsContext.Provider>
       </PlayersContext.Provider>
       </DailiesContext.Provider>
-      </GameSelectContext.Provider>
       </RerenderContext.Provider>
     </Router>
   );
