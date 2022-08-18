@@ -6,6 +6,9 @@ import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
 import { VoteFormContext, SelectVoteBoardDateContext, VoteLogsContext, DailiesContext } from '../../utils/AnalysisContext';
 import { votesCreateRequest } from '../../utils/ApiFetch';
+import {VOTE_LOG} from '../types'
+import { AxiosResponse } from 'axios'
+import { filteringDailyId } from '../../utils/UtilsFC';
 
 const VoteBoard:React.FC = () => {
   const { selectVoteDate } = useContext(SelectVoteBoardDateContext)
@@ -15,10 +18,21 @@ const VoteBoard:React.FC = () => {
   const [votedPlayerId, setVotedPlayerId] = useState('');
   const [isOpenForm, setIsOpenForm] = useState(false);
 
+  const IconStyle = { 
+    fontSize: 40, 
+    color: 'white', 
+    position: 'absolute', 
+    left: 520, 
+    bottom: -30, 
+    backgroundColor: '#29CB97', 
+    borderRadius: 50
+  }
+
   const handlePostVote = () => {
     if(voterPlayerId !== '' && votedPlayerId !== ''){
-      const dailyId = dailies.filter(daily => String(daily.date_progress) === String(selectVoteDate))[0].id
-      votesCreateRequest(dailyId, voterPlayerId, votedPlayerId).then((res: any) => {
+      votesCreateRequest(filteringDailyId(dailies, selectVoteDate), voterPlayerId, votedPlayerId)
+      .then((res: AxiosResponse<VOTE_LOG>) => {
+        console.log('vote response',res.data)
         setVoteLogs([...voteLogs,res.data])
       })
     }
@@ -49,8 +63,8 @@ const VoteBoard:React.FC = () => {
           </div>
         </div>
         {isOpenForm
-          ? <DoneIcon onClick={handlePostVote} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}} />
-          : <AddIcon onClick={handleOpen} sx={{ fontSize: 40, color: 'white', position: 'absolute', left: 520, backgroundColor: '#29CB97', borderRadius: 50}}/>
+          ? <DoneIcon onClick={handlePostVote} sx={IconStyle} />
+          : <AddIcon onClick={handleOpen} sx={IconStyle}/>
         }
       </div>
     </VoteFormContext.Provider>

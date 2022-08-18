@@ -21,8 +21,7 @@ const SelectPlayerDay = () => {
 
   const handleChange = (event: SelectChangeEvent) => {
       setSelectPlayerDate(event.target.value)
-      // セットしたdailyの値でプレイヤーデータをFetch
-   }
+  }
 
    console.log('selectPlayerDay', selectPlayerDate)
 

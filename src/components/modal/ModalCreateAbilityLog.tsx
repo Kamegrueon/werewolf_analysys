@@ -1,11 +1,13 @@
 import { useState, useContext } from 'react';
 import { abilityLogsCreateRequest } from '../../utils/ApiFetch'
-import { AxiosError} from 'axios'
+import { AxiosResponse,AxiosError} from 'axios'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import { DailiesContext, PlayersContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext';
+import { AbilityLogsContext, DailiesContext, PlayersContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext';
 import { InputLabel } from '@mui/material';
+import { ABILITY_LOG } from '../types';
+import { filteringDailyId } from '../../utils/UtilsFC';
 
 const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleClose: () => void}) => {
 
@@ -21,6 +23,8 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
   const [targetPlayerId, setTargetPlayerId] = useState<string>('')
   const players = useContext(PlayersContext)
   const dailies = useContext(DailiesContext)
+  const {setAbilityLogs} = useContext(AbilityLogsContext)
+
   const {selectPlayerDate} = useContext(SelectPlayerBoardDateContext)
 
   const handleChangeAbilityResult = (event: SelectChangeEvent<string>) => {
@@ -34,10 +38,10 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
   }
 
   const onClickSubmit = (coId: string | null | undefined) => {
-    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
     if(abilityResult !== '' && targetPlayerId !== '' && coId !== null){
-      abilityLogsCreateRequest(coId, targetPlayerId, dailyId, abilityResult).then((res: any) => {
-        console.log(res.data)
+      abilityLogsCreateRequest(coId, targetPlayerId, filteringDailyId(dailies, selectPlayerDate), abilityResult)
+      .then((res: AxiosResponse<ABILITY_LOG[]>) => {
+        setAbilityLogs(res.data)
         setAbilityResult('')
         setTargetPlayerId('')
         props.handleClose()
