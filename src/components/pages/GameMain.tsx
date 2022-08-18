@@ -24,11 +24,16 @@ const GameMain: React.FC = memo(() => {
   const [games, setGames] = useState([{id: '1', game_name: '', is_win: true, date_progress: 1, created_at: ''}])
 
   useEffect(() => {
-    gamesIndexRequest().then((res: any) => {
-      setGames(res.data.games)
-      setRollsState(res.data.roles)
-    })
-  },[setRollsState])
+    const fetchGames = async () => {
+      await gamesIndexRequest().then(
+        data => {
+          setGames(data.games)
+          setRollsState(data.rolls)
+        }          
+      )
+    };
+    fetchGames();
+  },[])
 
   const [isOpen, setIsOpen] = useState(false);
 

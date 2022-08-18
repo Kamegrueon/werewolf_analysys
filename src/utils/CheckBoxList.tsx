@@ -16,6 +16,7 @@ const CheckBoxList = (props: setTypeObject) => {
   const { positionIds, setPositionIds } = props
 
   const { rollsState } = useContext(RollsContext)
+  console.log('これ', rollsState)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.checked, event.target.value)

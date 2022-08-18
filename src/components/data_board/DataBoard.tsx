@@ -29,7 +29,8 @@ const DataBoard = () => {
           <div className={styles.data__menu}>投票数（{selectVoteDate}日目）</div>
         </div>
         <div className={styles.data__box}>
-          {Object.entries(aggVotedLogs).map(([key, value], index) => {
+          {aggVotedLogs
+          ? Object.entries(aggVotedLogs).map(([key, value], index) => {
             return (
               <div className={styles.data__avatar} key={index}>
                 <div className={styles.data__avatar_position} style={{borderColor: votedPlayerFilter(String(key)).roll_color, color: votedPlayerFilter(String(key)).roll_color}}>
@@ -39,7 +40,9 @@ const DataBoard = () => {
                 <div className={styles.data__avatar_name}>{String(value)}</div>
               </div>
             )
-          })}
+          })
+        : <></>
+        }
         </div>
       </div>
     </div>
