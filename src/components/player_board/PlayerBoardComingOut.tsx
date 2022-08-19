@@ -6,6 +6,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import { useSelector } from 'react-redux';
+import { selectCastings } from '../../reducers/gameSlice';
 
 const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispatch<React.SetStateAction<number | null>>, contentRefs: React.MutableRefObject<React.RefObject<HTMLDivElement>[]>, index: number, clicked: number | null}) => {
 
@@ -17,6 +19,9 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
     textAlign: 'center'
   }
 
+  // const castings = useContext(CastingsContext)
+  const castings = useSelector(selectCastings)
+
   useEffect(()=>{
     if (props.contentRefs && props.contentRefs.current[props.index].current){
       props.contentRefs.current[props.index].current?.scrollIntoView({block: "end", inline: "end"})
@@ -24,7 +29,6 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
   },[props.clicked, props.contentRefs, props.index])
 
 
-  const castings = useContext(CastingsContext)
   const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)  
   const dailies = useContext(DailiesContext)
   const { renderState, rerender } = useContext(RerenderContext)

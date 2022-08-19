@@ -18,7 +18,7 @@ import ModalMain from '../modal/ModalMain';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
 
-import { selectGames, fetchAsyncGetGames, fetchAsyncDeleteGames, setSelectGame } from "../../reducers/games/gameSlice";
+import { selectGames, fetchAsyncGetGames, fetchAsyncDeleteGames, setSelectGame, fetchAsyncGetRolls } from "../../reducers/gameSlice";
 
 const GameMain: React.FC = memo(() => {
 
@@ -44,6 +44,7 @@ const GameMain: React.FC = memo(() => {
   const games = useSelector(selectGames)
 
   useEffect(() => {
+    console.log('effect呼ばれた')
     dispatch(fetchAsyncGetGames())
   },[dispatch])
 
@@ -91,19 +92,24 @@ const GameMain: React.FC = memo(() => {
             >
               <TableCell component="th" scope="row" sx={{color: 'white'}}>
               <Link 
-                to={{pathname: `/games/${game.id}`}} 
+                to={{pathname: `/board/`}} 
                 style={{textDecoration: 'none', color: 'inherit'}} 
                 // onClick={() => setGameSelect(game.id)}
-                onClick={() => dispatch(setSelectGame(game.id))}
+                onClick={
+                  () => {dispatch(setSelectGame(game.id))}
+                }
               >
                   {game.game_name}
+                  {console.log('map呼ばれた')}
               </Link>
               </TableCell>
               <TableCell align="right" sx={{color: 'white'}}>{dayjs(game.created_at).locale('ja').format('YYYY/MM/DD(dd)')}</TableCell>
               <TableCell align="right" sx={{color: 'white'}}>{game.is_win ? '勝利' : game.is_win===null ? '' :'敗北'}</TableCell>
               <TableCell align="right" sx={{color: 'white'}}>{game.date_progress}</TableCell>
               {/* <TableCell><DeleteOutlineIcon sx={{color: 'white'}} onClick={()=>{deleteAction(game.id)}} /></TableCell> */}
-              <TableCell><DeleteOutlineIcon sx={{color: 'white'}} onClick={()=>{dispatch(fetchAsyncDeleteGames(game.id))}} /></TableCell>
+              <TableCell><DeleteOutlineIcon sx={{color: 'white'}} 
+                onClick={()=>{dispatch(fetchAsyncDeleteGames(game.id))}}
+              /></TableCell>
               </TableRow>
           ))}
         </TableBody>

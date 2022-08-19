@@ -37,10 +37,10 @@ export interface SELECT_STYLE_PROP {
 }
 
 export interface VOTE_LOG {
-  id: string, 
-  voter_id: string,
-  voted_id: string,
-  date_progress: number,
+  id: string
+  voter_id: string
+  voted_id: string
+  date_progress: number
 }
 
 export interface VOTE_LOG_STATE {

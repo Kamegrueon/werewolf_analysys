@@ -7,45 +7,42 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
 import { filteringDailyId } from './utils/UtilsFC';
-import { PLAYER, DAILIES, ROLL_STATE, VOTE_LOG, CASTING, ABILITY_LOG  } from "./components/types";
+import { PLAYER, DAILIES, VOTE_LOG, ABILITY_LOG  } from "./components/types";
 import { 
   dailiesIndexRequest, 
   playersIndexRequest, 
   votesIndexRequest, 
-  rollIndexRequest, 
   comingOutIndexRequest
 } from "./utils/ApiFetch";
 import { 
   DailiesContext, 
   PlayersContext, 
-  RollsContext, 
   SelectPlayerBoardDateContext, 
   SelectVoteBoardDateContext, 
   VoteLogsContext,
-  CastingsContext, 
-  // GameSelectContext, 
   RerenderContext,
   AbilityLogsContext,
 } from './utils/AnalysisContext';
 
-import { useSelector } from "react-redux";
-import { selectGameId } from "./reducers/games/gameSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectGameId, fetchAsyncGetRolls } from "./reducers/gameSlice";
 
 const App: React.FC = () =>  {
 
-  // const [gameSelect, setGameSelect] = useState<string>('')
+  // dailiesSliceに移行
   const [selectPlayerDate, setSelectPlayerDate] = useState<string>('1')
-  const [selectVoteDate, setSelectVoteDate] = useState<string>('1')
-  const [rollsState, setRollsState] = useState<ROLL_STATE[]>([{id: '1', roll_name: '人狼'}])
-  const [dailies, setDailies] = useState<DAILIES[]>([{id: '1',game_id: '1', date_progress: 1}])
   const [players, setPlayers] = useState<PLAYER[]>([])
-  const [voteLogs, setVoteLogs] = useState<VOTE_LOG[]>([])
-  const [castings, setCastings] = useState<CASTING[]>([])
   const [abilityLogs, setAbilityLogs] = useState<ABILITY_LOG[]>([])
+
+  const [selectVoteDate, setSelectVoteDate] = useState<string>('1')
+  const [dailies, setDailies] = useState<DAILIES[]>([{id: '1',game_id: '1', date_progress: 1}])
+  const [voteLogs, setVoteLogs] = useState<VOTE_LOG[]>([])
+
   const [renderState, rerender] = useState<number>(0);
 
   // ここから
   const gameId = useSelector(selectGameId)
+  const dispatch: any = useDispatch()
   // ここまで
 
   const isFirstRender = useRef(false)
@@ -73,11 +70,7 @@ const App: React.FC = () =>  {
         console.log('playersIndex',res.data)
         if (!ignore) setPlayers(res.data)
       })
-      rollIndexRequest(gameId)
-      .then((res: AxiosResponse) => {
-        console.log('rolls',res.data)
-        if (!ignore) setCastings(res.data)
-      })
+      dispatch(fetchAsyncGetRolls(gameId));
       comingOutIndexRequest(gameId, selectPlayerDate)
       .then((res: AxiosResponse) => {
         console.log('abilityLogs', res.data)
@@ -87,11 +80,11 @@ const App: React.FC = () =>  {
         ignore = true
         setVoteLogs([]);
         setPlayers([]);
-        setCastings([]);
+        // setCastings([]);
         setAbilityLogs([]);
       };
     }
-  },[gameId, selectPlayerDate, selectVoteDate, renderState])
+  },[gameId, selectPlayerDate, selectVoteDate, renderState, dispatch])
 
   return (
     <Router>
@@ -99,8 +92,6 @@ const App: React.FC = () =>  {
       <DailiesContext.Provider value={dailies}>
       <PlayersContext.Provider value={players}>
       <VoteLogsContext.Provider value={{voteLogs, setVoteLogs}}>
-      <RollsContext.Provider value={{rollsState, setRollsState}}>
-      <CastingsContext.Provider value={castings}>
       <SelectPlayerBoardDateContext.Provider value={{selectPlayerDate, setSelectPlayerDate}}>
       <SelectVoteBoardDateContext.Provider value={{selectVoteDate, setSelectVoteDate}}>
       <AbilityLogsContext.Provider value={{abilityLogs, setAbilityLogs}} >
@@ -112,7 +103,7 @@ const App: React.FC = () =>  {
               <Route exact path='/games/'>
                 <GameMain />
               </Route>
-              <Route exact path={`/games/${gameId}`}>
+              <Route exact path={`/board`}>
                 <GameBoard />
               </Route>
               <Route component={() => <h1 style={{color: 'white', position: 'absolute', top: 350, left: 600}}>404 NOT FOUND</h1>} />
@@ -122,8 +113,6 @@ const App: React.FC = () =>  {
       </AbilityLogsContext.Provider>
       </SelectVoteBoardDateContext.Provider>
       </SelectPlayerBoardDateContext.Provider>
-      </CastingsContext.Provider>
-      </RollsContext.Provider>
       </VoteLogsContext.Provider>
       </PlayersContext.Provider>
       </DailiesContext.Provider>

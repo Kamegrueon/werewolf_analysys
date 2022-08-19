@@ -1,15 +1,20 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import TagsInput from '../../utils/TagsInput';
 import CheckBoxList from '../../utils/CheckBoxList';
-import { gamesCreateRequest } from '../../utils/ApiFetch'
-import { GameSelectContext } from '../../utils/AnalysisContext';
-import {AxiosResponse, AxiosError} from 'axios'
+// import { gamesCreateRequest } from '../../utils/ApiFetch'
+// import { GameSelectContext } from '../../utils/AnalysisContext';
+// import {AxiosResponse, AxiosError} from 'axios'
+
+import { useDispatch, useSelector } from 'react-redux';
+import { selectGameId, fetchAsyncCreateGames } from "../../reducers/gameSlice";
 
 const ModalCreateGame = () => {
+  const dispatch: any = useDispatch()
+  const gameId = useSelector(selectGameId)
 
   const [gameName, setGameName] = useState<string | null>(null);
   const [positionIds, setPositionIds] = useState<string[]>([]);
@@ -17,7 +22,7 @@ const ModalCreateGame = () => {
   
   const history = useHistory();
 
-  const { setGameSelect } = useContext(GameSelectContext)
+  // const { setGameSelect } = useContext(GameSelectContext)
 
   const handleSelectedTags = (players: string[]) => {
     setPlayers(players)
@@ -38,14 +43,18 @@ const ModalCreateGame = () => {
 
   const onClickSubmit = () => {
     console.log(gameName, positionIds, players)
-    gamesCreateRequest(gameName, players, positionIds).then((res: AxiosResponse) => {
-      setGameSelect(res.data.id)
-      history.push(`/games/${res.data.id}`)
-    }).catch((error: AxiosError<{ error: string }>)  => {
-      if (error.response !== undefined){
-        alert(error.response.data.error)
-      }
-    })}
+    // gamesCreateRequest(gameName, players, positionIds).then((res: AxiosResponse) => {
+    //   setGameSelect(res.data.id)
+    //   history.push(`/games/${res.data.id}`)
+    // }).catch((error: AxiosError<{ error: string }>)  => {
+    //   if (error.response !== undefined){
+    //     alert(error.response.data.error)
+    //   }
+    // })
+    dispatch(fetchAsyncCreateGames({gameName: gameName,positionIds: positionIds,players: players}))
+    // history.push(`/games/${gameId}`)
+    history.push(`/board/`)
+  }
   
   return (
     <div style={{color: 'white',textAlign: 'center'}}>

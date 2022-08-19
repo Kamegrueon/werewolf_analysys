@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "../../store";
+import { RootState } from "../store";
 
 const games_api = axios.create ({
   baseURL: 'http://localhost:3000/api/v1/games',
@@ -24,6 +24,32 @@ export const fetchAsyncDeleteGames = createAsyncThunk(
   }
 )
 
+interface gameCreateParams {
+  gameName: string | null,
+  players: string[], 
+  positionIds: string[],
+}
+
+export const fetchAsyncCreateGames = createAsyncThunk(
+  'game/createGame',
+  async (params: gameCreateParams) => {
+    const res = await games_api.post('/',{
+      game: {
+        game_name: params.gameName, 
+        players: params.players, 
+        position_ids: params.positionIds
+      }})
+    return res.data.id
+    }
+  )
+
+export const fetchAsyncGetRolls = createAsyncThunk(
+  'game/getRolls',
+  async (gameId: string) => {
+  const res = await games_api.get(`/${gameId}/game_rolls`) 
+  return res.data
+  }
+)
 
 
 const initialState = {
@@ -38,12 +64,21 @@ const initialState = {
   ],
   rolls: [
     {
-      id: '1', 
-      roll_name: '人狼'
+      attributes:
+        {
+          id: '1', 
+          roll_name: '人狼'
+        }
     }
   ],
-  selectGameId: '1',
-
+  selectGameId: '',
+  castings: [
+    {
+      id: 1,
+      roll_id: 1, 
+      roll_name: ''
+    }
+  ],
 }
 
 export const gameSlice = createSlice({
@@ -74,6 +109,24 @@ export const gameSlice = createSlice({
         }
       }
     );
+    builder.addCase(
+      fetchAsyncCreateGames.fulfilled,
+      (state, action: any) => {
+        return {
+          ...state,
+          selectGameId: action.payload,
+        }
+      }
+    );
+    builder.addCase(
+      fetchAsyncGetRolls.fulfilled,
+      (state, action: any) => {
+        return {
+          ...state,
+          castings: action.payload,
+        }
+      }
+    );
   }
 })
 
@@ -82,5 +135,6 @@ export const { setSelectGame } = gameSlice.actions
 export const selectGames = (state: RootState) => state.game.games
 export const selectRolls = (state: RootState) => state.game.rolls
 export const selectGameId = (state: RootState) => state.game.selectGameId
+export const selectCastings = (state: RootState) => state.game.castings
 
 export default gameSlice.reducer

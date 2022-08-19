@@ -5,12 +5,16 @@ import { useContext } from 'react'
 import { GameSelectContext, SelectPlayerBoardDateContext, SelectVoteBoardDateContext } from '../../utils/AnalysisContext';
 import styles from './Analysis.module.css'
 import { NavLink, useLocation } from 'react-router-dom';
+import { selectGameId } from '../../reducers/gameSlice';
+import { useSelector } from 'react-redux';
 
 const AnalysisLeftBar = () => {  
   const location = useLocation();
   const path = location.pathname;
+  const gameId = useSelector(selectGameId)
+  // const { gameSelect } = useContext(GameSelectContext)
 
-  const { gameSelect } = useContext(GameSelectContext)
+
   const { setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
   const { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
 
@@ -34,13 +38,22 @@ const AnalysisLeftBar = () => {
             </ListItemIcon>
           </ListItem>
         </NavLink>
-        <NavLink exact to={`/games/${gameSelect}`}>
-          <ListItem button sx={path.match(/games\/\d/) ? LeftListItemStyle : {mb: 3}}>
+        {gameId !== '' 
+        ? (<NavLink exact to="/board/">
+        {/* <ListItem button sx={path.match(/games\/\d/) ? LeftListItemStyle : {mb: 3}}> */}
+          <ListItem button sx={path === "/board/" ? LeftListItemStyle : {mb: 3}}>
             <ListItemIcon>
               <DesktopMacIcon fontSize="large" sx={{color: '#545F69'}}/>
             </ListItemIcon>
           </ListItem>
-        </NavLink>
+        </NavLink>)
+       : (
+        <ListItem>
+          <ListItemIcon>
+            <DesktopMacIcon fontSize="large" sx={{color: '#545F69'}}/>
+          </ListItemIcon>
+        </ListItem>
+        )}
       </List>
     </div>
   )
