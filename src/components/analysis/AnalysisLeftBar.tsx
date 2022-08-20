@@ -1,26 +1,26 @@
 import { Avatar, List, ListItem, ListItemIcon } from '@mui/material'
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
-import { useContext } from 'react'
-import { GameSelectContext, SelectPlayerBoardDateContext, SelectVoteBoardDateContext } from '../../utils/AnalysisContext';
 import styles from './Analysis.module.css'
 import { NavLink, useLocation } from 'react-router-dom';
 import { selectGameId } from '../../reducers/gameSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { resetSelectPlayerDate } from '../../reducers/playerSlice';
 
 const AnalysisLeftBar = () => {  
   const location = useLocation();
   const path = location.pathname;
   const gameId = useSelector(selectGameId)
+  const dispatch: AppDispatch = useDispatch()
   // const { gameSelect } = useContext(GameSelectContext)
 
 
-  const { setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
-  const { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
+  // const { setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
+  // const { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
 
   const resetSelectDate = () => {
-    setSelectPlayerDate('1')
-    setSelectVoteDate('1')
+     dispatch(resetSelectPlayerDate())
   }
 
   const LeftListItemStyle = {backgroundColor: 'white', borderRadius: 2, mb: 3, pointerEvents: 'none'}

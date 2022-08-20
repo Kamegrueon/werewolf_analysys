@@ -1,11 +1,17 @@
 import { useContext } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-import { DailiesContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
+import { DailiesContext } from '../../utils/AnalysisContext'
+import { useDispatch, useSelector } from 'react-redux';
+import { selectPlayerDate, setSelectPlayerDate } from '../../reducers/playerSlice';
+import { AppDispatch } from '../../store';
 
 const SelectPlayerDay = () => {
 
-  const { selectPlayerDate, setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
+  // const { selectPlayerDate, setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
+  const playerDate = useSelector(selectPlayerDate)
+  const dispatch: AppDispatch = useDispatch()
+
   const dailies = useContext(DailiesContext)
 
   const days_style = { margin: "0 20px 0 auto" }
@@ -20,10 +26,10 @@ const SelectPlayerDay = () => {
   }
 
   const handleChange = (event: SelectChangeEvent) => {
-      setSelectPlayerDate(event.target.value)
+      dispatch(setSelectPlayerDate(event.target.value))
   }
 
-   console.log('selectPlayerDay', selectPlayerDate)
+   console.log('selectPlayerDay', playerDate)
 
   return (
     <div style={days_style}>
@@ -34,7 +40,7 @@ const SelectPlayerDay = () => {
         <Select
           sx={select_days_style}
           native={true}
-          value={selectPlayerDate}
+          value={playerDate}
           onChange={handleChange}
         >
          {dailies.map((daily, index) => 

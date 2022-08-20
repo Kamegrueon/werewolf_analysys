@@ -7,32 +7,34 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
 import { filteringDailyId } from './utils/UtilsFC';
-import { PLAYER, DAILIES, VOTE_LOG, ABILITY_LOG  } from "./components/types";
+import { DAILIES, VOTE_LOG } from "./components/types";
 import { 
   dailiesIndexRequest, 
-  playersIndexRequest, 
+  // playersIndexRequest, 
   votesIndexRequest, 
-  comingOutIndexRequest
+  // comingOutIndexRequest
 } from "./utils/ApiFetch";
 import { 
   DailiesContext, 
-  PlayersContext, 
-  SelectPlayerBoardDateContext, 
+  // PlayersContext, 
+  // SelectPlayerBoardDateContext, 
   SelectVoteBoardDateContext, 
   VoteLogsContext,
   RerenderContext,
-  AbilityLogsContext,
+  // AbilityLogsContext,
 } from './utils/AnalysisContext';
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectGameId, fetchAsyncGetRolls } from "./reducers/gameSlice";
+import { fetchAsyncGetPlayers, fetchAsyncGetComingOuts, selectPlayerDate } from './reducers/playerSlice';
+import { AppDispatch } from './store';
 
 const App: React.FC = () =>  {
 
   // dailiesSliceに移行
-  const [selectPlayerDate, setSelectPlayerDate] = useState<string>('1')
-  const [players, setPlayers] = useState<PLAYER[]>([])
-  const [abilityLogs, setAbilityLogs] = useState<ABILITY_LOG[]>([])
+  // const [selectPlayerDate, setSelectPlayerDate] = useState<string>('1')
+  // const [players, setPlayers] = useState<PLAYER[]>([])
+  // const [abilityLogs, setAbilityLogs] = useState<ABILITY_LOG[]>([])
 
   const [selectVoteDate, setSelectVoteDate] = useState<string>('1')
   const [dailies, setDailies] = useState<DAILIES[]>([{id: '1',game_id: '1', date_progress: 1}])
@@ -42,7 +44,8 @@ const App: React.FC = () =>  {
 
   // ここから
   const gameId = useSelector(selectGameId)
-  const dispatch: any = useDispatch()
+  const playerDate = useSelector(selectPlayerDate)
+  const dispatch: AppDispatch = useDispatch()
   // ここまで
 
   const isFirstRender = useRef(false)
@@ -65,36 +68,40 @@ const App: React.FC = () =>  {
           if (!ignore) setVoteLogs(res.data)
         })
       })
-      playersIndexRequest(gameId, selectPlayerDate)
-      .then((res: AxiosResponse<PLAYER[]>) => {
-        console.log('playersIndex',res.data)
-        if (!ignore) setPlayers(res.data)
-      })
-      dispatch(fetchAsyncGetRolls(gameId));
-      comingOutIndexRequest(gameId, selectPlayerDate)
-      .then((res: AxiosResponse) => {
-        console.log('abilityLogs', res.data)
-        if (!ignore) setAbilityLogs(res.data)
-      })
+      // playersIndexRequest(gameId, selectPlayerDate)
+      // .then((res: AxiosResponse<PLAYER[]>) => {
+      //   console.log('playersIndex',res.data)
+      //   if (!ignore) setPlayers(res.data)
+      // })
+      const fetchBootLoader = async () => {
+        await dispatch(fetchAsyncGetPlayers({gameId: gameId, dateProgress: playerDate}))
+        await dispatch(fetchAsyncGetRolls(gameId));
+        await dispatch(fetchAsyncGetComingOuts({gameId: gameId, dateProgress: playerDate}))
+      }
+      fetchBootLoader();
+      // comingOutIndexRequest(gameId, playerDate)
+      // .then((res: AxiosResponse) => {
+      //   console.log('abilityLogs', res.data)
+      //   if (!ignore) setAbilityLogs(res.data)
+      // })
       return () => { 
         ignore = true
         setVoteLogs([]);
-        setPlayers([]);
+        console.log('アンマウントされた')
+        // setPlayers([]);
         // setCastings([]);
-        setAbilityLogs([]);
+        // setAbilityLogs([]);
       };
     }
-  },[gameId, selectPlayerDate, selectVoteDate, renderState, dispatch])
+  },[gameId, playerDate, selectVoteDate, renderState, dispatch])
 
   return (
     <Router>
       <RerenderContext.Provider value={{renderState, rerender}}>
       <DailiesContext.Provider value={dailies}>
-      <PlayersContext.Provider value={players}>
       <VoteLogsContext.Provider value={{voteLogs, setVoteLogs}}>
-      <SelectPlayerBoardDateContext.Provider value={{selectPlayerDate, setSelectPlayerDate}}>
       <SelectVoteBoardDateContext.Provider value={{selectVoteDate, setSelectVoteDate}}>
-      <AbilityLogsContext.Provider value={{abilityLogs, setAbilityLogs}} >
+      {/* <AbilityLogsContext.Provider value={{abilityLogs, setAbilityLogs}} > */}
         <div className={styles.app__root}>
           <AnalysisLeftBar />
           <div className={styles.app__main}>
@@ -103,18 +110,16 @@ const App: React.FC = () =>  {
               <Route exact path='/games/'>
                 <GameMain />
               </Route>
-              <Route exact path={`/board`}>
+              <Route exact path={`/board/`}>
                 <GameBoard />
               </Route>
               <Route component={() => <h1 style={{color: 'white', position: 'absolute', top: 350, left: 600}}>404 NOT FOUND</h1>} />
             </Switch>
           </div>
         </div>
-      </AbilityLogsContext.Provider>
+      {/* </AbilityLogsContext.Provider> */}
       </SelectVoteBoardDateContext.Provider>
-      </SelectPlayerBoardDateContext.Provider>
       </VoteLogsContext.Provider>
-      </PlayersContext.Provider>
       </DailiesContext.Provider>
       </RerenderContext.Provider>
     </Router>

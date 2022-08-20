@@ -2,11 +2,13 @@ import { useState, useContext, useEffect } from 'react'
 import styles from './VoteBoard.module.css'
 import SendIcon from '@mui/icons-material/Send';
 import { PLAYER, VOTE_LOG } from '../types';
-import { PlayersContext, VoteLogsContext } from '../../utils/AnalysisContext';
+import { VoteLogsContext } from '../../utils/AnalysisContext';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { votesDeleteRequest } from '../../utils/ApiFetch'
 import { AxiosResponse } from 'axios'
 import { SliceRollName } from '../../utils/PlayerProcessing';
+import { useSelector } from 'react-redux';
+import { selectPlayers } from '../../reducers/playerSlice';
 
 interface VoteProps {
   vote: VOTE_LOG
@@ -14,7 +16,8 @@ interface VoteProps {
 
 const VoteBoardAvatar = (props: VoteProps) => {
   const { voted_id, voter_id } = props.vote
-  const players = useContext(PlayersContext)
+  // const players = useContext(PlayersContext)
+  const players = useSelector(selectPlayers)
   const { voteLogs, setVoteLogs } = useContext(VoteLogsContext) 
   const [voter, setVoter] = useState({} as PLAYER)
   const [voted, setVoted] = useState({} as PLAYER)
@@ -31,26 +34,34 @@ const VoteBoardAvatar = (props: VoteProps) => {
   },[players, voter_id, voted_id])
 
   return (
-    <div className={styles.vote__vote_log}>
-      <div className={styles.vote__avatar}>
-      <div className={styles.vote__avatar_position} style={{borderColor: voter.roll_color, color: voter.roll_color}}>{SliceRollName(voter)}</div>
-        <div className={styles.vote__avatar_name}>
-          {voter.player_name}
-        </div>
-      </div>
-      <div className={styles.vote__send_icon}>
-        <SendIcon />
-      </div>
-      <div className={styles.vote__avatar}>
-        <div className={styles.vote__avatar_position} style={{borderColor: voted.roll_color, color: voted.roll_color}}>{SliceRollName(voted)}</div>
-        <div className={styles.vote__avatar_name}>
-          {voted.player_name}
-        </div>
-      </div>
-      <div className={styles.vote__delete_icon}>
-        <DeleteOutlineIcon sx={{color: 'white'}} onClick={deleteAction} />
-      </div>
-    </div>
+    <>
+      {
+        players && players.length
+          ?(
+            <div className={styles.vote__vote_log}>
+              <div className={styles.vote__avatar}>
+              <div className={styles.vote__avatar_position} style={{borderColor: voter.roll_color, color: voter.roll_color}}>{SliceRollName(voter)}</div>
+                <div className={styles.vote__avatar_name}>
+                  {voter.player_name}
+                </div>
+              </div>
+              <div className={styles.vote__send_icon}>
+                <SendIcon />
+              </div>
+              <div className={styles.vote__avatar}>
+                <div className={styles.vote__avatar_position} style={{borderColor: voted.roll_color, color: voted.roll_color}}>{SliceRollName(voted)}</div>
+                <div className={styles.vote__avatar_name}>
+                  {voted.player_name}
+                </div>
+              </div>
+              <div className={styles.vote__delete_icon}>
+                <DeleteOutlineIcon sx={{color: 'white'}} onClick={deleteAction} />
+              </div>
+            </div>
+          )
+        : <></>
+      }
+    </>
   )
 }
 

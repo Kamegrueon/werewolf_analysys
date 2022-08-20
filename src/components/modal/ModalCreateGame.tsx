@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -9,18 +9,18 @@ import CheckBoxList from '../../utils/CheckBoxList';
 // import { GameSelectContext } from '../../utils/AnalysisContext';
 // import {AxiosResponse, AxiosError} from 'axios'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { selectGameId, fetchAsyncCreateGames } from "../../reducers/gameSlice";
+import { useDispatch } from 'react-redux';
+import { fetchAsyncCreateGames } from "../../reducers/gameSlice";
 
 const ModalCreateGame = () => {
   const dispatch: any = useDispatch()
-  const gameId = useSelector(selectGameId)
+  // const gameId = useSelector(selectGameId)
 
   const [gameName, setGameName] = useState<string | null>(null);
   const [positionIds, setPositionIds] = useState<string[]>([]);
   const [players, setPlayers] = useState<string[]>([]);
   
-  const history = useHistory();
+  // const history = useHistory();
 
   // const { setGameSelect } = useContext(GameSelectContext)
 
@@ -53,9 +53,11 @@ const ModalCreateGame = () => {
     // })
     dispatch(fetchAsyncCreateGames({gameName: gameName,positionIds: positionIds,players: players}))
     // history.push(`/games/${gameId}`)
-    history.push(`/board/`)
-  }
-  
+    // history.push(`/board/`)
+    // console.log(store.getState().game.selectGameId)
+    // window.location.href = `/board/${store.getState().game.selectGameId}`;
+  } 
+
   return (
     <div style={{color: 'white',textAlign: 'center'}}>
       <h2>New Game</h2>

@@ -1,6 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
+import { CASTING, GAME_CREATE_PARAMS, GAME_STATE, GET_GAMES } from "../components/types";
 
 const games_api = axios.create ({
   baseURL: 'http://localhost:3000/api/v1/games',
@@ -11,7 +12,7 @@ const games_api = axios.create ({
 export const fetchAsyncGetGames = createAsyncThunk(
   'game/getGames',
   async() =>{
-    const res = await games_api.get('/')
+    const res = await games_api.get<GET_GAMES>('/')
     return res.data
   }
 )
@@ -24,15 +25,9 @@ export const fetchAsyncDeleteGames = createAsyncThunk(
   }
 )
 
-interface gameCreateParams {
-  gameName: string | null,
-  players: string[], 
-  positionIds: string[],
-}
-
 export const fetchAsyncCreateGames = createAsyncThunk(
   'game/createGame',
-  async (params: gameCreateParams) => {
+  async (params: GAME_CREATE_PARAMS) => {
     const res = await games_api.post('/',{
       game: {
         game_name: params.gameName, 
@@ -52,13 +47,13 @@ export const fetchAsyncGetRolls = createAsyncThunk(
 )
 
 
-const initialState = {
+const initialState: GAME_STATE = {
   games:  [
     {
-      id: '1', 
+      id: '', 
       game_name: '', 
       is_win: true, 
-      date_progress: 1, 
+      date_progress: 0, 
       created_at: ''
     }
   ],
@@ -66,16 +61,16 @@ const initialState = {
     {
       attributes:
         {
-          id: '1', 
-          roll_name: '人狼'
+          id: '', 
+          roll_name: ''
         }
     }
   ],
   selectGameId: '',
   castings: [
     {
-      id: 1,
-      roll_id: 1, 
+      id: 0,
+      roll_id: 0, 
       roll_name: ''
     }
   ],
@@ -85,14 +80,14 @@ export const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
-    setSelectGame(state, action){
+    setSelectGame(state, action: PayloadAction<string>){
       state.selectGameId = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchAsyncGetGames.fulfilled,
-      (state, action: any) => {
+      (state, action: PayloadAction<GET_GAMES>) => {
         return {
           ...state,
           games: action.payload.games,
@@ -102,7 +97,7 @@ export const gameSlice = createSlice({
     );
     builder.addCase(
       fetchAsyncDeleteGames.fulfilled,
-      (state, action: any) => {
+      (state, action: PayloadAction<string>) => {
         return {
           ...state,
           games: state.games.filter((game) => game.id !== action.payload),
@@ -111,7 +106,7 @@ export const gameSlice = createSlice({
     );
     builder.addCase(
       fetchAsyncCreateGames.fulfilled,
-      (state, action: any) => {
+      (state, action: PayloadAction<string>) => {
         return {
           ...state,
           selectGameId: action.payload,
@@ -120,7 +115,7 @@ export const gameSlice = createSlice({
     );
     builder.addCase(
       fetchAsyncGetRolls.fulfilled,
-      (state, action: any) => {
+      (state, action: PayloadAction<CASTING[]>) => {
         return {
           ...state,
           castings: action.payload,
@@ -131,6 +126,13 @@ export const gameSlice = createSlice({
 })
 
 export const { setSelectGame } = gameSlice.actions
+
+// export const redirectBoard = 
+//   ():AppThunk => (dispatch, getState) => {
+//     const currentGameId = selectGameId(getState())
+//     dispatch(visitBoard(currentGameId))
+//   }
+
 
 export const selectGames = (state: RootState) => state.game.games
 export const selectRolls = (state: RootState) => state.game.rolls
