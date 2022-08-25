@@ -7,7 +7,7 @@ import ModalMain from '../modal/ModalMain'
 import PlayerBoardComingOut from './PlayerBoardComingOut'
 import PlayerBoardSelectAbilityAction from './PlayerBoardSelectAbilityAction'
 import PlayerBoardExistCod from './PlayerBoardExistCod';
-import { SliceRollName, ExistCodStyle } from '../../utils/PlayerProcessing'
+import { ShortRollName, ExistCodStyle } from '../../utils/PlayerProcessing'
 import { useSelector } from 'react-redux';
 import { selectAbilityLogs, selectPlayers } from '../../reducers/playerSlice';
 
@@ -92,7 +92,7 @@ const PlayerBoardAvatar: React.FC = () => {
             }
           </div>
           <div onClick={()=>handleClick(index)} className={styles.player__avatar} style={ExistCodStyle(player)}>
-            <div className={styles.player__avatar_position} style={{borderColor: player.roll_color, color: player.roll_color}}>{SliceRollName(player)}</div>
+            <div className={styles.player__avatar_position} style={{borderColor: player.roll_color, color: player.roll_color}}>{ShortRollName(player)}</div>
             <div className={styles.player__avatar_name}>
               {player.player_name}
             </div>

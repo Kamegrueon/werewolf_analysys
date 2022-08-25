@@ -1,6 +1,6 @@
 import { PLAYER } from '../components/types'
 
-export const SliceRollName = (player: PLAYER) => {
+export const ShortRollName = (player: PLAYER) => {
   let roll_name = '？'
   switch (player.roll_name) {
     case '占い師':

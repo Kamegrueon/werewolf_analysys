@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosBase from "axios";
-import { GET_PLAYER_SLICE_PARAMS } from "../components/types";
+import { GET_DATA_PARAMS } from "../components/types";
 import { RootState } from "../store";
 
 
@@ -16,7 +16,7 @@ const coming_outs_api = axiosBase.create ({
 
 export const fetchAsyncGetPlayers = createAsyncThunk(
   'player/getPlayers',
-  async(params: GET_PLAYER_SLICE_PARAMS) =>{
+  async(params: GET_DATA_PARAMS) =>{
     const res = await games_api.get(`/${params.gameId}/players?date_progress=${params.dateProgress}`)
     console.log('playersIndex',res.data)
     return res.data
@@ -25,7 +25,7 @@ export const fetchAsyncGetPlayers = createAsyncThunk(
 
 export const fetchAsyncGetComingOuts = createAsyncThunk(
   'player/getComingOuts',
-  async(params: GET_PLAYER_SLICE_PARAMS) => {
+  async(params: GET_DATA_PARAMS) => {
     const res = await coming_outs_api.get(`?game_id=${params.gameId}&date_progress=${params.dateProgress}`)
     return res.data
   }

@@ -125,6 +125,7 @@ export interface GAME_STATE {
   rolls: ROLLS[]
   selectGameId: string
   castings: CASTING[]
+  dailies: DAILIES[]
 }
 
 export interface GAMES {
@@ -160,8 +161,13 @@ export interface CASTING {
   roll_name: string
 }
 
-// playerSlice
-export interface GET_PLAYER_SLICE_PARAMS {
+export interface GET_DATA_PARAMS {
   gameId: string, 
   dateProgress: string
+}
+
+export interface CREATE_VOTE_PARAMS {
+  dailyId: string
+  voterId: string
+  votedId: string
 }

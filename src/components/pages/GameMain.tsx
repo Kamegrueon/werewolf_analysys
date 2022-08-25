@@ -18,7 +18,7 @@ import ModalMain from '../modal/ModalMain';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
 
-import { selectGames, fetchAsyncGetGames, fetchAsyncDeleteGames, setSelectGame, fetchAsyncGetRolls } from "../../reducers/gameSlice";
+import { selectGames, fetchAsyncGetGames, fetchAsyncDeleteGames, setSelectGame, fetchAsyncGetDailies } from "../../reducers/gameSlice";
 
 const GameMain: React.FC = memo(() => {
 
@@ -96,7 +96,10 @@ const GameMain: React.FC = memo(() => {
                 style={{textDecoration: 'none', color: 'inherit'}} 
                 // onClick={() => setGameSelect(game.id)}
                 onClick={
-                  () => {dispatch(setSelectGame(game.id))}
+                  () => {
+                    dispatch(setSelectGame(game.id))
+                    dispatch(fetchAsyncGetDailies(game.id))
+                  }                  
                 }
               >
                   {game.game_name}
