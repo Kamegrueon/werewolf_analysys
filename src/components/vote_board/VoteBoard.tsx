@@ -1,22 +1,25 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import SelectMain from '../select/SelectMain'
 import styles from './VoteBoard.module.css'
 import VoteBoardVoteList from './VoteBoardVoteList'
 import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
-import { VoteFormContext, SelectVoteBoardDateContext, VoteLogsContext, DailiesContext } from '../../utils/AnalysisContext';
-import { votesCreateRequest } from '../../utils/ApiFetch';
-import {VOTE_LOG} from '../types'
-import { AxiosResponse } from 'axios'
+
 import { filteringDailyId } from '../../utils/UtilsFC';
+import { fetchAsyncCreateVotes, selectIsOpenVoteForm, selectVoteDate, selectVotedPlayerId, selectVoterPlayerId, setIsVoteForm, setVotedPlayerId, setVoterPlayerId } from '../../reducers/voteSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectDailies } from '../../reducers/gameSlice';
+import { AppDispatch } from '../../store';
 
 const VoteBoard:React.FC = () => {
-  const { selectVoteDate } = useContext(SelectVoteBoardDateContext)
-  const { voteLogs, setVoteLogs } = useContext(VoteLogsContext)
-  const dailies = useContext(DailiesContext)
-  const [voterPlayerId, setVoterPlayerId] = useState('');
-  const [votedPlayerId, setVotedPlayerId] = useState('');
-  const [isOpenForm, setIsOpenForm] = useState(false);
+
+  const voteDate = useSelector(selectVoteDate)
+  const voterPlayerId = useSelector(selectVoterPlayerId)
+  const votedPlayerId = useSelector(selectVotedPlayerId)
+  const isOpenVoteForm = useSelector(selectIsOpenVoteForm)
+  const dailies = useSelector(selectDailies)
+
+  const dispatch: AppDispatch = useDispatch()
 
   const IconStyle = { 
     fontSize: 40, 
@@ -30,44 +33,35 @@ const VoteBoard:React.FC = () => {
 
   const handlePostVote = () => {
     if(voterPlayerId !== '' && votedPlayerId !== ''){
-      votesCreateRequest(filteringDailyId(dailies, selectVoteDate), voterPlayerId, votedPlayerId)
-      .then((res: AxiosResponse<VOTE_LOG>) => {
-        console.log('vote response',res.data)
-        setVoteLogs([...voteLogs,res.data])
-      })
+      dispatch(fetchAsyncCreateVotes({
+        dailyId: filteringDailyId(dailies, voteDate),
+        voterId: voterPlayerId,
+        votedId: votedPlayerId
+      }))
     }
-    setVoterPlayerId('')
-    setVotedPlayerId('')
-    setIsOpenForm(false)
+    dispatch(setVoterPlayerId(''))
+    dispatch(setVotedPlayerId(''))
+    dispatch(setIsVoteForm(false))
   }
 
   const handleOpen = () => {
-    setIsOpenForm(true)
+    dispatch(setIsVoteForm(true))
   }
 
   return (
-    <VoteFormContext.Provider value={{
-      voteLogs,
-      voterPlayerId,
-      setVoterPlayerId,
-      votedPlayerId,
-      setVotedPlayerId, 
-      isOpenForm, 
-    }}>
-      <div className={styles.vote__board}>
-        <div className={styles.vote__title}>Vote for</div>
-        <div className={styles.vote__box}>
-          <VoteBoardVoteList />
-          <div className={styles.vote__select}>
-            <SelectMain body={'voteDay'} />
-          </div>
+    <div className={styles.vote__board}>
+      <div className={styles.vote__title}>Vote for</div>
+      <div className={styles.vote__box}>
+        <VoteBoardVoteList />
+        <div className={styles.vote__select}>
+          <SelectMain body={'voteDay'} />
         </div>
-        {isOpenForm
-          ? <DoneIcon onClick={handlePostVote} sx={IconStyle} />
-          : <AddIcon onClick={handleOpen} sx={IconStyle}/>
-        }
       </div>
-    </VoteFormContext.Provider>
+      {isOpenVoteForm
+        ? <DoneIcon onClick={handlePostVote} sx={IconStyle} />
+        : <AddIcon onClick={handleOpen} sx={IconStyle}/>
+      }
+    </div>
   )
 }
 

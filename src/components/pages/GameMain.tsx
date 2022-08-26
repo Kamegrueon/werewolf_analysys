@@ -94,7 +94,6 @@ const GameMain: React.FC = memo(() => {
               <Link 
                 to={{pathname: `/board/`}} 
                 style={{textDecoration: 'none', color: 'inherit'}} 
-                // onClick={() => setGameSelect(game.id)}
                 onClick={
                   () => {
                     dispatch(setSelectGame(game.id))
@@ -109,7 +108,6 @@ const GameMain: React.FC = memo(() => {
               <TableCell align="right" sx={{color: 'white'}}>{dayjs(game.created_at).locale('ja').format('YYYY/MM/DD(dd)')}</TableCell>
               <TableCell align="right" sx={{color: 'white'}}>{game.is_win ? '勝利' : game.is_win===null ? '' :'敗北'}</TableCell>
               <TableCell align="right" sx={{color: 'white'}}>{game.date_progress}</TableCell>
-              {/* <TableCell><DeleteOutlineIcon sx={{color: 'white'}} onClick={()=>{deleteAction(game.id)}} /></TableCell> */}
               <TableCell><DeleteOutlineIcon sx={{color: 'white'}} 
                 onClick={()=>{dispatch(fetchAsyncDeleteGames(game.id))}}
               /></TableCell>

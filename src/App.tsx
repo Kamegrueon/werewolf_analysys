@@ -64,7 +64,7 @@ const App: React.FC = () =>  {
         await dispatch(fetchAsyncGetPlayers({gameId: gameId, dateProgress: playerDate}))
         await dispatch(fetchAsyncGetRolls(gameId));
         await dispatch(fetchAsyncGetComingOuts({gameId: gameId, dateProgress: playerDate}))
-        await dispatch(fetchAsyncGetVotes({gameId: gameId, dateProgress: playerDate}))
+        await dispatch(fetchAsyncGetVotes({gameId: gameId, dateProgress: voteDate}))
       }
       fetchBootLoader();
 

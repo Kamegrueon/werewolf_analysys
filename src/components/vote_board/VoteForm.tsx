@@ -1,23 +1,29 @@
-import { useContext } from 'react'
-import { PlayersContext } from '../../utils/AnalysisContext';
-import { VoteFormContext } from '../../utils/AnalysisContext';
 import styles from './VoteBoard.module.css'
 import SendIcon from '@mui/icons-material/Send';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectPlayers } from '../../reducers/playerSlice';
+import { selectVotedPlayerId, selectVoteLogs, selectVoterPlayerId, setVotedPlayerId, setVoterPlayerId } from '../../reducers/voteSlice';
+import { AppDispatch } from '../../store';
 
 const VoteForm = () => {
 
-  const players = useContext(PlayersContext)
-  const { voteLogs, voterPlayerId, setVoterPlayerId, votedPlayerId, setVotedPlayerId } = useContext(VoteFormContext)
+  const players = useSelector(selectPlayers)
+  const voteLogs = useSelector(selectVoteLogs)
+  const voterPlayerId = useSelector(selectVoterPlayerId)
+  const votedPlayerId = useSelector(selectVotedPlayerId)
+
+  const dispatch: AppDispatch = useDispatch()
+  
 
   const voteHandleChange = (event: SelectChangeEvent) => {
-    setVoterPlayerId(event.target.value)
+    dispatch(setVoterPlayerId(event.target.value))
     console.log('voter', event.target.value)
   }
 
   const votedHandleChange = (event: SelectChangeEvent) => {
-    setVotedPlayerId(event.target.value)
+    dispatch(setVotedPlayerId(event.target.value))
     console.log('voted', event.target.value)
   }
 

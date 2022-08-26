@@ -1,10 +1,9 @@
-import { useContext } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-import { DailiesContext } from '../../utils/AnalysisContext'
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPlayerDate, setSelectPlayerDate } from '../../reducers/playerSlice';
 import { AppDispatch } from '../../store';
+import { selectDailies } from '../../reducers/gameSlice';
 
 const SelectPlayerDay = () => {
 
@@ -12,7 +11,8 @@ const SelectPlayerDay = () => {
   const playerDate = useSelector(selectPlayerDate)
   const dispatch: AppDispatch = useDispatch()
 
-  const dailies = useContext(DailiesContext)
+  // const dailies = useContext(DailiesContext)
+  const dailies = useSelector(selectDailies)
 
   const days_style = { margin: "0 20px 0 auto" }
   const label_style = { color: "#FFFFFF" , fontWeight: 800}

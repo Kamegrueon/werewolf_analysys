@@ -1,5 +1,5 @@
 import { useState } from 'react'
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -14,15 +14,12 @@ import { fetchAsyncCreateGames } from "../../reducers/gameSlice";
 
 const ModalCreateGame = () => {
   const dispatch: any = useDispatch()
-  // const gameId = useSelector(selectGameId)
 
   const [gameName, setGameName] = useState<string | null>(null);
   const [positionIds, setPositionIds] = useState<string[]>([]);
   const [players, setPlayers] = useState<string[]>([]);
   
-  // const history = useHistory();
-
-  // const { setGameSelect } = useContext(GameSelectContext)
+  const history = useHistory();
 
   const handleSelectedTags = (players: string[]) => {
     setPlayers(players)
@@ -43,19 +40,8 @@ const ModalCreateGame = () => {
 
   const onClickSubmit = () => {
     console.log(gameName, positionIds, players)
-    // gamesCreateRequest(gameName, players, positionIds).then((res: AxiosResponse) => {
-    //   setGameSelect(res.data.id)
-    //   history.push(`/games/${res.data.id}`)
-    // }).catch((error: AxiosError<{ error: string }>)  => {
-    //   if (error.response !== undefined){
-    //     alert(error.response.data.error)
-    //   }
-    // })
     dispatch(fetchAsyncCreateGames({gameName: gameName,positionIds: positionIds,players: players}))
-    // history.push(`/games/${gameId}`)
-    // history.push(`/board/`)
-    // console.log(store.getState().game.selectGameId)
-    // window.location.href = `/board/${store.getState().game.selectGameId}`;
+    history.push(`/board/`)
   } 
 
   return (

@@ -1,19 +1,14 @@
-import { useContext } from 'react'
-import { SelectVoteBoardDateContext } from '../../utils/AnalysisContext'
 import { PLAYER } from '../types'
 import styles from './DataBoard.module.css'
 import { ShortRollName } from '../../utils/PlayerProcessing'
 import { useSelector } from 'react-redux'
 import { selectPlayers } from '../../reducers/playerSlice'
-import { selectVoteLogs } from '../../reducers/voteSlice'
+import { selectVoteDate, selectVoteLogs } from '../../reducers/voteSlice'
 
 const DataBoard = () => {
-  // const players = useContext(PlayersContext)
   const players = useSelector(selectPlayers)
-
-  // const { voteLogs } = useContext(VoteLogsContext)
   const voteLogs = useSelector(selectVoteLogs)
-  const { selectVoteDate } = useContext(SelectVoteBoardDateContext)
+  const voteDate = useSelector(selectVoteDate)
 
   type aggVoteLogsReduceObj = { [key: string]: number };
 
@@ -27,22 +22,22 @@ const DataBoard = () => {
   console.log('agg',aggVotedLogs)
 
   const votedPlayerFilter = (key: string) => {
-    return players.filter((player: PLAYER) => String(player.id) === String(key))[0]
+    return players.filter((player: PLAYER) => String(player?.id) === String(key))[0]
   }
 
   return (
     <>
       {
-        players[0].id !== '' && voteLogs[0].id !== ''
+        players[0].id !== '' && voteLogs.length && voteLogs[0].id !== ''
         ?(
           <div className={styles.data__board_wrapper}>
             <div className={styles.data__board}>
               <div style={{display: 'flex', marginBottom: 15}}>
                 <div className={styles.data__title}>Data</div>
-                <div className={styles.data__menu}>投票数（{selectVoteDate}日目）</div>
+                <div className={styles.data__menu}>投票数（{voteDate}日目）</div>
               </div>
               <div className={styles.data__box}>
-                {aggVotedLogs !== {"": 0}
+                {aggVotedLogs !== {"": 1} && aggVotedLogs !== {}
                 ? Object.entries(aggVotedLogs).map(([key, value], index) => {
                   console.log('呼ばれた')
                   return (
