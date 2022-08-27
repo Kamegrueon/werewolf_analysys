@@ -25,7 +25,7 @@ import {
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectGameId, fetchAsyncGetRolls, selectDailies } from "./reducers/gameSlice";
-import { fetchAsyncGetPlayers, fetchAsyncGetComingOuts, selectPlayerDate } from './reducers/playerSlice';
+import { fetchAsyncGetPlayers, fetchAsyncGetAbilityLogs, selectPlayerDate } from './reducers/playerSlice';
 import { AppDispatch } from './store';
 import { fetchAsyncGetVotes, selectVoteDate } from './reducers/voteSlice';
 
@@ -63,7 +63,7 @@ const App: React.FC = () =>  {
       const fetchBootLoader = async () => {
         await dispatch(fetchAsyncGetPlayers({gameId: gameId, dateProgress: playerDate}))
         await dispatch(fetchAsyncGetRolls(gameId));
-        await dispatch(fetchAsyncGetComingOuts({gameId: gameId, dateProgress: playerDate}))
+        await dispatch(fetchAsyncGetAbilityLogs({gameId: gameId, dateProgress: playerDate}))
         await dispatch(fetchAsyncGetVotes({gameId: gameId, dateProgress: voteDate}))
       }
       fetchBootLoader();

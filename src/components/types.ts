@@ -171,3 +171,16 @@ export interface CREATE_VOTE_PARAMS {
   voterId: string
   votedId: string
 }
+
+export interface CREATE_ABILITY_LOGS_PARAMS {
+  coId: string | null | undefined
+  targetPlayerId: string
+  dailyId: string
+  abilityResult: string
+}
+
+export interface CREATE_COMING_OUTS_PARAMS {
+  dailyId: string
+  comingOutRoll: string | null
+  coPlayerId: string
+}

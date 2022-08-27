@@ -8,6 +8,10 @@ import { AbilityLogsContext, DailiesContext, PlayersContext, SelectPlayerBoardDa
 import { InputLabel } from '@mui/material';
 import { ABILITY_LOG } from '../types';
 import { filteringDailyId } from '../../utils/UtilsFC';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAsyncCreateAbilityLogs, selectPlayerDate, selectPlayers } from '../../reducers/playerSlice';
+import { selectDailies } from '../../reducers/gameSlice';
+import { AppDispatch } from '../../store';
 
 const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleClose: () => void}) => {
 
@@ -21,11 +25,11 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
 
   const [abilityResult, setAbilityResult] = useState<string>('')
   const [targetPlayerId, setTargetPlayerId] = useState<string>('')
-  const players = useContext(PlayersContext)
-  const dailies = useContext(DailiesContext)
-  const {setAbilityLogs} = useContext(AbilityLogsContext)
 
-  const {selectPlayerDate} = useContext(SelectPlayerBoardDateContext)
+  const players = useSelector(selectPlayers)
+  const dailies = useSelector(selectDailies)
+  const playerDate = useSelector(selectPlayerDate)
+  const dispatch: AppDispatch = useDispatch()
 
   const handleChangeAbilityResult = (event: SelectChangeEvent<string>) => {
     setAbilityResult(event.target.value)
@@ -39,19 +43,17 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
 
   const onClickSubmit = (coId: string | null | undefined) => {
     if(abilityResult !== '' && targetPlayerId !== '' && coId !== null){
-      abilityLogsCreateRequest(coId, targetPlayerId, filteringDailyId(dailies, selectPlayerDate), abilityResult)
-      .then((res: AxiosResponse<ABILITY_LOG[]>) => {
-        setAbilityLogs(res.data)
-        setAbilityResult('')
-        setTargetPlayerId('')
-        props.handleClose()
-      }).catch((error: AxiosError<{ error: string }>)  => {
-        if (error.response !== undefined){
-          alert(error.response.data.error)
+      dispatch(fetchAsyncCreateAbilityLogs(
+        {
+          coId: coId, 
+          targetPlayerId: targetPlayerId, 
+          dailyId: filteringDailyId(dailies, playerDate), 
+          abilityResult: abilityResult
         }
-      })
-    }else{
-      alert('エラー')
+      ))
+      setAbilityResult('')
+      setTargetPlayerId('')
+      props.handleClose()
     }
   }
 

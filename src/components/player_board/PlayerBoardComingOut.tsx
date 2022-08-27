@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import { CastingsContext, DailiesContext, RerenderContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
 import { comingOutCreateRequest } from '../../utils/ApiFetch'
 import { AxiosError} from 'axios'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -7,7 +6,9 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
-import { selectCastings } from '../../reducers/gameSlice';
+import { selectCastings, selectDailies } from '../../reducers/gameSlice';
+import { selectPlayerDate } from '../../reducers/playerSlice';
+import { RerenderContext } from '../../utils/AnalysisContext';
 
 const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispatch<React.SetStateAction<number | null>>, contentRefs: React.MutableRefObject<React.RefObject<HTMLDivElement>[]>, index: number, clicked: number | null}) => {
 
@@ -19,20 +20,17 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
     textAlign: 'center'
   }
 
-  // const castings = useContext(CastingsContext)
-  const castings = useSelector(selectCastings)
-
   useEffect(()=>{
     if (props.contentRefs && props.contentRefs.current[props.index].current){
       props.contentRefs.current[props.index].current?.scrollIntoView({block: "end", inline: "end"})
     }
   },[props.clicked, props.contentRefs, props.index])
 
-
-  const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)  
-  const dailies = useContext(DailiesContext)
+  const castings = useSelector(selectCastings)
+  const playerDate = useSelector(selectPlayerDate)
+  const dailies = useSelector(selectDailies)
+  
   const { renderState, rerender } = useContext(RerenderContext)
-
   const [comingOutRoll, setComingOutRoll] = useState<string | null>(null)
 
   const handleChangeComingOutRoll = (event: SelectChangeEvent) => {
@@ -42,13 +40,13 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
 
   const onClickSubmit = (playerId: string) => {
     // daily_idをフィルターで取得してpostする
-    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
+    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(playerDate))[0].id
     if(comingOutRoll !== ''){
       comingOutCreateRequest(dailyId, comingOutRoll, playerId).then((res: any) => {
         console.log(res.data)
-        rerender(renderState + 1)
         setComingOutRoll(null)
         props.setClicked(null)
+        rerender(renderState + 1)
       }).catch((error: AxiosError<{ error: string }>)  => {
         if (error.response !== undefined){
           alert(error.response.data.error)

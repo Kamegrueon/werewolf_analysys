@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosBase from "axios";
-import { GET_DATA_PARAMS } from "../components/types";
+import { CREATE_ABILITY_LOGS_PARAMS, CREATE_COMING_OUTS_PARAMS, GET_DATA_PARAMS } from "../components/types";
 import { RootState } from "../store";
 
 
@@ -23,13 +23,40 @@ export const fetchAsyncGetPlayers = createAsyncThunk(
   }
 )
 
-export const fetchAsyncGetComingOuts = createAsyncThunk(
+export const fetchAsyncGetAbilityLogs = createAsyncThunk(
   'player/getComingOuts',
   async(params: GET_DATA_PARAMS) => {
     const res = await coming_outs_api.get(`?game_id=${params.gameId}&date_progress=${params.dateProgress}`)
     return res.data
   }
 )
+
+export const fetchAsyncCreateComingOuts = createAsyncThunk(
+  'player/createComingOuts',
+  async(params: CREATE_COMING_OUTS_PARAMS) => {
+    return await coming_outs_api.post('',{
+      coming_out: {
+        daily_id: params.dailyId,
+        player_id: params.coPlayerId,
+        roll_name: params.comingOutRoll,
+      }
+    })
+  }  
+)
+
+export const fetchAsyncCreateAbilityLogs = createAsyncThunk(
+  'player/createAbilityLogs',
+  async(params: CREATE_ABILITY_LOGS_PARAMS) => {
+    const res = await coming_outs_api.post(`/${params.coId}/ability_logs`,{
+      ability_log: {
+        target_player_id: params.targetPlayerId,
+        daily_id: params.dailyId,
+        ability_result: params.abilityResult,
+      }})
+    return res.data
+  }
+)
+
 
 const initialState = {
   players:  [
@@ -80,14 +107,23 @@ export const playerSlice = createSlice({
       }
     );
     builder.addCase(
-      fetchAsyncGetComingOuts.fulfilled,
+      fetchAsyncGetAbilityLogs.fulfilled,
       (state, action: any) => {
         return {
           ...state,
           abilityLogs: action.payload
         }
       }      
-    )
+    );
+    builder.addCase(
+      fetchAsyncCreateAbilityLogs.fulfilled,
+      (state, action: any) => {
+        return {
+          ...state,
+          abilityLogs: [...state.abilityLogs, action.payload]
+        }
+      }      
+    );
   }
 })
 
