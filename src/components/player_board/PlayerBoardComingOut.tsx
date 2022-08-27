@@ -6,8 +6,8 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
-import { selectCastings, selectDailies } from '../../reducers/gameSlice';
-import { selectPlayerDate } from '../../reducers/playerSlice';
+import { selectCastings } from '../../reducers/gameSlice';
+import { selectDailies, selectPlayerDate } from '../../reducers/playerSlice';
 import { RerenderContext } from '../../utils/AnalysisContext';
 
 const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispatch<React.SetStateAction<number | null>>, contentRefs: React.MutableRefObject<React.RefObject<HTMLDivElement>[]>, index: number, clicked: number | null}) => {

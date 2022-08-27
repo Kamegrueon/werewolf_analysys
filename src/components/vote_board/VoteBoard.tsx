@@ -8,7 +8,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { filteringDailyId } from '../../utils/UtilsFC';
 import { fetchAsyncCreateVotes, selectIsOpenVoteForm, selectVoteDate, selectVotedPlayerId, selectVoterPlayerId, setIsVoteForm, setVotedPlayerId, setVoterPlayerId } from '../../reducers/voteSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectDailies } from '../../reducers/gameSlice';
+import { selectDailies } from '../../reducers/playerSlice';
 import { AppDispatch } from '../../store';
 
 const VoteBoard:React.FC = () => {

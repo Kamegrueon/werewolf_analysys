@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosBase from "axios";
 import { RootState } from "../store";
-import { CASTING, DAILIES, GAME_CREATE_PARAMS, GAME_STATE, GET_GAMES } from "../components/types";
+import { CASTING, GAME_CREATE_PARAMS, GAME_STATE, GET_GAMES } from "../components/types";
 
-const games_api = axios.create ({
+const games_api = axiosBase.create ({
   baseURL: 'http://localhost:3000/api/v1/games',
   responseType: "json",
 })
@@ -46,15 +46,6 @@ export const fetchAsyncGetRolls = createAsyncThunk(
   }
 )
 
-export const fetchAsyncGetDailies = createAsyncThunk(
-  'game/getDailies',
-  async(gameId: string) =>{
-    const res = await games_api.get(`/${gameId}/dailies`)
-    console.log(res.data)
-    return res.data
-  }
-)
-
 
 const initialState: GAME_STATE = {
   games:  [
@@ -75,7 +66,6 @@ const initialState: GAME_STATE = {
         }
     }
   ],
-  selectGameId: '',
   castings: [
     {
       id: 0,
@@ -83,13 +73,7 @@ const initialState: GAME_STATE = {
       roll_name: ''
     }
   ],
-  dailies: [
-    {
-      id: '',
-      game_id: '', 
-      date_progress: 0
-    }
-  ]
+  selectGameId: ''
 }
 
 export const gameSlice = createSlice({
@@ -138,15 +122,6 @@ export const gameSlice = createSlice({
         }
       }
     );
-    builder.addCase(
-      fetchAsyncGetDailies.fulfilled,
-      (state, action: PayloadAction<DAILIES[]>) => {
-        return {
-          ...state,
-          dailies: action.payload,
-        }
-      }
-    );
   }
 })
 
@@ -163,6 +138,5 @@ export const selectGames = (state: RootState) => state.game.games
 export const selectRolls = (state: RootState) => state.game.rolls
 export const selectGameId = (state: RootState) => state.game.selectGameId
 export const selectCastings = (state: RootState) => state.game.castings
-export const selectDailies = (state: RootState) => state.game.dailies
 
 export default gameSlice.reducer

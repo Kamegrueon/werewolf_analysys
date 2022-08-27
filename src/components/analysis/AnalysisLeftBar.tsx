@@ -6,7 +6,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { selectGameId } from '../../reducers/gameSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store';
-import { resetSelectPlayerDate } from '../../reducers/playerSlice';
+import { setSelectPlayerDate } from '../../reducers/playerSlice';
 
 const AnalysisLeftBar = () => {  
   const location = useLocation();
@@ -20,7 +20,7 @@ const AnalysisLeftBar = () => {
   // const { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
 
   const resetSelectDate = () => {
-     dispatch(resetSelectPlayerDate())
+     dispatch(setSelectPlayerDate('1'))
   }
 
   const LeftListItemStyle = {backgroundColor: 'white', borderRadius: 2, mb: 3, pointerEvents: 'none'}

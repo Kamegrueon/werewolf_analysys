@@ -1,14 +1,14 @@
-import { useState, useContext } from 'react'
-import { PlayersContext, DailiesContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
+import { useState } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { causeOfDeathsCreateRequest } from '../../utils/ApiFetch'
-import {AxiosResponse, AxiosError} from 'axios'
-import { DAILIES } from '../types';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectPlayerDate, selectPlayers } from '../../reducers/playerSlice';
+import { fetchAsyncCreateReport, selectDailies } from '../../reducers/playerSlice';
+import { AppDispatch } from '../../store';
 
-const ModalCreateReport = (props: any ) => {
+const ModalCreateReport = (props: {handleClose: () => void} ) => {
 
   const select_days_style = {
     width: 165,
@@ -18,9 +18,10 @@ const ModalCreateReport = (props: any ) => {
     textAlign: 'center'
   }
 
-  const players = useContext(PlayersContext)
-  const { selectPlayerDate, setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
-  const dailies = useContext(DailiesContext)
+  const players = useSelector(selectPlayers)
+  const playerDate = useSelector(selectPlayerDate)
+  const dailies = useSelector(selectDailies)
+  const dispatch: AppDispatch = useDispatch()
 
   const [executedPlayerId, setExecutedPlayerId] = useState<string>('')
   const [murderedPlayerId, setMurderedPlayerId] = useState<string | null>(null)
@@ -40,24 +41,16 @@ const ModalCreateReport = (props: any ) => {
 
   const onClickSubmit = () => {
     // daily_idをフィルターで取得してpostする
-    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
+    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(playerDate))[0].id
     if(executedPlayerId !== ''){
-      causeOfDeathsCreateRequest( 
-        dailyId,
-        executedPlayerId, 
-        murderedPlayerId,
-        perishedPlayerId
-      ).then((res: AxiosResponse<DAILIES>) => {
-        console.log(res.data.date_progress)
-        setSelectPlayerDate(String(res.data.date_progress))
-        props.handleClose(false)
-      }).catch((error: AxiosError<{ error: string }>)  => {
-        if (error.response !== undefined){
-          alert(error.response.data.error)
-        }
-      })
-    }else{
-      alert('処刑された人を選択してください')
+      dispatch(fetchAsyncCreateReport(
+        {
+          dailyId: dailyId,
+          executedPlayerId: executedPlayerId, 
+          murderedPlayerId: murderedPlayerId,
+          perishedPlayerId: perishedPlayerId
+        }))
+      props.handleClose()
     }
   }
 

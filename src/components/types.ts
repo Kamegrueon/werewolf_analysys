@@ -125,7 +125,6 @@ export interface GAME_STATE {
   rolls: ROLLS[]
   selectGameId: string
   castings: CASTING[]
-  dailies: DAILIES[]
 }
 
 export interface GAMES {
@@ -183,4 +182,11 @@ export interface CREATE_COMING_OUTS_PARAMS {
   dailyId: string
   comingOutRoll: string | null
   coPlayerId: string
+}
+
+export interface CREATE_COD_PARAMS {
+  dailyId: string
+  executedPlayerId: string
+  murderedPlayerId: string | null
+  perishedPlayerId: string | null
 }

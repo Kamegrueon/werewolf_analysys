@@ -24,8 +24,8 @@ import {
 } from './utils/AnalysisContext';
 
 import { useSelector, useDispatch } from "react-redux";
-import { selectGameId, fetchAsyncGetRolls, selectDailies } from "./reducers/gameSlice";
-import { fetchAsyncGetPlayers, fetchAsyncGetAbilityLogs, selectPlayerDate } from './reducers/playerSlice';
+import { selectGameId, fetchAsyncGetRolls } from "./reducers/gameSlice";
+import { fetchAsyncGetPlayers, fetchAsyncGetAbilityLogs, selectPlayerDate, setIsExistReport, selectDailies } from './reducers/playerSlice';
 import { AppDispatch } from './store';
 import { fetchAsyncGetVotes, selectVoteDate } from './reducers/voteSlice';
 
@@ -67,6 +67,9 @@ const App: React.FC = () =>  {
         await dispatch(fetchAsyncGetVotes({gameId: gameId, dateProgress: voteDate}))
       }
       fetchBootLoader();
+      let maxDateProgress = String(dailies.map((date) => date.date_progress).reduce((pre, cur) => Math.max(pre, cur)))
+      let isExistReport = maxDateProgress === '1' ? false : playerDate !== maxDateProgress
+      dispatch(setIsExistReport(isExistReport))
 
       return () => { 
         console.log('アンマウントされた')

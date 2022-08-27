@@ -3,7 +3,7 @@ import FormControl from '@mui/material/FormControl';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectVoteDate, setSelectVoteDate } from '../../reducers/voteSlice';
-import { selectDailies } from '../../reducers/gameSlice';
+import { selectDailies } from '../../reducers/playerSlice';
 import { AppDispatch } from '../../store';
 
 const SelectVoteDay = () => {

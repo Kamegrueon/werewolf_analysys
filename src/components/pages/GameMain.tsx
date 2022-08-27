@@ -18,7 +18,8 @@ import ModalMain from '../modal/ModalMain';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
 
-import { selectGames, fetchAsyncGetGames, fetchAsyncDeleteGames, setSelectGame, fetchAsyncGetDailies } from "../../reducers/gameSlice";
+import { selectGames, fetchAsyncGetGames, fetchAsyncDeleteGames, setSelectGame } from "../../reducers/gameSlice";
+import { fetchAsyncGetDailies } from '../../reducers/playerSlice';
 
 const GameMain: React.FC = memo(() => {
 

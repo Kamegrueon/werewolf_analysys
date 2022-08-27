@@ -12,7 +12,7 @@ const votes_api = axiosBase.create ({
 export const fetchAsyncGetVotes = createAsyncThunk(
   'vote/getVotes',
   async(params: GET_DATA_PARAMS) =>{
-    const res = await votes_api.get(`?game_id=${params.gameId}&date_progress=${params.dateProgress}`)
+    const res = await votes_api.get<VOTE_LOG[]>(`?game_id=${params.gameId}&date_progress=${params.dateProgress}`)
     console.log('votesIndex',res.data)
     return res.data
   }
@@ -21,7 +21,7 @@ export const fetchAsyncGetVotes = createAsyncThunk(
 export const fetchAsyncCreateVotes = createAsyncThunk(
   'vote/createVotes',
   async(params: CREATE_VOTE_PARAMS) => {
-    const res = await votes_api.post('',{
+    const res = await votes_api.post<VOTE_LOG>('',{
       vote: {
         daily_id: params.dailyId,
         voter_id: params.voterId,
@@ -32,15 +32,13 @@ export const fetchAsyncCreateVotes = createAsyncThunk(
   }
 )
 
-
 export const fetchAsyncDeleteVotes = createAsyncThunk(
   'vote/deleteVotes',
   async(voteId: string) => {
-    const res = await votes_api.delete(`/${voteId}`)
+    const res = await votes_api.delete<VOTE_LOG>(`/${voteId}`)
     return res.data.id
   }
 )
-
 
 const initialState = {
   voteLogs: [
