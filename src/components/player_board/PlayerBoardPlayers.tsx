@@ -11,7 +11,7 @@ import { ShortRollName, ExistCodStyle } from '../../utils/PlayerProcessing'
 import { useSelector } from 'react-redux';
 import { selectAbilityLogs, selectPlayers } from '../../reducers/playerSlice';
 
-const PlayerBoardAvatar: React.FC = () => {
+const PlayerBoardPlayers: React.FC = () => {
   // const players = useContext(PlayersContext)
   const players = useSelector(selectPlayers)
   const abilityLogs = useSelector(selectAbilityLogs)
@@ -110,4 +110,4 @@ const PlayerBoardAvatar: React.FC = () => {
   )
 }
 
-export default PlayerBoardAvatar
+export default PlayerBoardPlayers
