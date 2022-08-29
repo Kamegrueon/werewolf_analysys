@@ -40,10 +40,13 @@ const VoteForm = () => {
                 style={{background: 'white', width: 90, height: 30}}
               >
                 <option value={''} key={''}></option>
-              {players.filter(player => player.cause_of_death === null && String(player.id) !== String(votedPlayerId) && !voteLogs.map(vote => String(vote.voter_id)).includes(String(player.id)))
-                .map(player => 
-                  <option value={player.id} key={player.id}>{player.player_name}</option>
-                )}
+              {players[0].id !== '' && voteLogs.length && voteLogs[0].id !== '' 
+                ? (players.filter(player => player.cause_of_death === null && String(player.id) !== String(votedPlayerId) && !voteLogs.map(vote => String(vote.voter_id)).includes(String(player.id)))
+                  .map(player => 
+                    <option value={player.id} key={player.id}>{player.player_name}</option>
+                  ))
+                : players.filter(player => String(player.id) !== String(votedPlayerId)).map(player => <option value={player.id} key={player.id}>{player.player_name}</option>)
+              }
               </Select>
             </FormControl>
           </div>
@@ -62,10 +65,13 @@ const VoteForm = () => {
                 style={{background: 'white', width: 90, height: 30}}
               >
                 <option value={''} key={''}></option>
-              {players.filter(player => player.cause_of_death === null && String(player.id) !== String(voterPlayerId))
-              .map(player => 
-                <option value={player.id} key={player.id}>{player.player_name}</option>
-              )}
+              {players[0].id !== '' && voteLogs.length && voteLogs[0].id !== '' 
+                ? (players.filter(player => player.cause_of_death === null && String(player.id) !== String(voterPlayerId))
+                  .map(player => 
+                    <option value={player.id} key={player.id}>{player.player_name}</option>
+                  ))
+                : players.filter(player => String(player.id) !== String(voterPlayerId)).map(player => <option value={player.id} key={player.id}>{player.player_name}</option>)
+              }
               </Select>
             </FormControl>
           </div>

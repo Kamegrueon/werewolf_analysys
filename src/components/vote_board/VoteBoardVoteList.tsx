@@ -14,7 +14,7 @@ const VoteBoardVoteList = () => {
   return (
     <div>
       <div className={styles.vote__voted}>
-        {isOpenVoteForm && players[0].id !== '' && voteLogs.length && voteLogs[0].id !== '' 
+        {isOpenVoteForm
           ? <VoteForm />
           : <></>
         }
