@@ -1,4 +1,3 @@
-// import { useContext } from 'react'
 import styles from './VoteBoard.module.css'
 import SendIcon from '@mui/icons-material/Send';
 import { PLAYER } from '../types';

@@ -1,11 +1,13 @@
-import { useState, useContext, useEffect } from 'react'
-import { PlayersContext, DailiesContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext'
+import { useState, useContext } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { causeOfDeathsUpdateRequest, causeOfDeathsIndexRequest } from '../../utils/ApiFetch'
+import { causeOfDeathsUpdateRequest } from '../../utils/ApiFetch'
 import {AxiosResponse, AxiosError} from 'axios'
+import { useSelector } from 'react-redux';
+import { selectDailies, selectDailyCod, selectPlayerDate, selectPlayers } from '../../reducers/playerSlice';
+import { RerenderContext } from '../../utils/AnalysisContext';
 
 const ModalEditReport = (props: any ) => {
 
@@ -17,24 +19,17 @@ const ModalEditReport = (props: any ) => {
     textAlign: 'center'
   }
 
-  const players = useContext(PlayersContext)
-  const { selectPlayerDate } = useContext(SelectPlayerBoardDateContext)
-  const dailies = useContext(DailiesContext)
+  const players = useSelector(selectPlayers)
+  const playerDate = useSelector(selectPlayerDate)
+  const dailies = useSelector(selectDailies)
+  const dailyCod = useSelector(selectDailyCod)
 
-  const [executedPlayerId, setExecutedPlayerId] = useState<string>('')
-  const [murderedPlayerId, setMurderedPlayerId] = useState<string | null>(null)
-  const [perishedPlayerId, setPerishedPlayerId] = useState<string | null>(null)
+  const [executedPlayerId, setExecutedPlayerId] = useState<string>(dailyCod.executed_player_id)
+  const [murderedPlayerId, setMurderedPlayerId] = useState<string | null>(dailyCod.murdered_player_id)
+  const [perishedPlayerId, setPerishedPlayerId] = useState<string | null>(dailyCod.perished_player_id)
 
-  const daily_id = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
-  
-  useEffect(() => {
-    causeOfDeathsIndexRequest(daily_id).then((res: any) => {
-      console.log(res.data)
-      setExecutedPlayerId(res.data.executed_player_id)
-      if(res.data.murdered_player_id !== null) setMurderedPlayerId(res.data.murdered_player_id);
-      if(res.data.perished_player_id !== null) setPerishedPlayerId(res.data.perished_player_id);
-    })
-  },[daily_id])
+  const { renderState, rerender } = useContext(RerenderContext)
+
 
   const handleChangeExecutedPlayer = (event: SelectChangeEvent) => {
     setExecutedPlayerId(event.target.value)
@@ -49,8 +44,7 @@ const ModalEditReport = (props: any ) => {
   }
 
   const onClickSubmit = () => {
-    // daily_idをフィルターで取得してpostする
-    const daily_id = dailies.filter(daily => String(daily.date_progress) === String(selectPlayerDate))[0].id
+    const daily_id = dailies.filter(daily => String(daily.date_progress) === String(playerDate))[0].id
     if(executedPlayerId !== ''){
       causeOfDeathsUpdateRequest( 
         daily_id,
@@ -59,6 +53,7 @@ const ModalEditReport = (props: any ) => {
         perishedPlayerId
       ).then((res: AxiosResponse) => {
         props.handleClose(false)
+        rerender(renderState + 1)
       }).catch((error: AxiosError<{ error: string }>)  => {
         if (error.response !== undefined){
           alert(error.response.data.error)

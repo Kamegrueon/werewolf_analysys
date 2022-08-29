@@ -8,11 +8,9 @@ import { AppDispatch } from '../../store';
 
 const SelectVoteDay = () => {
 
+  const dispatch: AppDispatch = useDispatch()
   const voteDate = useSelector(selectVoteDate)
   const dailies = useSelector(selectDailies)
-
-  // const dailies = useContext(DailiesContext)
-  const dispatch: AppDispatch = useDispatch()
 
   const days_style = { margin: "0 20px 0 auto" }
   const label_style = { color: "#FFFFFF" , fontWeight: 800}
@@ -27,6 +25,8 @@ const SelectVoteDay = () => {
   const handleChange = (event: SelectChangeEvent) => {
     dispatch(setSelectVoteDate(event.target.value))
   }
+
+  console.log('selectVoteDay', voteDate)
 
   return (
     <div style={days_style}>

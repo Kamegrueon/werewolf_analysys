@@ -7,11 +7,8 @@ import { selectDailies } from '../../reducers/playerSlice';
 
 const SelectPlayerDay = () => {
 
-  // const { selectPlayerDate, setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
-  const playerDate = useSelector(selectPlayerDate)
   const dispatch: AppDispatch = useDispatch()
-
-  // const dailies = useContext(DailiesContext)
+  const playerDate = useSelector(selectPlayerDate)
   const dailies = useSelector(selectDailies)
 
   const days_style = { margin: "0 20px 0 auto" }

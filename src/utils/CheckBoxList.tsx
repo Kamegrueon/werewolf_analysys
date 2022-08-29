@@ -4,8 +4,6 @@ import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-// import { RollsContext } from './AnalysisContext'
-// import { ROLL_STATE } from '../components/types';
 
 import { useSelector } from 'react-redux';
 import { selectRolls } from "../reducers/gameSlice";
@@ -17,10 +15,7 @@ type setTypeObject = {
 
 const CheckBoxList = (props: setTypeObject) => {
   const { positionIds, setPositionIds } = props
-
-  // const { rollsState } = useContext(RollsContext)
   const rolls = useSelector(selectRolls)
-  console.log('これ', rolls)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.checked, event.target.value)

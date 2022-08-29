@@ -18,9 +18,6 @@ const DataBoard = () => {
       return prev;
     }, {} as aggVoteLogsReduceObj); 
 
-
-  console.log('agg',aggVotedLogs)
-
   const votedPlayerFilter = (key: string) => {
     return players.filter((player: PLAYER) => String(player?.id) === String(key))[0]
   }
@@ -39,7 +36,6 @@ const DataBoard = () => {
               <div className={styles.data__box}>
                 {aggVotedLogs !== {"": 1} && aggVotedLogs !== {}
                 ? Object.entries(aggVotedLogs).map(([key, value], index) => {
-                  console.log('呼ばれた')
                   return (
                     <div className={styles.data__avatar} key={index}>
                       <div className={styles.data__avatar_position} style={{borderColor: votedPlayerFilter(String(key)).roll_color, color: votedPlayerFilter(String(key)).roll_color}}>

@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux';
 import { selectAbilityLogs, selectPlayers } from '../../reducers/playerSlice';
 
 const PlayerBoardPlayers: React.FC = () => {
-  // const players = useContext(PlayersContext)
   const players = useSelector(selectPlayers)
   const abilityLogs = useSelector(selectAbilityLogs)
 
@@ -20,7 +19,6 @@ const PlayerBoardPlayers: React.FC = () => {
   const [coId, setCoId] = useState<string | null>(null)
   const [clicked, setClicked] = useState<number | null>(null);
   const contentRefs = useRef<RefObject<HTMLDivElement>[]>([])
-  // const {abilityLogs} = useContext(AbilityLogsContext)
 
   players.forEach((_, index) => {
     contentRefs.current[index] = createRef<HTMLDivElement>()

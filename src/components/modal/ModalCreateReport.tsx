@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPlayerDate, selectPlayers } from '../../reducers/playerSlice';
-import { fetchAsyncCreateReport, selectDailies } from '../../reducers/playerSlice';
+import { fetchAsyncCreateDailies, selectDailies } from '../../reducers/playerSlice';
 import { AppDispatch } from '../../store';
 
 const ModalCreateReport = (props: {handleClose: () => void} ) => {
@@ -43,7 +43,7 @@ const ModalCreateReport = (props: {handleClose: () => void} ) => {
     // daily_idをフィルターで取得してpostする
     const dailyId = dailies.filter(daily => String(daily.date_progress) === String(playerDate))[0].id
     if(executedPlayerId !== ''){
-      dispatch(fetchAsyncCreateReport(
+      dispatch(fetchAsyncCreateDailies(
         {
           dailyId: dailyId,
           executedPlayerId: executedPlayerId, 

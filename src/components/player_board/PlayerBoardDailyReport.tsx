@@ -1,13 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './PlayerBoard.module.css'
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/AddOutlined';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import SelectMain from '../select/SelectMain'
 import ModalMain from '../modal/ModalMain';
-// import { DailiesContext } from '../../utils/AnalysisContext'
 import { useSelector } from 'react-redux';
-import { selectIsExistReport } from '../../reducers/playerSlice';
+import { selectDailies, selectPlayerDate } from '../../reducers/playerSlice';
 
 const PlayerBoardDailyReport = () => {
   
@@ -21,7 +20,20 @@ const PlayerBoardDailyReport = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [reportBody, setReportBody] = useState('');
 
-  const isExistReport = useSelector(selectIsExistReport)
+  const dailies = useSelector(selectDailies)
+  const playerDate = useSelector(selectPlayerDate)
+  const [isExistReport, setIsExistReport] = useState(false)
+
+  useEffect(() => {
+    let maxDateProgress = String(dailies.map((date) => date.date_progress).reduce((pre, cur) => Math.max(pre, cur)))
+    let isExistReport = maxDateProgress === '1' ? false : playerDate !== maxDateProgress
+    setIsExistReport(isExistReport)
+
+    return () => { 
+      console.log('DailyReportがアンマウントされた')
+    };
+  },[dailies, playerDate])
+
 
   const handleOpen = (body: string) => {
     setReportBody(body)

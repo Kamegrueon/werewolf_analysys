@@ -83,6 +83,9 @@ export const gameSlice = createSlice({
     setSelectGame(state, action: PayloadAction<string>){
       state.selectGameId = action.payload;
     },
+    resetGameState(state){
+      state.rolls = initialState.rolls
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -125,14 +128,7 @@ export const gameSlice = createSlice({
   }
 })
 
-export const { setSelectGame } = gameSlice.actions
-
-// export const redirectBoard = 
-//   ():AppThunk => (dispatch, getState) => {
-//     const currentGameId = selectGameId(getState())
-//     dispatch(visitBoard(currentGameId))
-//   }
-
+export const { setSelectGame, resetGameState } = gameSlice.actions
 
 export const selectGames = (state: RootState) => state.game.games
 export const selectRolls = (state: RootState) => state.game.rolls

@@ -1,16 +1,12 @@
 import styles from './VoteBoard.module.css'
 import VoteBoardAvatar from './VoteBoardAvatar'
-
 import VoteForm from './VoteForm';
-
-// import { VoteLogsContext } from '../../utils/AnalysisContext';
 import { useSelector } from 'react-redux';
 import { selectIsOpenVoteForm, selectVoteLogs } from '../../reducers/voteSlice';
 import { selectPlayers } from '../../reducers/playerSlice';
 
 
 const VoteBoardVoteList = () => {
-  // const { voteLogs } = useContext(VoteLogsContext)
   const voteLogs = useSelector(selectVoteLogs)
   const players = useSelector(selectPlayers)
   const isOpenVoteForm = useSelector(selectIsOpenVoteForm)

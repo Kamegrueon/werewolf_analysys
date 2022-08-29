@@ -7,20 +7,17 @@ import { selectGameId } from '../../reducers/gameSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store';
 import { setSelectPlayerDate } from '../../reducers/playerSlice';
+import { setSelectVoteDate } from '../../reducers/voteSlice';
 
 const AnalysisLeftBar = () => {  
   const location = useLocation();
   const path = location.pathname;
-  const gameId = useSelector(selectGameId)
   const dispatch: AppDispatch = useDispatch()
-  // const { gameSelect } = useContext(GameSelectContext)
-
-
-  // const { setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
-  // const { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
+  const gameId = useSelector(selectGameId)
 
   const resetSelectDate = () => {
      dispatch(setSelectPlayerDate('1'))
+     dispatch(setSelectVoteDate('1'))
   }
 
   const LeftListItemStyle = {backgroundColor: 'white', borderRadius: 2, mb: 3, pointerEvents: 'none'}

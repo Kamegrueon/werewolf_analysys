@@ -1,54 +1,26 @@
 import { useState, useEffect, useRef } from 'react'
-// import { AxiosResponse } from 'axios'
 import styles from "./App.module.css"
 import AnalysisHeader from './components/analysis/AnalysisHeader';
 import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { GameBoard } from "./components/pages/GameBoard";
 import GameMain from "./components/pages/GameMain";
-// import { VOTE_LOG } from "./components/types";
-import { 
-  // dailiesIndexRequest, 
-  // playersIndexRequest, 
-  // votesIndexRequest, 
-  // comingOutIndexRequest
-} from "./utils/ApiFetch";
-import { 
-  // DailiesContext, 
-  // PlayersContext, 
-  // SelectPlayerBoardDateContext, 
-  // SelectVoteBoardDateContext, 
-  // VoteLogsContext,
-  RerenderContext,
-  // AbilityLogsContext,
-} from './utils/AnalysisContext';
 
+import { RerenderContext } from './utils/AnalysisContext';
 import { useSelector, useDispatch } from "react-redux";
-import { selectGameId, fetchAsyncGetRolls } from "./reducers/gameSlice";
-import { fetchAsyncGetPlayers, fetchAsyncGetAbilityLogs, selectPlayerDate, setIsExistReport, selectDailies } from './reducers/playerSlice';
+import { selectGameId, fetchAsyncGetRolls, resetGameState } from "./reducers/gameSlice";
+import { fetchAsyncGetPlayers, fetchAsyncGetAbilityLogs, selectPlayerDate, fetchAsyncGetCOD, resetPlayerState, fetchAsyncGetDailies } from './reducers/playerSlice';
 import { AppDispatch } from './store';
-import { fetchAsyncGetVotes, selectVoteDate } from './reducers/voteSlice';
+import { fetchAsyncGetVotes, resetVoteState, selectVoteDate } from './reducers/voteSlice';
 
 const App: React.FC = () =>  {
 
-  // dailiesSliceに移行
-  // const [selectPlayerDate, setSelectPlayerDate] = useState<string>('1')
-  // const [players, setPlayers] = useState<PLAYER[]>([])
-  // const [abilityLogs, setAbilityLogs] = useState<ABILITY_LOG[]>([])
-
-  // const [selectVoteDate, setSelectVoteDate] = useState<string>('1')
-  // const [dailies, setDailies] = useState<DAILIES[]>([{id: '1',game_id: '1', date_progress: 1}])
-  // const [voteLogs, setVoteLogs] = useState<VOTE_LOG[]>([])
-
   const [renderState, rerender] = useState<number>(0);
 
-  // ここから
   const gameId = useSelector(selectGameId)
   const playerDate = useSelector(selectPlayerDate)
   const voteDate = useSelector(selectVoteDate)
-  const dailies = useSelector(selectDailies)
   const dispatch: AppDispatch = useDispatch()
-  // ここまで
 
   const isFirstRender = useRef(false)
 
@@ -61,21 +33,23 @@ const App: React.FC = () =>  {
       isFirstRender.current = false
     } else {
       const fetchBootLoader = async () => {
+        await dispatch(fetchAsyncGetDailies(gameId))
         await dispatch(fetchAsyncGetPlayers({gameId: gameId, dateProgress: playerDate}))
         await dispatch(fetchAsyncGetRolls(gameId));
         await dispatch(fetchAsyncGetAbilityLogs({gameId: gameId, dateProgress: playerDate}))
         await dispatch(fetchAsyncGetVotes({gameId: gameId, dateProgress: voteDate}))
+        await dispatch(fetchAsyncGetCOD({gameId: gameId, dateProgress: voteDate}))
       }
       fetchBootLoader();
-      let maxDateProgress = String(dailies.map((date) => date.date_progress).reduce((pre, cur) => Math.max(pre, cur)))
-      let isExistReport = maxDateProgress === '1' ? false : playerDate !== maxDateProgress
-      dispatch(setIsExistReport(isExistReport))
 
       return () => { 
-        console.log('アンマウントされた')
+        dispatch(resetGameState())
+        dispatch(resetPlayerState())
+        dispatch(resetVoteState())
+        console.log('Appがアンマウントされた')
       };
     }
-  },[gameId, playerDate,dailies, renderState,voteDate, dispatch])
+  },[gameId, playerDate, renderState,voteDate, dispatch])
 
   return (
     <Router>

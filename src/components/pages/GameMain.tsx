@@ -9,8 +9,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
-// import { GameSelectContext, RollsContext } from '../../utils/AnalysisContext';
-// import { gamesIndexRequest, gamesDeleteRequest } from '../../utils/ApiFetch'
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -19,37 +17,20 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
 
 import { selectGames, fetchAsyncGetGames, fetchAsyncDeleteGames, setSelectGame } from "../../reducers/gameSlice";
-import { fetchAsyncGetDailies } from '../../reducers/playerSlice';
 
 const GameMain: React.FC = memo(() => {
 
-  // const { setGameSelect } = useContext(GameSelectContext)
-  // const { setRollsState } = useContext(RollsContext)
-
-  // const [games, setGames] = useState([{id: '1', game_name: '', is_win: true, date_progress: 1, created_at: ''}])
-
-  // useEffect(() => {
-  //   const fetchGames = async () => {
-  //     await gamesIndexRequest().then(
-  //       data => {
-  //         setGames(data.games)
-  //         setRollsState(data.rolls)
-  //       }          
-  //     )
-  //   };
-  //   fetchGames();
-  // },[setRollsState])
-
-  // ここから
   const dispatch: any = useDispatch()
   const games = useSelector(selectGames)
 
   useEffect(() => {
-    console.log('effect呼ばれた')
     dispatch(fetchAsyncGetGames())
-  },[dispatch])
 
-  // ここまで
+    return () => { 
+      console.log('GameMainがアンマウントされた')
+    };
+
+  },[dispatch])
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -60,13 +41,6 @@ const GameMain: React.FC = memo(() => {
   const handleClose = () => {
     setIsOpen(false)
   }
-
-  // const deleteAction = (id:string) => {
-  //   gamesDeleteRequest(id).then(() => {
-  //     setGameSelect('')
-  //     setGames(games.filter((game) => game.id !== id))
-  //   })
-  // }
 
   return (
     <>
@@ -95,15 +69,9 @@ const GameMain: React.FC = memo(() => {
               <Link 
                 to={{pathname: `/board/`}} 
                 style={{textDecoration: 'none', color: 'inherit'}} 
-                onClick={
-                  () => {
-                    dispatch(setSelectGame(game.id))
-                    dispatch(fetchAsyncGetDailies(game.id))
-                  }                  
-                }
+                onClick={() => {dispatch(setSelectGame(game.id))}}
               >
                   {game.game_name}
-                  {console.log('map呼ばれた')}
               </Link>
               </TableCell>
               <TableCell align="right" sx={{color: 'white'}}>{dayjs(game.created_at).locale('ja').format('YYYY/MM/DD(dd)')}</TableCell>
