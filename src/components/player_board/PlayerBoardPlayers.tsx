@@ -41,7 +41,8 @@ const PlayerBoardPlayers: React.FC = () => {
                   borderRadius: '5%',
                   boxShadow: '2px 2px 3px rgba(255, 255, 255, 0.3)',
                   position: 'absolute',
-                  display: 'block'
+                  display: 'block',
+                  zIndex: 10
                 }
               : { height: "0px", display: 'none' }
           }
