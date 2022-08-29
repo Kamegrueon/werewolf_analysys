@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './PlayerBoard.module.css'
 
-import PlayerBoardPlayers from './PlayerBoardAvatar'
+import PlayerBoardPlayers from './PlayerBoardPlayers'
 import PlayerBoardDailyReport from './PlayerBoardDailyReport'
 
 const PlayerBoard: React.FC = () => {

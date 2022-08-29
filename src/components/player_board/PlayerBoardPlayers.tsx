@@ -1,21 +1,24 @@
-import React, { useContext, useState, useRef, RefObject, createRef } from 'react'
+import React, { useState, useRef, RefObject, createRef } from 'react'
 import styles from './PlayerBoard.module.css'
 import AvatarStatePositionMarker from '../avatar_state/AvatarStatePositionMarker';
 import { PLAYER } from '../types'
-import { AbilityLogsContext, PlayersContext } from '../../utils/AnalysisContext';
+// import { AbilityLogsContext, PlayersContext } from '../../utils/AnalysisContext';
 import ModalMain from '../modal/ModalMain'
 import PlayerBoardComingOut from './PlayerBoardComingOut'
 import PlayerBoardSelectAbilityAction from './PlayerBoardSelectAbilityAction'
 import PlayerBoardExistCod from './PlayerBoardExistCod';
-import { SliceRollName, ExistCodStyle } from '../../utils/PlayerProcessing'
+import { ShortRollName, ExistCodStyle } from '../../utils/PlayerProcessing'
+import { useSelector } from 'react-redux';
+import { selectAbilityLogs, selectPlayers } from '../../reducers/playerSlice';
 
-const PlayerBoardAvatar: React.FC = () => {
-  const players = useContext(PlayersContext)
+const PlayerBoardPlayers: React.FC = () => {
+  const players = useSelector(selectPlayers)
+  const abilityLogs = useSelector(selectAbilityLogs)
+
   const [isOpen, setIsOpen] = useState(false);
   const [coId, setCoId] = useState<string | null>(null)
   const [clicked, setClicked] = useState<number | null>(null);
   const contentRefs = useRef<RefObject<HTMLDivElement>[]>([])
-  const {abilityLogs} = useContext(AbilityLogsContext)
 
   players.forEach((_, index) => {
     contentRefs.current[index] = createRef<HTMLDivElement>()
@@ -87,7 +90,7 @@ const PlayerBoardAvatar: React.FC = () => {
             }
           </div>
           <div onClick={()=>handleClick(index)} className={styles.player__avatar} style={ExistCodStyle(player)}>
-            <div className={styles.player__avatar_position} style={{borderColor: player.roll_color, color: player.roll_color}}>{SliceRollName(player)}</div>
+            <div className={styles.player__avatar_position} style={{borderColor: player.roll_color, color: player.roll_color}}>{ShortRollName(player)}</div>
             <div className={styles.player__avatar_name}>
               {player.player_name}
             </div>
@@ -105,4 +108,4 @@ const PlayerBoardAvatar: React.FC = () => {
   )
 }
 
-export default PlayerBoardAvatar
+export default PlayerBoardPlayers

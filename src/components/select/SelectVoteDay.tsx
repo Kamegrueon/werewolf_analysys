@@ -1,13 +1,16 @@
-import { useContext } from 'react'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-import { DailiesContext } from '../../utils/AnalysisContext'
-import { SelectVoteBoardDateContext } from '../../utils/AnalysisContext';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { selectVoteDate, setSelectVoteDate } from '../../reducers/voteSlice';
+import { selectDailies } from '../../reducers/playerSlice';
+import { AppDispatch } from '../../store';
 
 const SelectVoteDay = () => {
 
-  const { selectVoteDate, setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
-  const dailies = useContext(DailiesContext)
+  const dispatch: AppDispatch = useDispatch()
+  const voteDate = useSelector(selectVoteDate)
+  const dailies = useSelector(selectDailies)
 
   const days_style = { margin: "0 20px 0 auto" }
   const label_style = { color: "#FFFFFF" , fontWeight: 800}
@@ -20,8 +23,10 @@ const SelectVoteDay = () => {
   }
   
   const handleChange = (event: SelectChangeEvent) => {
-    setSelectVoteDate(event.target.value)
+    dispatch(setSelectVoteDate(event.target.value))
   }
+
+  console.log('selectVoteDay', voteDate)
 
   return (
     <div style={days_style}>
@@ -32,7 +37,7 @@ const SelectVoteDay = () => {
         <Select
           sx={select_days_style}
           native={true}
-          value={selectVoteDate}
+          value={voteDate}
           onChange={handleChange}
         >
          {dailies.map((daily, index) => 

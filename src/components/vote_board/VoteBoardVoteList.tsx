@@ -1,28 +1,32 @@
-import { useContext } from 'react'
 import styles from './VoteBoard.module.css'
 import VoteBoardAvatar from './VoteBoardAvatar'
-
 import VoteForm from './VoteForm';
+import { useSelector } from 'react-redux';
+import { selectIsOpenVoteForm, selectVoteLogs } from '../../reducers/voteSlice';
+import { selectPlayers } from '../../reducers/playerSlice';
 
-import { VoteLogsContext } from '../../utils/AnalysisContext';
-import { VoteFormContext } from '../../utils/AnalysisContext';
 
 const VoteBoardVoteList = () => {
-  const { voteLogs } = useContext(VoteLogsContext)
-  const { isOpenForm } = useContext(VoteFormContext)
+  const voteLogs = useSelector(selectVoteLogs)
+  const players = useSelector(selectPlayers)
+  const isOpenVoteForm = useSelector(selectIsOpenVoteForm)
 
   return (
     <div>
       <div className={styles.vote__voted}>
-        {isOpenForm 
+        {isOpenVoteForm && players[0].id !== '' && voteLogs.length && voteLogs[0].id !== '' 
           ? <VoteForm />
-          : null
+          : <></>
         }
-        {voteLogs !== []
+        {players[0].id !== '' && voteLogs.length && voteLogs[0].id !== '' 
           ? voteLogs.map((vote) => (
-            <VoteBoardAvatar vote={vote} key={vote.id}/>
+            <VoteBoardAvatar 
+              voteId={vote.id}
+              voterPlayer={players.filter((player) => String(player.id) === String(vote.voter_id))[0]} 
+              votedPlayer={players.filter((player) => String(player.id) === String(vote.voted_id))[0]} 
+              key={vote.id}/>
           ))
-          : null
+          : <></>
         }
       </div>
   </div>

@@ -1,22 +1,23 @@
 import { Avatar, List, ListItem, ListItemIcon } from '@mui/material'
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
-import { useContext } from 'react'
-import { GameSelectContext, SelectPlayerBoardDateContext, SelectVoteBoardDateContext } from '../../utils/AnalysisContext';
 import styles from './Analysis.module.css'
 import { NavLink, useLocation } from 'react-router-dom';
+import { selectGameId } from '../../reducers/gameSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { setSelectPlayerDate } from '../../reducers/playerSlice';
+import { setSelectVoteDate } from '../../reducers/voteSlice';
 
 const AnalysisLeftBar = () => {  
   const location = useLocation();
   const path = location.pathname;
-
-  const { gameSelect } = useContext(GameSelectContext)
-  const { setSelectPlayerDate } = useContext(SelectPlayerBoardDateContext)
-  const { setSelectVoteDate } = useContext(SelectVoteBoardDateContext)
+  const dispatch: AppDispatch = useDispatch()
+  const gameId = useSelector(selectGameId)
 
   const resetSelectDate = () => {
-    setSelectPlayerDate('1')
-    setSelectVoteDate('1')
+     dispatch(setSelectPlayerDate('1'))
+     dispatch(setSelectVoteDate('1'))
   }
 
   const LeftListItemStyle = {backgroundColor: 'white', borderRadius: 2, mb: 3, pointerEvents: 'none'}
@@ -34,13 +35,22 @@ const AnalysisLeftBar = () => {
             </ListItemIcon>
           </ListItem>
         </NavLink>
-        <NavLink exact to={`/games/${gameSelect}`}>
-          <ListItem button sx={path.match(/games\/\d/) ? LeftListItemStyle : {mb: 3}}>
+        {gameId !== '' 
+        ? (<NavLink exact to="/board/">
+        {/* <ListItem button sx={path.match(/games\/\d/) ? LeftListItemStyle : {mb: 3}}> */}
+          <ListItem button sx={path === "/board/" ? LeftListItemStyle : {mb: 3}}>
             <ListItemIcon>
               <DesktopMacIcon fontSize="large" sx={{color: '#545F69'}}/>
             </ListItemIcon>
           </ListItem>
-        </NavLink>
+        </NavLink>)
+       : (
+        <ListItem>
+          <ListItemIcon>
+            <DesktopMacIcon fontSize="large" sx={{color: '#545F69'}}/>
+          </ListItemIcon>
+        </ListItem>
+        )}
       </List>
     </div>
   )

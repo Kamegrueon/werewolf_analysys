@@ -37,10 +37,10 @@ export interface SELECT_STYLE_PROP {
 }
 
 export interface VOTE_LOG {
-  id: string, 
-  voter_id: string,
-  voted_id: string,
-  date_progress: number,
+  id: string
+  voter_id: string
+  voted_id: string
+  date_progress: number
 }
 
 export interface VOTE_LOG_STATE {
@@ -100,12 +100,6 @@ export interface SELECT_VOTE_DATE {
   setSelectVoteDate: React.Dispatch<React.SetStateAction<string>> 
 };
 
-export interface CASTING {
-  id: number, 
-  roll_id: number, 
-  roll_name: string
-}
-
 export interface RENDER_STATE {
   renderState: number
   rerender: React.Dispatch<React.SetStateAction<number>>
@@ -124,3 +118,75 @@ export interface ABILITY_LOG_STATE {
   abilityLogs: ABILITY_LOG[],
   setAbilityLogs: React.Dispatch<React.SetStateAction<ABILITY_LOG[]>>
 };
+
+// gameSlice
+export interface GAME_STATE {
+  games:  GAMES[]
+  rolls: ROLLS[]
+  selectGameId: string
+  castings: CASTING[]
+}
+
+export interface GAMES {
+    id: string, 
+    game_name: string, 
+    is_win: boolean, 
+    date_progress: number, 
+    created_at: string
+}
+
+export interface GAME_CREATE_PARAMS {
+  gameName: string | null,
+  players: string[], 
+  positionIds: string[],
+}
+
+export interface GET_GAMES {
+  games: GAMES[],
+  rolls: ROLLS[],
+}
+
+export interface ROLLS {
+  attributes:
+    {
+      id: string, 
+      roll_name: string
+    }
+}
+
+export interface CASTING {
+  id: number, 
+  roll_id: number, 
+  roll_name: string
+}
+
+export interface GET_DATA_PARAMS {
+  gameId: string, 
+  dateProgress: string
+}
+
+export interface CREATE_VOTE_PARAMS {
+  dailyId: string
+  voterId: string
+  votedId: string
+}
+
+export interface CREATE_ABILITY_LOGS_PARAMS {
+  coId: string | null | undefined
+  targetPlayerId: string
+  dailyId: string
+  abilityResult: string
+}
+
+export interface CREATE_COMING_OUTS_PARAMS {
+  dailyId: string
+  comingOutRoll: string | null
+  coPlayerId: string
+}
+
+export interface CREATE_COD_PARAMS {
+  dailyId: string
+  executedPlayerId: string
+  murderedPlayerId: string | null
+  perishedPlayerId: string | null
+}

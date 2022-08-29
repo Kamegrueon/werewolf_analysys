@@ -4,7 +4,6 @@ import PlayerBoard from '../player_board/PlayerBoard'
 import VoteBoard from '../vote_board/VoteBoard'
 import DataBoard from '../data_board/DataBoard'
 
-
 export const GameBoard: React.FC = memo(() => {
   return (
     <>

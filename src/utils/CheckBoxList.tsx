@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { RollsContext } from './AnalysisContext'
-import { ROLL_STATE } from '../components/types';
+
+import { useSelector } from 'react-redux';
+import { selectRolls } from "../reducers/gameSlice";
 
 type setTypeObject = {
   positionIds: string[]
@@ -14,9 +15,7 @@ type setTypeObject = {
 
 const CheckBoxList = (props: setTypeObject) => {
   const { positionIds, setPositionIds } = props
-
-  const { rollsState } = useContext(RollsContext)
-  console.log('これ', rollsState)
+  const rolls = useSelector(selectRolls)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.checked, event.target.value)
@@ -33,23 +32,24 @@ const CheckBoxList = (props: setTypeObject) => {
     <Box>
       <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
         <FormGroup row>
-          {Object(rollsState).map((role:{attributes:ROLL_STATE}) => (
+          {rolls.map((roll) => (
             <FormControlLabel
             control={
               <Checkbox 
                 onChange={handleChange} 
-                name={role.attributes.roll_name} 
-                value={role.attributes.id} 
+                name={roll.attributes.roll_name} 
+                value={roll.attributes.id} 
                 sx={{
                   color: 'white',
                   '&.Mui-checked': {
                     color: 'red',
                   },
                 }}
+                key={roll.attributes.id}
               />
             }
-            label={role.attributes.roll_name}
-            key={role.attributes.id}
+            label={roll.attributes.roll_name}
+            key={roll.attributes.id}
         />            
           ))}
         </FormGroup>
