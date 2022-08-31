@@ -2,7 +2,6 @@ import React, { useState, useRef, RefObject, createRef } from 'react'
 import styles from './PlayerBoard.module.css'
 import AvatarStatePositionMarker from '../avatar_state/AvatarStatePositionMarker';
 import { PLAYER } from '../types'
-// import { AbilityLogsContext, PlayersContext } from '../../utils/AnalysisContext';
 import ModalMain from '../modal/ModalMain'
 import PlayerBoardComingOut from './PlayerBoardComingOut'
 import PlayerBoardSelectAbilityAction from './PlayerBoardSelectAbilityAction'
@@ -82,12 +81,12 @@ const PlayerBoardPlayers: React.FC = () => {
           </div>
           <div style={{position: 'relative'}}>
             {abilityLogs && abilityLogs.filter(abilityLog => String(abilityLog.target_player_id) === String(player.id)).length
-              ? <></>
-              : (abilityLogs.filter(abilityLog => String(abilityLog.target_player_id) === String(player.id))
+              ? (abilityLogs.filter(abilityLog => String(abilityLog.target_player_id) === String(player.id))
                 .map((abilityResult, i) => {
                   return <AvatarStatePositionMarker abilityResult={abilityResult} i={i} key={abilityResult.id}/>
                 })
-              )
+                )
+              : <></>
             }
           </div>
           <div onClick={()=>handleClick(index)} className={styles.player__avatar} style={ExistCodStyle(player)}>

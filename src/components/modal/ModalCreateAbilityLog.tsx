@@ -1,17 +1,14 @@
-import { useState } from 'react';
-// import { abilityLogsCreateRequest } from '../../utils/ApiFetch'
-// import { AxiosResponse,AxiosError} from 'axios'
+import { useContext, useState } from 'react';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-// import { AbilityLogsContext, DailiesContext, PlayersContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext';
 import { InputLabel } from '@mui/material';
-// import { ABILITY_LOG } from '../types';
 import { filteringDailyId } from '../../utils/UtilsFC';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncCreateAbilityLogs, selectPlayerDate, selectPlayers } from '../../reducers/playerSlice';
 import { selectDailies } from '../../reducers/playerSlice';
 import { AppDispatch } from '../../store';
+import { RerenderContext } from '../../utils/AnalysisContext';
 
 const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleClose: () => void}) => {
 
@@ -25,6 +22,8 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
 
   const [abilityResult, setAbilityResult] = useState<string>('')
   const [targetPlayerId, setTargetPlayerId] = useState<string>('')
+
+  const { rerender, renderState } = useContext(RerenderContext)
 
   const players = useSelector(selectPlayers)
   const dailies = useSelector(selectDailies)
@@ -54,6 +53,7 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
       setAbilityResult('')
       setTargetPlayerId('')
       props.handleClose()
+      rerender(renderState + 1)
     }
   }
 

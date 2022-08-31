@@ -31,7 +31,7 @@ const PlayerBoardSelectAbilityAction = (props: Props) => {
     setCoId(coId)
     setIsOpen(true)
     const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
-    Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 0})              
+    Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 0})
   }
 
   return (

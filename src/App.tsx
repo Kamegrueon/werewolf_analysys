@@ -17,10 +17,10 @@ const App: React.FC = () =>  {
 
   const [renderState, rerender] = useState<number>(0);
 
+  const dispatch: AppDispatch = useDispatch()
   const gameId = useSelector(selectGameId)
   const playerDate = useSelector(selectPlayerDate)
   const voteDate = useSelector(selectVoteDate)
-  const dispatch: AppDispatch = useDispatch()
 
   const isFirstRender = useRef(false)
 
