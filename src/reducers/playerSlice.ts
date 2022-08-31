@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosBase from "axios";
-import { CREATE_ABILITY_LOGS_PARAMS, CREATE_COD_PARAMS, GET_DATA_PARAMS } from "../components/types";
+import { CREATE_ABILITY_LOGS_PARAMS, CREATE_COD_PARAMS, GET_DATA_PARAMS, PLAYER_STATE } from "../components/types";
 import { RootState } from "../store";
 
 
@@ -84,7 +84,7 @@ export const fetchAsyncCreateAbilityLogs = createAsyncThunk(
   }
 )
 
-const initialState = {
+const initialState: PLAYER_STATE = {
   players:  [
     {
       id: '',
