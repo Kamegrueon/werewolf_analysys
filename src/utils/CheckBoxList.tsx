@@ -8,13 +8,13 @@ import Checkbox from '@mui/material/Checkbox';
 import { useSelector } from 'react-redux';
 import { selectRolls } from "../reducers/gameSlice";
 
-type setTypeObject = {
+type SET_TYPE_OBJECT = {
   positionIds: string[]
   setPositionIds: React.Dispatch<React.SetStateAction<string[]>> 
 };
 
-const CheckBoxList = (props: setTypeObject) => {
-  const { positionIds, setPositionIds } = props
+const CheckBoxList: React.FC<SET_TYPE_OBJECT> = ({positionIds, setPositionIds}) => {
+
   const rolls = useSelector(selectRolls)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

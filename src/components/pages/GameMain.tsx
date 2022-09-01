@@ -17,10 +17,12 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
 
 import { selectGames, fetchAsyncGetGames, fetchAsyncDeleteGames, setSelectGame } from "../../reducers/gameSlice";
+import { AppDispatch } from '../../store';
+import { GAME } from '../types';
 
 const GameMain: React.FC = memo(() => {
 
-  const dispatch: any = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
   const games = useSelector(selectGames)
 
   useEffect(() => {
@@ -60,7 +62,7 @@ const GameMain: React.FC = memo(() => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {games.map((game: any) => (
+          {games.map((game: GAME) => (
             <TableRow
               key={game.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

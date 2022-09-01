@@ -20,13 +20,13 @@ export interface GET_DATA_PARAMS {
 
 // gameSlice
 export interface GAME_STATE {
-  games:  GAMES[];
-  rolls: ROLLS[];
+  games:  GAME[];
+  rolls: ROLL[];
   selectGameId: string;
   castings: CASTING[];
 }
 
-export interface GAMES {
+export interface GAME {
     id: string;
     game_name: string;
     is_win: boolean;
@@ -41,11 +41,11 @@ export interface GAME_CREATE_PARAMS {
 }
 
 export interface GET_GAMES {
-  games: GAMES[];
-  rolls: ROLLS[];
+  games: GAME[];
+  rolls: ROLL[];
 }
 
-export interface ROLLS {
+export interface ROLL {
   attributes:
     {
       id: string;
@@ -101,17 +101,11 @@ export interface DAILY {
   date_progress: number;
 }
 
-export interface CREATE_VOTE_PARAMS {
-  dailyId: string
-  voterId: string
-  votedId: string
-}
-
 export interface CREATE_ABILITY_LOGS_PARAMS {
-  coId: string | null | undefined
-  targetPlayerId: string
-  dailyId: string
-  abilityResult: string
+  coId: string | null | undefined;
+  targetPlayerId: string;
+  dailyId: string;
+  abilityResult: string;
 }
 
 export interface CREATE_COMING_OUTS_PARAMS {
@@ -127,9 +121,24 @@ export interface CREATE_COD_PARAMS {
   perishedPlayerId: string | null
 }
 
+// voteSlice
+export interface VOTE_STATE{
+  voteLogs: VOTE_LOG[];
+  selectVoteDate: string;
+  voterPlayerId: string;
+  votedPlayerId: string;
+  isOpenVoteForm: boolean;
+}
+
 export interface VOTE_LOG {
   id: string
   voter_id: string
   voted_id: string
   date_progress: number
+}
+
+export interface CREATE_VOTE_PARAMS {
+  dailyId: string
+  voterId: string
+  votedId: string
 }

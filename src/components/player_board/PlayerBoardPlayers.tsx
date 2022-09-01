@@ -58,13 +58,12 @@ const PlayerBoardPlayers: React.FC = () => {
 
   const handleClose = () => {
     setIsOpen(false)
-    const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
-    Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 5})
+    const elements = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC") as HTMLCollectionOf<HTMLElement>;
+    Object.keys(elements).forEach((_, index) => {elements[index].style.zIndex = '5'})
   }
 
   const handleClick = (index: number) => {
     if (clicked === index) {
-      // comingOutRollを初期値に更新
       return setClicked(null);
     }
   

@@ -11,6 +11,24 @@ interface Props {
   coId?: string | null | undefined;
 }
 
+interface customStylesType {
+  overlay: {
+    backgroundColor: string;
+  };
+  content: {
+    height?: string;
+    width?: string;
+    top: string;
+    left: string;
+    transform: string;
+    WebkitTransform: string;
+    MsTransform: string;
+    padding: string | number;
+    backgroundColor: string;
+    borderColor: string;
+  };
+};
+
 const customStyles = {
   overlay: {
     backgroundColor: "rgb(80, 80, 80, 0.8)",
@@ -27,23 +45,23 @@ const customStyles = {
   },
 };
 
-const settingDisplayShortSize = (customStyles: any) => {
+const settingDisplayShortSize = (customStyles: customStylesType) => {
   customStyles.content['height'] = '35vh'
   customStyles.content['width'] = '20vw'
   customStyles.content['padding'] = 0
 }
 
-const settingDisplayMediumSize = (customStyles: any) => {
+const settingDisplayMediumSize = (customStyles: customStylesType) => {
   customStyles.content['height'] = '75vh'
   customStyles.content['width'] = '50vw'
 }
 
-const settingDisplayLargeSize = (customStyles: any) => {
+const settingDisplayLargeSize = (customStyles: customStylesType) => {
   customStyles.content['height'] = '90vh'
   customStyles.content['width'] = '90vw'
 }
 
-const renderBody = (props: Props, customStyles: any) => {
+const renderBody = (props: Props, customStyles: customStylesType) => {
   switch(props.body){
     case 'createReport':
       settingDisplayMediumSize(customStyles)
@@ -62,7 +80,7 @@ const renderBody = (props: Props, customStyles: any) => {
   }
 }
 
-const ModalMain = (props:Props) => {
+const ModalMain: React.FC<Props> = (props) => {
 
   Modal.setAppElement("#root")
 

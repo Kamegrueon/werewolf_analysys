@@ -1,13 +1,9 @@
 import styles from './AvatarState.module.css'
 
-interface Props {
-  death_date: number | null
-}
-
-const AvatarStateDeathDate = (props: Props) => {
+const AvatarStateDeathDate: React.FC<{death_date: number | null}> = ({death_date}) => {
   return (
     <div className={styles.avatar__death_date}>
-      {props.death_date}
+      {death_date}
     </div>
   )
 }

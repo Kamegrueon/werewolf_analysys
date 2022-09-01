@@ -5,7 +5,7 @@ import { selectPlayerDate, setSelectPlayerDate } from '../../reducers/playerSlic
 import { AppDispatch } from '../../store';
 import { selectDailies } from '../../reducers/playerSlice';
 
-const SelectPlayerDay = () => {
+const SelectPlayerDay: React.FC = () => {
 
   const dispatch: AppDispatch = useDispatch()
   const playerDate = useSelector(selectPlayerDate)

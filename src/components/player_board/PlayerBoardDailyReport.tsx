@@ -38,14 +38,15 @@ const PlayerBoardDailyReport = () => {
   const handleOpen = (body: string) => {
     setReportBody(body)
     setIsOpen(true)
-    const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
-    Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 0})
+    const elements = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC") as HTMLCollectionOf<HTMLElement>;
+    console.log(elements)
+    Object.keys(elements).forEach((_, index) => {elements[index].style.zIndex = '0'})
   }
 
   const handleClose = () => {
     setIsOpen(false)
-    const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
-    Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 5})
+    const elements = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC") as HTMLCollectionOf<HTMLElement>;
+    Object.keys(elements).forEach((_, index) => {elements[index].style.zIndex = '5'})
   }
 
   return (

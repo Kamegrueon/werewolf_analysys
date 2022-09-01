@@ -9,7 +9,7 @@ import { AppDispatch } from '../../store';
 import { setSelectPlayerDate } from '../../reducers/playerSlice';
 import { setSelectVoteDate } from '../../reducers/voteSlice';
 
-const AnalysisLeftBar = () => {  
+const AnalysisLeftBar: React.FC = () => {  
   const location = useLocation();
   const path = location.pathname;
   const dispatch: AppDispatch = useDispatch()

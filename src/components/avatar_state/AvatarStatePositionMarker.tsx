@@ -2,13 +2,11 @@ import { useSelector } from 'react-redux'
 import { selectPlayers } from '../../reducers/playerSlice'
 import { ABILITY_LOG } from '../types'
 import styles from './AvatarState.module.css'
-// import { POSITION_STATE } from '../types'
 
-const AvatarStatePositionMarker = (props: {abilityResult: ABILITY_LOG, i: number}) => {
-  const {abilityResult, i} = props
+const AvatarStatePositionMarker: React.FC<{abilityResult: ABILITY_LOG, i: number}> = ({abilityResult, i}) => {
   const players = useSelector(selectPlayers)
-  let left_circle_position = 41 * i
-  let left_date_position = 33 + (41 * i)
+  let left_circle_position: number = 43 * i
+  let left_date_position: number = 33 + (43 * i)
 
   console.log('abilityResult',abilityResult)
 
