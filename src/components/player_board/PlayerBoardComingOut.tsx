@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { selectCastings } from '../../reducers/gameSlice';
 import { selectDailies, selectPlayerDate } from '../../reducers/playerSlice';
 import { RerenderContext } from '../../utils/AnalysisContext';
+import { filteringDailyId } from '../../utils/UtilsFC';
 
 interface Props {
   playerId: string;
@@ -59,7 +60,8 @@ const PlayerBoardComingOut: React.FC<Props> = ({playerId, setClicked, contentRef
 
   const onClickSubmit = (playerId: string) => {
     // daily_idをフィルターで取得してpostする
-    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(playerDate))[0].id
+    // const dailyId = dailies.filter(daily => String(daily.date_progress) === String(playerDate))[0].id    
+    const dailyId = filteringDailyId(dailies,playerDate)
     if(comingOutRoll !== ''){
       comingOutCreateRequest(dailyId, comingOutRoll, playerId).then((res: CreateCoResponse) => {
         console.log(res.data)

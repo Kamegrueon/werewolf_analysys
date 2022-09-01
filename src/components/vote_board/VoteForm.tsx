@@ -7,7 +7,7 @@ import { selectPlayers } from '../../reducers/playerSlice';
 import { selectVotedPlayerId, selectVoteLogs, selectVoterPlayerId, setVotedPlayerId, setVoterPlayerId } from '../../reducers/voteSlice';
 import { AppDispatch } from '../../store';
 
-const VoteForm = () => {
+const VoteForm: React.FC = () => {
 
   const players = useSelector(selectPlayers)
   const voteLogs = useSelector(selectVoteLogs)
