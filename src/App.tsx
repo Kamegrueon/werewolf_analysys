@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import styles from "./App.module.css"
 import AnalysisHeader from './components/analysis/AnalysisHeader';
 import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
@@ -22,16 +22,8 @@ const App: React.FC = () =>  {
   const playerDate = useSelector(selectPlayerDate)
   const voteDate = useSelector(selectVoteDate)
 
-  const isFirstRender = useRef(false)
-
   useEffect(() => {
-    isFirstRender.current = true
-  }, [])
-  
-  useEffect(() => {
-    if(isFirstRender.current) {
-      isFirstRender.current = false
-    } else {
+    if(gameId !== '') {
       const fetchBootLoader = async () => {
         await dispatch(fetchAsyncGetDailies(gameId))
         await dispatch(fetchAsyncGetPlayers({gameId: gameId, dateProgress: playerDate}))
