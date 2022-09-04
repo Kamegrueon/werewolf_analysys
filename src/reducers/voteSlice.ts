@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosBase from "axios";
-import { CREATE_VOTE_PARAMS, GET_DATA_PARAMS, VOTE_LOG } from "../components/types";
+import { CREATE_VOTE_PARAMS, GET_DATA_PARAMS, VOTE_LOG, VOTE_STATE } from "../components/types";
 import { RootState } from "../store";
 
 const votes_api = axiosBase.create ({
@@ -39,7 +39,7 @@ export const fetchAsyncDeleteVotes = createAsyncThunk(
   }
 )
 
-const initialState = {
+const initialState: VOTE_STATE = {
   voteLogs: [
     {
       id: '',
@@ -58,19 +58,19 @@ export const voteSlice = createSlice({
   name: "vote",
   initialState,
   reducers: {
-    setSelectVoteDate(state, action){
+    setSelectVoteDate(state, action: PayloadAction<string>){
       state.selectVoteDate = action.payload;
     },
     resetSelectVoteDate(state){
       state.selectVoteDate = initialState.selectVoteDate
     },
-    setVoterPlayerId(state, action){
+    setVoterPlayerId(state, action: PayloadAction<string>){
       state.voterPlayerId = action.payload
     },
-    setVotedPlayerId(state, action){
+    setVotedPlayerId(state, action: PayloadAction<string>){
       state.votedPlayerId = action.payload
     },
-    setIsVoteForm(state, action){
+    setIsVoteForm(state, action: PayloadAction<boolean>){
       state.isOpenVoteForm = action.payload
     },
     resetVoteState(state){

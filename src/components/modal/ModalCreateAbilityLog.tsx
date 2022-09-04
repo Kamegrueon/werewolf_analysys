@@ -1,19 +1,17 @@
-import { useState } from 'react';
-// import { abilityLogsCreateRequest } from '../../utils/ApiFetch'
-// import { AxiosResponse,AxiosError} from 'axios'
+import { useContext, useState } from 'react';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-// import { AbilityLogsContext, DailiesContext, PlayersContext, SelectPlayerBoardDateContext } from '../../utils/AnalysisContext';
 import { InputLabel } from '@mui/material';
-// import { ABILITY_LOG } from '../types';
 import { filteringDailyId } from '../../utils/UtilsFC';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncCreateAbilityLogs, selectPlayerDate, selectPlayers } from '../../reducers/playerSlice';
 import { selectDailies } from '../../reducers/playerSlice';
 import { AppDispatch } from '../../store';
+import { RerenderContext } from '../../utils/AnalysisContext';
 
-const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleClose: () => void}) => {
+
+const ModalCreateAbilityLog: React.FC<{coId: string | null | undefined, handleClose: () => void}> = ({coId, handleClose}) => {
 
   const select_style = {
     width: '100%',
@@ -25,6 +23,8 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
 
   const [abilityResult, setAbilityResult] = useState<string>('')
   const [targetPlayerId, setTargetPlayerId] = useState<string>('')
+
+  const { rerender, renderState } = useContext(RerenderContext)
 
   const players = useSelector(selectPlayers)
   const dailies = useSelector(selectDailies)
@@ -42,10 +42,10 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
   }
 
   const onClickSubmit = (coId: string | null | undefined) => {
-    if(abilityResult !== '' && targetPlayerId !== '' && coId !== null){
+    if(abilityResult !== '' && targetPlayerId !== '' && coId !== null && coId !== undefined){
       dispatch(fetchAsyncCreateAbilityLogs(
         {
-          coId: coId, 
+          coId: coId,
           targetPlayerId: targetPlayerId, 
           dailyId: filteringDailyId(dailies, playerDate), 
           abilityResult: abilityResult
@@ -53,7 +53,8 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
       ))
       setAbilityResult('')
       setTargetPlayerId('')
-      props.handleClose()
+      handleClose()
+      rerender(renderState + 1)
     }
   }
 
@@ -93,7 +94,7 @@ const ModalCreateAbilityLog = (props: {coId: string | null | undefined, handleCl
         </FormControl>
       <Button
         variant="contained"
-        onClick={()=>onClickSubmit(props.coId)}
+        onClick={()=>onClickSubmit(coId)}
         style={{backgroundColor: "#bdbdbd", color: "#1F2327", marginTop: 20}}
       >
         結果を記録する

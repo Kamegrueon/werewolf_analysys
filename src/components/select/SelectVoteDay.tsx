@@ -6,7 +6,7 @@ import { selectVoteDate, setSelectVoteDate } from '../../reducers/voteSlice';
 import { selectDailies } from '../../reducers/playerSlice';
 import { AppDispatch } from '../../store';
 
-const SelectVoteDay = () => {
+const SelectVoteDay: React.FC = () => {
 
   const dispatch: AppDispatch = useDispatch()
   const voteDate = useSelector(selectVoteDate)

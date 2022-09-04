@@ -11,8 +11,7 @@ interface Props {
   clicked: number | null
 }
 
-const PlayerBoardSelectAbilityAction = (props: Props) => {
-  const {coId, setCoId, setClicked, setIsOpen, contentRefs, index, clicked} = props
+const PlayerBoardSelectAbilityAction: React.FC<Props> = ({coId, setCoId, setClicked, setIsOpen, contentRefs, index, clicked}) => {
 
   useEffect(()=>{
     if (contentRefs && contentRefs.current[index].current){
@@ -30,8 +29,8 @@ const PlayerBoardSelectAbilityAction = (props: Props) => {
     setClicked(null)
     setCoId(coId)
     setIsOpen(true)
-    const elements:any = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC");
-    Object.keys(elements).forEach((index: string) => {elements[index].style.zIndex = 0})              
+    const elements = document.getElementsByClassName("AvatarState_avatar__marker_box__fgSIC") as HTMLCollectionOf<HTMLElement>;
+    Object.keys(elements).forEach((_, index) => {elements[index].style.zIndex = '0'})
   }
 
   return (

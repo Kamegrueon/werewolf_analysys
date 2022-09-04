@@ -4,8 +4,7 @@ import AvatarStatePerishedMarker from '../avatar_state/AvatarStatePerishedMarker
 import AvatarStateDeathDate from '../avatar_state/AvatarStateDeathDate';
 import { PLAYER } from '../types'
 
-const PlayerBoardExistCod = (props: {player: PLAYER}) => {
-  const {player} = props
+const PlayerBoardExistCod: React.FC<{player: PLAYER}> = ({player}) => {
 
   switch (player.cause_of_death) {
     case '殺害':

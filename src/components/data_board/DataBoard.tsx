@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { selectPlayers } from '../../reducers/playerSlice'
 import { selectVoteDate, selectVoteLogs } from '../../reducers/voteSlice'
 
-const DataBoard = () => {
+const DataBoard: React.FC = () => {
   const players = useSelector(selectPlayers)
   const voteLogs = useSelector(selectVoteLogs)
   const voteDate = useSelector(selectVoteDate)

@@ -9,8 +9,28 @@ import { useSelector } from 'react-redux';
 import { selectCastings } from '../../reducers/gameSlice';
 import { selectDailies, selectPlayerDate } from '../../reducers/playerSlice';
 import { RerenderContext } from '../../utils/AnalysisContext';
+import { filteringDailyId } from '../../utils/UtilsFC';
 
-const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispatch<React.SetStateAction<number | null>>, contentRefs: React.MutableRefObject<React.RefObject<HTMLDivElement>[]>, index: number, clicked: number | null}) => {
+interface Props {
+  playerId: string;
+  setClicked: React.Dispatch<React.SetStateAction<number | null>>;
+  contentRefs: React.MutableRefObject<React.RefObject<HTMLDivElement>[]>;
+  index: number; 
+  clicked: number | null;
+}
+
+interface CreateCoResponse {
+  data: {
+    daily_id: number
+    id: number
+    player_id: number
+    roll_name: string
+    created_at: string
+    updated_at: string
+  }
+}
+
+const PlayerBoardComingOut: React.FC<Props> = ({playerId, setClicked, contentRefs, index, clicked}) => {
 
   const select_days_style = {
     width: '100%',
@@ -21,10 +41,10 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
   }
 
   useEffect(()=>{
-    if (props.contentRefs && props.contentRefs.current[props.index].current){
-      props.contentRefs.current[props.index].current?.scrollIntoView({block: "end", inline: "end"})
+    if (contentRefs && contentRefs.current[index].current){
+      contentRefs.current[index].current?.scrollIntoView({block: "end", inline: "end"})
     }
-  },[props.clicked, props.contentRefs, props.index])
+  },[clicked, contentRefs, index])
 
   const castings = useSelector(selectCastings)
   const playerDate = useSelector(selectPlayerDate)
@@ -40,12 +60,13 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
 
   const onClickSubmit = (playerId: string) => {
     // daily_idをフィルターで取得してpostする
-    const dailyId = dailies.filter(daily => String(daily.date_progress) === String(playerDate))[0].id
+    // const dailyId = dailies.filter(daily => String(daily.date_progress) === String(playerDate))[0].id    
+    const dailyId = filteringDailyId(dailies,playerDate)
     if(comingOutRoll !== ''){
-      comingOutCreateRequest(dailyId, comingOutRoll, playerId).then((res: any) => {
+      comingOutCreateRequest(dailyId, comingOutRoll, playerId).then((res: CreateCoResponse) => {
         console.log(res.data)
         setComingOutRoll(null)
-        props.setClicked(null)
+        setClicked(null)
         rerender(renderState + 1)
       }).catch((error: AxiosError<{ error: string }>)  => {
         if (error.response !== undefined){
@@ -75,7 +96,7 @@ const PlayerBoardComingOut = (props: {playerId: string, setClicked: React.Dispat
         </FormControl>
         <Button
           variant="contained"
-          onClick={()=>onClickSubmit(props.playerId)}
+          onClick={()=>onClickSubmit(playerId)}
           style={{backgroundColor: "#bdbdbd", color: "#1F2327", marginTop: 20}}
         >
           この役職を記録する

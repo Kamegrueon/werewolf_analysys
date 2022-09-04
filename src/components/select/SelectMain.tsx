@@ -12,10 +12,10 @@ const renderBody = (body: string) => {
   }
 }
 
-const SelectMain = (props: {'body': string}) => {
+const SelectMain: React.FC<{body: string}> = ({body}) => {
   return (
     <div>
-        {renderBody(props.body)}
+      {renderBody(body)}
     </div>
   )
 }

@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosBase from "axios";
-import { CREATE_ABILITY_LOGS_PARAMS, CREATE_COD_PARAMS, GET_DATA_PARAMS } from "../components/types";
+import { ABILITY_LOG, CREATE_ABILITY_LOGS_PARAMS, CREATE_COD_PARAMS, DAILY, GET_DATA_PARAMS, PLAYER, PLAYER_STATE } from "../components/types";
 import { RootState } from "../store";
 
 
@@ -27,7 +27,7 @@ const cod_api = axiosBase.create ({
 export const fetchAsyncGetPlayers = createAsyncThunk(
   'player/getPlayers',
   async(params: GET_DATA_PARAMS) =>{
-    const res = await games_api.get(`/${params.gameId}/players?date_progress=${params.dateProgress}`)
+    const res = await games_api.get<PLAYER[]>(`/${params.gameId}/players?date_progress=${params.dateProgress}`)
     console.log('playersIndex',res.data)
     return res.data
   }
@@ -67,6 +67,7 @@ export const fetchAsyncGetCOD = createAsyncThunk(
   'player/GetCauseOfDeaths',
   async(params: GET_DATA_PARAMS) => {
     const res = await cod_api.get(`?game_id=${params.gameId}&date_progress=${params.dateProgress}`)
+    console.log(res.data)
     return res.data
   }
 )
@@ -84,7 +85,7 @@ export const fetchAsyncCreateAbilityLogs = createAsyncThunk(
   }
 )
 
-const initialState = {
+const initialState: PLAYER_STATE = {
   players:  [
     {
       id: '',
@@ -127,7 +128,7 @@ export const playerSlice = createSlice({
   name: "player",
   initialState,
   reducers: {
-    setSelectPlayerDate(state, action){
+    setSelectPlayerDate(state, action: PayloadAction<string>){
       state.selectPlayerDate = action.payload;
     },
     resetPlayerState(state){
@@ -140,7 +141,7 @@ export const playerSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       fetchAsyncGetPlayers.fulfilled,
-      (state, action: any) => {
+      (state, action: PayloadAction<PLAYER[]>) => {
         return {
           ...state,
           players: action.payload
@@ -149,7 +150,7 @@ export const playerSlice = createSlice({
     );
     builder.addCase(
       fetchAsyncGetDailies.fulfilled,
-      (state, action: any) => {
+      (state, action: PayloadAction<DAILY[]>) => {
         return {
           ...state,
           dailies: action.payload,
@@ -158,7 +159,7 @@ export const playerSlice = createSlice({
     );
     builder.addCase(
       fetchAsyncCreateDailies.fulfilled,
-      (state, action: any) => {
+      (state, action: PayloadAction<DAILY>) => {
         return {
           ...state,
           selectPlayerDate: String(action.payload.date_progress),
@@ -182,7 +183,7 @@ export const playerSlice = createSlice({
     );
     builder.addCase(
       fetchAsyncGetAbilityLogs.fulfilled,
-      (state, action: any) => {
+      (state, action: PayloadAction<ABILITY_LOG[]>) => {
         return {
           ...state,
           abilityLogs: action.payload
@@ -191,7 +192,7 @@ export const playerSlice = createSlice({
     );
     builder.addCase(
       fetchAsyncCreateAbilityLogs.fulfilled,
-      (state, action: any) => {
+      (state, action: PayloadAction<ABILITY_LOG>) => {
         return {
           ...state,
           abilityLogs: [...state.abilityLogs, action.payload]

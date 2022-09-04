@@ -6,7 +6,7 @@ import { selectIsOpenVoteForm, selectVoteLogs } from '../../reducers/voteSlice';
 import { selectPlayers } from '../../reducers/playerSlice';
 
 
-const VoteBoardVoteList = () => {
+const VoteBoardVoteList: React.FC = () => {
   const voteLogs = useSelector(selectVoteLogs)
   const players = useSelector(selectPlayers)
   const isOpenVoteForm = useSelector(selectIsOpenVoteForm)

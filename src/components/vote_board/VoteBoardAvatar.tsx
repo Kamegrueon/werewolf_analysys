@@ -13,8 +13,7 @@ interface VoteProps {
   votedPlayer: PLAYER
 }
 
-const VoteBoardAvatar = (props: VoteProps) => {
-  const { voteId, votedPlayer, voterPlayer } = props
+const VoteBoardAvatar: React.FC<VoteProps> = ({ voteId, votedPlayer, voterPlayer }) => {
   const dispatch: AppDispatch = useDispatch()
 
   const deleteAction = () => {
