@@ -1,6 +1,10 @@
 import React from 'react'
 import styles from "./Analysis.module.css"
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIsSignedIn, signOut } from '../../reducers/userSlice';
+import { AppDispatch } from '../../store';
 
 const MenuIconStyle = { 
   backgroundColor: '#363C43',
@@ -12,11 +16,18 @@ const MenuIconStyle = {
   height: 40
 }
 
+
+
 const AnalysisHeader: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch()
+  const isSignedIn = useSelector(selectIsSignedIn)
+
   return (
     <header className={styles.analysis__header}>
       <div className={styles.analysis__title}>WereWolf Analysis</div>
-      <MenuIcon sx={MenuIconStyle} />
+      {isSignedIn 
+        ? <ExitToAppIcon sx={MenuIconStyle} onClick={()=>dispatch(signOut())} /> 
+        : <></>}
     </header>
   )
 }

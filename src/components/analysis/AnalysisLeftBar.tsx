@@ -28,28 +28,30 @@ const AnalysisLeftBar: React.FC = () => {
         <Avatar />
       </div>
       <List>
-        <NavLink exact to="/games/" onClick={resetSelectDate}>
-          <ListItem button sx={path === "/games/" ? LeftListItemStyle : {mb: 3}}>
+        <NavLink exact to="/games" onClick={resetSelectDate}>
+          {/* ここ修正 */}
+          <ListItem sx={path === "/games" ? LeftListItemStyle : {mb: 3}}>
             <ListItemIcon >
               <FeaturedPlayListIcon fontSize="large" sx={{color: '#545F69'}}/>
             </ListItemIcon>
           </ListItem>
         </NavLink>
         {gameId !== '' 
-        ? (<NavLink exact to="/board/">
-        {/* <ListItem button sx={path.match(/games\/\d/) ? LeftListItemStyle : {mb: 3}}> */}
-          <ListItem button sx={path === "/board/" ? LeftListItemStyle : {mb: 3}}>
-            <ListItemIcon>
-              <DesktopMacIcon fontSize="large" sx={{color: '#545F69'}}/>
-            </ListItemIcon>
-          </ListItem>
-        </NavLink>)
-       : (
-        <ListItem>
-          <ListItemIcon>
-            <DesktopMacIcon fontSize="large" sx={{color: '#545F69'}}/>
-          </ListItemIcon>
-        </ListItem>
+        ? (<NavLink exact to="/board">
+            <ListItem sx={path === "/board" ? LeftListItemStyle : {mb: 3}}>
+              <ListItemIcon>
+                <DesktopMacIcon fontSize="large" sx={{color: '#545F69'}}/>
+              </ListItemIcon>
+            </ListItem>
+          </NavLink>)
+       : (<NavLink exact to="/games">
+          {/* ここ修正 */}
+            <ListItem sx={path === "/board" ? LeftListItemStyle : {mb: 3}}>
+              <ListItemIcon>
+                <DesktopMacIcon fontSize="large" sx={{color: '#545F69'}}/>
+              </ListItemIcon>
+            </ListItem>
+          </NavLink>
         )}
       </List>
     </div>
