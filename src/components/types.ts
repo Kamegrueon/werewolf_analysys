@@ -142,3 +142,37 @@ export interface CREATE_VOTE_PARAMS {
   voterId: string
   votedId: string
 }
+
+export interface USER_STATE {
+  loading: boolean,
+  isSignedIn: boolean,
+  currentUser: USER
+}
+
+// サインアップ
+export interface SIGN_UP_PARAMS {
+  name: string
+  email: string
+  password: string
+  passwordConfirmation: string
+}
+
+// サインイン
+export interface SIGN_IN_PARAMS {
+  email: string
+  password: string
+}
+
+// ユーザー
+export interface USER {
+  id: number
+  uid: string
+  provider: string
+  email: string
+  name: string
+  nickname?: string
+  image?: string
+  allowPasswordChange: boolean
+  created_at: Date
+  updated_at: Date
+}

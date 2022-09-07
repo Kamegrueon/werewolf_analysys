@@ -1,12 +1,14 @@
 import { configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/toolkit';
 import gameReducer from './reducers/gameSlice'
 import playerSlice from './reducers/playerSlice';
+import userSlice from './reducers/userSlice';
 import voteSlice from './reducers/voteSlice';
 
 export const rootReducer = combineReducers({
     game: gameReducer,
     player: playerSlice,
     vote: voteSlice,
+    user: userSlice
 });
 
 export const store = configureStore({
