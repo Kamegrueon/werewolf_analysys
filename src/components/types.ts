@@ -29,8 +29,9 @@ export interface GAME_STATE {
 export interface GAME {
     id: string;
     game_name: string;
-    is_win: boolean;
-    date_progress: number;
+    user_id: string;
+    // is_win: boolean;
+    // date_progress: number;
     created_at: string;
 }
 
@@ -38,6 +39,7 @@ export interface GAME_CREATE_PARAMS {
   gameName: string | null;
   players: string[];
   positionIds: string[];
+  userId: number;
 }
 
 export interface GET_GAMES {

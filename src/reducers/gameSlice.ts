@@ -11,8 +11,8 @@ const games_api = axiosBase.create ({
 // games Request
 export const fetchAsyncGetGames = createAsyncThunk(
   'game/getGames',
-  async() =>{
-    const res = await games_api.get<GET_GAMES>('/')
+  async(userId: string) =>{
+    const res = await games_api.get<GET_GAMES>(`?user_id=${userId}`)
     return res.data
   }
 )
@@ -32,7 +32,8 @@ export const fetchAsyncCreateGames = createAsyncThunk(
       game: {
         game_name: params.gameName, 
         players: params.players, 
-        position_ids: params.positionIds
+        position_ids: params.positionIds,
+        user_id: params.userId
       }})
     return res.data.id
     }
@@ -52,8 +53,7 @@ const initialState: GAME_STATE = {
     {
       id: '', 
       game_name: '', 
-      is_win: true, 
-      date_progress: 0, 
+      user_id: '',
       created_at: ''
     }
   ],
@@ -104,6 +104,7 @@ export const gameSlice = createSlice({
         return {
           ...state,
           games: state.games.filter((game) => game.id !== action.payload),
+          selectGameId: initialState.selectGameId,
         }
       }
     );

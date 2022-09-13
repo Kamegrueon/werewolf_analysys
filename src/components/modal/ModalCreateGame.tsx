@@ -9,8 +9,9 @@ import CheckBoxList from '../../utils/CheckBoxList';
 // import { GameSelectContext } from '../../utils/AnalysisContext';
 // import {AxiosResponse, AxiosError} from 'axios'
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncCreateGames } from "../../reducers/gameSlice";
+import { selectCurrentUser } from '../../reducers/userSlice';
 
 const ModalCreateGame = () => {
   const dispatch: any = useDispatch()
@@ -18,6 +19,8 @@ const ModalCreateGame = () => {
   const [gameName, setGameName] = useState<string | null>(null);
   const [positionIds, setPositionIds] = useState<string[]>([]);
   const [players, setPlayers] = useState<string[]>([]);
+
+  const currentUser = useSelector(selectCurrentUser)
   
   const history = useHistory();
 
@@ -40,7 +43,7 @@ const ModalCreateGame = () => {
 
   const onClickSubmit = () => {
     console.log(gameName, positionIds, players)
-    dispatch(fetchAsyncCreateGames({gameName: gameName,positionIds: positionIds,players: players}))
+    dispatch(fetchAsyncCreateGames({gameName: gameName, positionIds: positionIds, players: players, userId: currentUser.id}))
     history.push(`/board/`)
   } 
 
