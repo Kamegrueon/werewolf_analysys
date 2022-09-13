@@ -11,7 +11,7 @@ const options = {
 }
 
 const client = applyCaseMiddleware(axiosBase.create({
-  baseURL: `${process.env.REACT_APP_API_DOMEIN}/api/v1`
+  baseURL: `${process.env.REACT_APP_API_DOMEIN}/api/v1/`
 }), options)
 
 client.defaults.withCredentials = true
