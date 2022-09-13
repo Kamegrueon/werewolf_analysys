@@ -57,8 +57,6 @@ const App: React.FC = () =>  {
   useEffect(()=> {
     if (!Cookies.get("_access_token") || !Cookies.get("_client") || !Cookies.get("_uid")) return
     dispatch(getCurrentUser())
-    console.log('呼ばれたった')
-    // setLoading(false)
   },[dispatch])
 
   // console.log(Cookies.get("_access_token"),Cookies.get("_client"),Cookies.get("_uid"))

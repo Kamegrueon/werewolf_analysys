@@ -4,7 +4,7 @@ import { CREATE_VOTE_PARAMS, GET_DATA_PARAMS, VOTE_LOG, VOTE_STATE } from "../co
 import { RootState } from "../store";
 
 const votes_api = axiosBase.create ({
-  baseURL: 'http://localhost:3000/api/v1/votes',
+  baseURL: `${process.env.REACT_APP_API_DOMEIN}/api/v1/votes`,
   responseType: "json",
 })
 

@@ -4,7 +4,7 @@ import { RootState } from "../store";
 import { CASTING, GAME_CREATE_PARAMS, GAME_STATE, GET_GAMES } from "../components/types";
 
 const games_api = axiosBase.create ({
-  baseURL: 'http://localhost:3000/api/v1/games',
+  baseURL: `${process.env.REACT_APP_API_DOMEIN}/api/v1/games`,
   responseType: "json",
 })
 

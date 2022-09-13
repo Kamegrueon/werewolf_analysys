@@ -2,8 +2,9 @@ import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { selectIsSignedIn } from '../../reducers/userSlice';
 
-const AuthenticatedGuard = ({ children }: { children: React.ReactElement }) => {
+const AuthenticatedGuard = ({ children }: { children: React.ReactElement}) => {
   const isSignedIn = useSelector(selectIsSignedIn)
+  console.log(isSignedIn)
 
   return isSignedIn 
     ? <>{children}</> 

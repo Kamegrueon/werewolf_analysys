@@ -7,6 +7,7 @@ const AuthenticatedRoute: React.FC = () => {
     <Switch>
       <Route exact path='/games' component={GameMain} />
       <Route exact path="/board" component={GameBoard} />
+      <Route path="/" component={GameBoard} />
     </Switch>
   );
 };
