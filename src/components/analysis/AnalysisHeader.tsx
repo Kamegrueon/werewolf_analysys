@@ -5,6 +5,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsSignedIn, signOut } from '../../reducers/userSlice';
 import { AppDispatch } from '../../store';
+import { setSelectGame } from '../../reducers/gameSlice';
 
 const MenuIconStyle = { 
   backgroundColor: '#363C43',
@@ -26,7 +27,10 @@ const AnalysisHeader: React.FC = () => {
     <header className={styles.analysis__header}>
       <div className={styles.analysis__title}>WereWolf Analysis</div>
       {isSignedIn 
-        ? <ExitToAppIcon sx={MenuIconStyle} onClick={()=>dispatch(signOut())} /> 
+        ? <ExitToAppIcon sx={MenuIconStyle} onClick={()=>{
+            dispatch(signOut())
+            dispatch(setSelectGame(''))
+          }} /> 
         : <></>}
     </header>
   )
