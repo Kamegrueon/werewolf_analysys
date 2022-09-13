@@ -19,20 +19,22 @@ import 'dayjs/locale/ja';
 import { selectGames, fetchAsyncGetGames, fetchAsyncDeleteGames, setSelectGame } from "../../reducers/gameSlice";
 import { AppDispatch } from '../../store';
 import { GAME } from '../types';
+import { selectCurrentUser } from '../../reducers/userSlice';
 
 const GameMain: React.FC = memo(() => {
 
   const dispatch: AppDispatch = useDispatch()
   const games = useSelector(selectGames)
+  const currentUser = useSelector(selectCurrentUser)
 
   useEffect(() => {
-    dispatch(fetchAsyncGetGames())
+    dispatch(fetchAsyncGetGames(String(currentUser.id)))
 
     return () => { 
       console.log('GameMainがアンマウントされた')
     };
 
-  },[dispatch])
+  },[dispatch, currentUser])
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,18 +48,16 @@ const GameMain: React.FC = memo(() => {
 
   return (
     <>
-      <h2 style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Game List</h2>
-      <Button onClick={handleOpen} variant="contained" sx={{backgroundColor: '#bdbdbd', color: '#1F2327', ml: 137, mt: 2, mb: 3}} endIcon={<AddIcon />}>
+      <Button onClick={handleOpen} variant="contained" sx={{backgroundColor: '#bdbdbd', color: '#1F2327', ml: 137, mt: 5, mb: 3}} endIcon={<AddIcon />}>
           New Game
         </Button>
+      {games.length ? (
       <TableContainer component={Paper} style={{ background: '#292E33' }}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell sx={{color: 'white', fontWeight: 'bold', fontSize: 18}}>Game Name</TableCell>
             <TableCell align="right" sx={{color: 'white', fontWeight: 'bold', fontSize: 18}}>Play Date</TableCell>
-            <TableCell align="right" sx={{color: 'white', fontWeight: 'bold', fontSize: 18}}>isWin</TableCell>
-            <TableCell align="right" sx={{color: 'white', fontWeight: 'bold', fontSize: 18}}>Date Progress</TableCell>
             <TableCell align="right" sx={{color: 'white', fontWeight: 'bold', fontSize: 18}}></TableCell>
           </TableRow>
         </TableHead>
@@ -77,8 +77,6 @@ const GameMain: React.FC = memo(() => {
               </Link>
               </TableCell>
               <TableCell align="right" sx={{color: 'white'}}>{dayjs(game.created_at).locale('ja').format('YYYY/MM/DD(dd)')}</TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{game.is_win ? '勝利' : game.is_win===null ? '' :'敗北'}</TableCell>
-              <TableCell align="right" sx={{color: 'white'}}>{game.date_progress}</TableCell>
               <TableCell><DeleteOutlineIcon sx={{color: 'white'}} 
                 onClick={()=>{dispatch(fetchAsyncDeleteGames(game.id))}}
               /></TableCell>
@@ -87,6 +85,7 @@ const GameMain: React.FC = memo(() => {
         </TableBody>
       </Table>
     </TableContainer>
+      ) : <></> }
     <ModalMain 
         isOpen={isOpen} 
         handleClose={handleClose}
