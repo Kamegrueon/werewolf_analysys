@@ -6,10 +6,9 @@ import axiosBase from 'axios'
 //   baseURL: 'http://localhost:3000/api/v1/games',
 //   responseType: "json",
 // })
-
 // Daily
 const dailies_api = axiosBase.create ({
-  baseURL: 'http://localhost:3000/api/v1/dailies',
+  baseURL: `${process.env.REACT_APP_API_DOMEIN}/api/v1/dailies`,
   responseType: "json",
 })
 
@@ -21,7 +20,7 @@ const dailies_api = axiosBase.create ({
 
 // ComingOut
 const coming_outs_api = axiosBase.create ({
-  baseURL: 'http://localhost:3000/api/v1/coming_outs',
+  baseURL: `${process.env.REACT_APP_API_DOMEIN}/api/v1/coming_outs`,
   responseType: "json",
 })
 
