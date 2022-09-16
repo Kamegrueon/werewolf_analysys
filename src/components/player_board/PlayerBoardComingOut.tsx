@@ -51,21 +51,20 @@ const PlayerBoardComingOut: React.FC<Props> = ({playerId, setClicked, contentRef
   const dailies = useSelector(selectDailies)
   
   const { renderState, rerender } = useContext(RerenderContext)
-  const [comingOutRoll, setComingOutRoll] = useState<string | null>(null)
+  const [comingOutRoll, setComingOutRoll] = useState<string>('')
 
   const handleChangeComingOutRoll = (event: SelectChangeEvent) => {
+
     setComingOutRoll(event.target.value)
     console.log(event.target.value)
   }
 
   const onClickSubmit = (playerId: string) => {
-    // daily_idをフィルターで取得してpostする
-    // const dailyId = dailies.filter(daily => String(daily.date_progress) === String(playerDate))[0].id    
     const dailyId = filteringDailyId(dailies,playerDate)
     if(comingOutRoll !== ''){
       comingOutCreateRequest(dailyId, comingOutRoll, playerId).then((res: CreateCoResponse) => {
         console.log(res.data)
-        setComingOutRoll(null)
+        setComingOutRoll('')
         setClicked(null)
         rerender(renderState + 1)
       }).catch((error: AxiosError<{ error: string }>)  => {
