@@ -9,9 +9,6 @@ import CardContent from "@material-ui/core/CardContent"
 import CardHeader from "@material-ui/core/CardHeader"
 import Button from "@material-ui/core/Button"
 
-// import { AuthContext } from "App"
-// import AlertMessage from "components/utils/AlertMessage"
-// import { signUp } from "../../lib/api/auth"
 import { SIGN_UP_PARAMS } from "../../components/types"
 
 import { signUp } from "../../reducers/userSlice";
@@ -19,6 +16,9 @@ import { AppDispatch } from '../../store';
 import { useDispatch } from "react-redux"
 import { Grid } from "@mui/material"
 import { Spacer } from "../../utils/Spacer"
+
+import { useSnackbar } from 'notistack';
+import AlertMessage from "../../utils/AlertMessage"
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -48,8 +48,11 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = useState<string>("")
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("")
   // const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
+  // const [errorMessages, setErrorMessages] = useState<string[]>([])
 
   const dispatch: AppDispatch = useDispatch()
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -60,10 +63,16 @@ const SignUp: React.FC = () => {
       password: password,
       passwordConfirmation: passwordConfirmation
     }
-    await dispatch(signUp(params))
-    history.push("/games")
-
-    console.log("Signed in successfully!")
+    const res:any = await dispatch(signUp(params))
+    console.log(res)
+    if(res.type === "user/signUp/fulfilled"){
+      history.push("/games")
+      console.log("Signed in successfully!")
+    } else if(res.type === "user/signUp/rejected"){
+      console.log('これ',res);
+      AlertMessage(res.payload?.errors.fullMessages, enqueueSnackbar)
+      // res.payload?.errors.fullMessages.map((message: string) => enqueueSnackbar(message, {anchorOrigin: {horizontal: 'center', vertical: 'top'}, variant: 'error'}))
+    }
   }
 
   return (
@@ -129,12 +138,6 @@ const SignUp: React.FC = () => {
             </CardContent>
           </Card>
         </form>
-        {/* <AlertMessage // エラーが発生した場合はアラートを表示
-          open={alertMessageOpen}
-          setOpen={setAlertMessageOpen}
-          severity="error"
-          message="Invalid email or password"
-        /> */}
       </Grid>
     </>
   )

@@ -3,7 +3,7 @@ import axiosBase from "axios";
 import { RootState } from "../store";
 
 import Cookies from "js-cookie"
-import { SIGN_IN_PARAMS, SIGN_UP_PARAMS } from "../components/types"
+import { SIGN_IN_PARAMS, SIGN_UP_PARAMS, USER_STATE } from "../components/types"
 import applyCaseMiddleware from "axios-case-converter"
 
 const options = {
@@ -17,31 +17,51 @@ const client = applyCaseMiddleware(axiosBase.create({
 client.defaults.withCredentials = true
 
 // サインアップ（新規アカウント作成）
-export const signUp = createAsyncThunk(
+export const signUp = createAsyncThunk<
+  USER_STATE,
+  SIGN_UP_PARAMS,
+  {
+    rejectValue: string;
+  }
+>(
   'user/signUp',
-  async (params: SIGN_UP_PARAMS) => {
-    const res = await client.post("auth", params)
-    console.log('signup res',res)
-    if(res.status === 200){
-      Cookies.set("_access_token", res.headers["access-token"])
-      Cookies.set("_client", res.headers["client"])
-      Cookies.set("_uid", res.headers["uid"])
+  async (params, { rejectWithValue }) => {
+    try{
+      const res = await client.post("auth", params)
+      console.log('signup res',res)
+      if(res.status === 200){
+        Cookies.set("_access_token", res.headers["access-token"])
+        Cookies.set("_client", res.headers["client"])
+        Cookies.set("_uid", res.headers["uid"])
+      }
+      return res.data
+    } catch (err: any) {
+      return rejectWithValue(err.response.data)
     }
-    return res.data
   }
 )
 
-export const signIn = createAsyncThunk(
+export const signIn = createAsyncThunk<
+  USER_STATE,
+  SIGN_IN_PARAMS,
+  {
+    rejectValue: string;
+  }
+>(
   'user/signIn',
-  async (params: SIGN_IN_PARAMS) => {
-    const res = await client.post("auth/sign_in", params)
-    if(res.status === 200){
+  async (params, { rejectWithValue }) => {
+    try{
+      const res = await client.post("auth/sign_in", params)
       Cookies.set("_access_token", res.headers["access-token"])
       Cookies.set("_client", res.headers["client"])
       Cookies.set("_uid", res.headers["uid"])
+
+      // console.log(res)
+      return res.data
+    } catch (err: any) {
+      return rejectWithValue(err.response.data)
     }
-    console.log(res)
-    return res.data
+
   }
 )
 
