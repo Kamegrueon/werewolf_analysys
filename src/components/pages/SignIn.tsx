@@ -10,15 +10,15 @@ import CardHeader from "@material-ui/core/CardHeader"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 
-// import { AuthContext } from "App"
-// import AlertMessage from "components/utils/AlertMessage"
-// import { signIn } from "../../lib/api/auth"
 import { SIGN_IN_PARAMS } from "../types"
 import { useDispatch } from "react-redux"
 import { AppDispatch } from "../../store"
 import { signIn } from "../../reducers/userSlice"
 import { Spacer } from "../../utils/Spacer"
 import { Grid } from "@mui/material"
+
+import { useSnackbar } from 'notistack';
+import AlertMessage from "../../utils/AlertMessage"
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -49,11 +49,10 @@ const SignIn: React.FC = () => {
   const classes = useStyles()
   const history = useHistory()
 
-  // const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const { enqueueSnackbar } = useSnackbar();
 
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  // const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   
   const dispatch: AppDispatch = useDispatch()
 
@@ -65,10 +64,15 @@ const SignIn: React.FC = () => {
       password: password
     }
 
-    await dispatch(signIn(params))
-    history.push("/games")
-
-    console.log("Signed in successfully!")
+    const res: any = await dispatch(signIn(params))
+    
+    if(res.type === "user/signIn/fulfilled"){
+      history.push("/games")
+      console.log("Signed in successfully!")
+    } else if(res.type === "user/signIn/rejected"){
+      console.log(res);
+      AlertMessage(res.payload?.errors, enqueueSnackbar)
+    }
   }
 
   return (
@@ -123,12 +127,6 @@ const SignIn: React.FC = () => {
             </CardContent>
           </Card>
         </form>
-        {/* <AlertMessage // エラーが発生した場合はアラートを表示
-          open={alertMessageOpen}
-          setOpen={setAlertMessageOpen}
-          severity="error"
-          message="Invalid email or password"
-        /> */}
       </Grid>
     </>
   )

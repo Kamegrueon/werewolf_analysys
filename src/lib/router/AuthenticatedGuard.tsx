@@ -4,7 +4,7 @@ import { selectIsSignedIn } from '../../reducers/userSlice';
 
 const AuthenticatedGuard = ({ children }: { children: React.ReactElement}) => {
   const isSignedIn = useSelector(selectIsSignedIn)
-  console.log(isSignedIn)
+  // console.log(isSignedIn)
 
   return isSignedIn 
     ? <>{children}</> 

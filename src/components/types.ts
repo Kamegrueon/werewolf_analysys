@@ -146,7 +146,6 @@ export interface CREATE_VOTE_PARAMS {
 }
 
 export interface USER_STATE {
-  loading: boolean,
   isSignedIn: boolean,
   currentUser: USER
 }

@@ -5,6 +5,8 @@ import AnalysisLeftBar from './components/analysis/AnalysisLeftBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // import { GameBoard } from "./components/pages/GameBoard";
 // import GameMain from "./components/pages/GameMain";
+import { SnackbarProvider } from 'notistack';
+
 import SignUp from './components/pages/SignUp';
 
 import { RerenderContext } from './utils/AnalysisContext';
@@ -63,6 +65,7 @@ const App: React.FC = () =>  {
 
   return (
     <Router>
+      <SnackbarProvider>
       <RerenderContext.Provider value={{renderState, rerender}}>
         <div className={styles.app__root}>
           <AnalysisLeftBar />
@@ -79,6 +82,7 @@ const App: React.FC = () =>  {
           </div>
         </div>
       </RerenderContext.Provider>
+      </SnackbarProvider>
     </Router>
   );
 }
